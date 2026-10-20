@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ॐ-SYNTH // The Sanskrit Acoustic Synthesizer & Multi-Script Studio</title>
+  <meta name="description" content="State-of-the-art interactive Sanskrit Phonology Matrix and ॐ-Script Read-Aloud Speech Synthesizer with real-time Devanāgarī, Telugu, IAST, English, and Hindi synchrony.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0e17'/><text x='50%' y='68%' font-size='56' text-anchor='middle' fill='%23f59e0b' font-family='sans-serif' font-weight='bold'>ॐ</text></svg>">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ॐ-SYNTH // The Sanskrit Acoustic Synthesizer">
+  <meta property="og:description" content="Interactive Pāṇinian Phonology Matrix and continuous ॐ-Script Read-Aloud Speech Synthesizer with real-time multi-script synchrony.">
+  <meta property="og:image" content="qr_om_synth_300dpi.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f59e0b">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-symbol">ॐ</div>
+        <div>
+          <h1 class="brand-title">ॐ-SYNTH</h1>
+          <div class="brand-tag">Acoustic Phonology & Multi-Script Reader</div>
+        </div>
+      </div>
+
+      <!-- Mode Switcher -->
+      <nav class="nav-tabs" aria-label="App Navigation">
+        <button class="tab-btn active" data-target="matrix-panel" id="tab-matrix-btn">
+          <span>🏛️</span> Phonology Matrix (5 Sthānas)
+        </button>
+        <button class="tab-btn" data-target="studio-panel" id="tab-studio-btn">
+          <span>🎙️</span> ॐ-Script Read-Aloud Studio
+        </button>
+      </nav>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- MODE 1: PHONOLOGY MATRIX & VOCAL TRACT                                -->
+    <!-- ===================================================================== -->
+    <main id="matrix-panel" class="tab-panel active">
+      
+      <!-- Sthāna Filter Bar & Script Display Toggles -->
+      <div class="matrix-header-bar">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 700;">The Pāṇinian Vocal Tract Matrix</h2>
+          <p style="color: var(--text-dim); font-size: 0.9rem;">
+            Click any cell to hear authentic studio recordings and visualize tongue placement across the 5 vocal stations.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+          <!-- Script Display Toggles -->
+          <div class="script-toggle-group">
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase;">Scripts:</span>
+            <button class="script-chip locked active">Devanāgarī (Hindi/Skt)</button>
+            <button class="script-chip locked active">IAST</button>
+            <button class="script-chip toggle active" id="toggle-telugu-btn">
+              <span id="telugu-toggle-check">✓</span> Telugu (South Indic)
+            </button>
+          </div>
+
+          <div class="sthana-filters" id="sthana-filters-container">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Matrix Two-Column Grid -->
+      <div class="matrix-layout-grid">
+        
+        <!-- Left: Anatomical Visualizer & Selected Phoneme HUD -->
+        <aside class="anatomy-card">
+          <div class="anatomy-header">
+            <h3 class="anatomy-title">Vocal Tract Anatomy</h3>
+            <span style="font-size: 0.8rem; color: var(--accent-cyan); font-family: var(--font-mono);">5 STHĀNAS</span>
+          </div>
+
+          <!-- Interactive SVG Stage -->
+          <div class="vocal-tract-stage" id="vocal-tract-stage">
+            <!-- Rendered by app.js -->
+          </div>
+
+          <!-- Active Phoneme Inspector -->
+          <div class="selected-phoneme-hud">
+            <div class="hud-glyphs">
+              <div class="glyph-badge">
+                <div class="glyph-label">Devanāgarī (Hindi/Skt)</div>
+                <div class="glyph-val-deva" id="hud-val-deva">क</div>
+              </div>
+              <div class="glyph-badge" id="hud-telugu-badge">
+                <div class="glyph-label">Telugu</div>
+                <div class="glyph-val-telugu" id="hud-val-telugu">క</div>
+              </div>
+              <div class="glyph-badge">
+                <div class="glyph-label">IAST</div>
+                <div class="glyph-val-iast" id="hud-val-iast">ka</div>
+              </div>
+            </div>
+
+            <div class="hud-details">
+              <div class="hud-row">
+                <span class="hud-k">Station (Sthāna):</span>
+                <span class="hud-v" id="hud-sthana-name">1. Kaṇṭhya</span>
+              </div>
+              <div class="hud-row">
+                <span class="hud-k">Effort (Prayatna):</span>
+                <span class="hud-v" id="hud-phoneme-type">Unvoiced Unaspirated</span>
+              </div>
+              <div class="hud-row" id="hud-skt-word-row" style="display:none; align-items:center;">
+                <span class="hud-k">Sanskrit Example:</span>
+                <span class="hud-v" id="hud-example-skt"></span>
+              </div>
+              <div class="hud-row" id="hud-hindi-word-row" style="display:none; align-items:center;">
+                <span class="hud-k">Hindi Cognate:</span>
+                <span class="hud-v" id="hud-example-hindi" style="color:var(--accent-cyan);font-weight:600;"></span>
+              </div>
+              <div class="hud-row">
+                <span class="hud-k">Audio Asset:</span>
+                <span class="hud-v" id="hud-audio-file" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent-saffron);">as-ka.mp3</span>
+              </div>
+            </div>
+
+            <button class="play-sound-btn" id="hud-play-btn">
+              <span>🔊</span> Play Studio Phoneme
+            </button>
+          </div>
+        </aside>
+
+
+        <!-- Right: Tables Section -->
+        <section class="tables-wrapper">
+          
+          <!-- Consonants (Sparśa & Antaḥstha & Ūṣman) -->
+          <div class="table-card">
+            <div class="table-title-row">
+              <h3 class="table-title">Consonants (Vyañjana) & Vocal Stations</h3>
+              <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">5x5 STOPS + SEMIVOWELS + SIBILANTS</span>
+            </div>
+            <table class="phonology-table">
+              <thead>
+                <tr>
+                  <th class="station-cell-header">Vocal Station</th>
+                  <th>1. Unvoiced</th>
+                  <th>2. Aspirated</th>
+                  <th>3. Voiced</th>
+                  <th>4. Asp. Voiced</th>
+                  <th>5. Nasal</th>
+                  <th>Semivowel</th>
+                  <th>Sibilant</th>
+                </tr>
+              </thead>
+              <tbody id="consonants-table-body">
+                <!-- Rendered by app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Vowels Table (Svara) -->
+          <div class="table-card">
+            <div class="table-title-row">
+              <h3 class="table-title">Vowels (Svara) & Diphthongs</h3>
+              <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">SHORT (HRASVA) & LONG (DĪRGHA)</span>
+            </div>
+            <table class="phonology-table">
+              <thead>
+                <tr>
+                  <th class="station-cell-header">Articulation Point</th>
+                  <th>Short (1 Mātrā)</th>
+                  <th>Long (2 Mātrās)</th>
+                </tr>
+              </thead>
+              <tbody id="vowels-table-body">
+                <!-- Rendered by app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Modifiers (Ayogavāhas) -->
+          <div class="table-card">
+            <div class="table-title-row">
+              <h3 class="table-title">Acoustic Modifiers (Ayogavāha)</h3>
+              <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">RESONANCES</span>
+            </div>
+            <div id="modifiers-container" style="display: flex; gap: 16px;">
+              <!-- Rendered by app.js -->
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- MODE 2: ॐ-SCRIPT READ-ALOUD STUDIO (KARAOKE SYNTHESIZER)              -->
+    <!-- ===================================================================== -->
+    <main id="studio-panel" class="tab-panel">
+      
+      <div class="studio-grid">
+
+        <!-- Left: Control & Input Panel -->
+        <aside class="studio-control-card">
+          
+          <div class="form-group">
+            <label class="form-label" for="preset-select">Canonical Presets (Book Chapters)</label>
+            <select class="preset-select" id="preset-select">
+              <!-- Populated by app.js -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="om-input-textarea">
+              ॐ-Script Input (Carrier Waves + Segmented Morphemes)
+            </label>
+            <textarea 
+              class="om-textarea" 
+              id="om-input-textarea" 
+              spellcheck="false"
+              placeholder="Enter ॐ-script... e.g. him nar·aḥ hūṃ van·am OM gam·ti ॥"
+            ></textarea>
+          </div>
+
+          <!-- Audio Controls -->
+          <div class="audio-controls-row">
+            <button class="btn-primary" id="studio-play-btn">
+              <span>▶</span> Read Out Loud
+            </button>
+            <button class="btn-secondary" id="studio-stop-btn">
+              <span>⏹</span> Stop
+            </button>
+          </div>
+
+          <!-- Voice & Mode Selection -->
+          <div class="form-group">
+            <label class="form-label" for="voice-select">Vocalist / Speech Voice</label>
+            <select class="preset-select" id="voice-select">
+              <!-- Populated by app.js -->
+            </select>
+          </div>
+
+          <!-- Flow & Engine Selection -->
+          <div class="form-group">
+            <label class="form-label" for="engine-mode-select">Audio Flow / Buffering</label>
+            <select class="preset-select" id="engine-mode-select">
+              <option value="buffered">🌊 Buffered Stream (Continuous, Super Smooth & Connected)</option>
+              <option value="step">⏱️ Step-by-Step Pacing (Discrete Word Analysis)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bija-mode-select">Carrier Wave (Bīja) Style</label>
+            <select class="preset-select" id="bija-mode-select">
+              <option value="human">🎙️ Vedic Human Chanting (Voice + Singing Bowl Resonance)</option>
+              <option value="bell">🔔 Acoustic Tibetan Singing Bowl (Meditative Chimes)</option>
+              <option value="mute">🔇 Speech Only (Bījas Paused / Muted)</option>
+            </select>
+          </div>
+
+
+          <!-- Speed & Synthesis Tuning -->
+          <div class="sliders-group">
+            <div class="slider-row">
+              <span style="color:var(--text-muted);font-weight:600;">Pacing / Rate:</span>
+              <input type="range" class="slider-input" id="speed-slider" min="0.6" max="1.4" step="0.1" value="1.0">
+              <span id="speed-val" style="font-family:var(--font-mono);color:var(--accent-saffron);width:36px;text-align:right;">1.0x</span>
+            </div>
+          </div>
+
+
+          <!-- Carrier Waves Acoustic Legend -->
+          <div class="carrier-legend">
+            <div style="font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem;">
+              Procedural Web Audio Breath Oscillators:
+            </div>
+            <div class="carrier-chip-row">
+              <div class="carrier-tag him">him: 150ms Breath</div>
+              <div class="carrier-tag hum">hūṃ: 108Hz Drone</div>
+              <div class="carrier-tag om">OM: 136.1Hz Cosmic Chime</div>
+              <div class="carrier-tag halt">॥: Bell Halt</div>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- Right: Real-Time Multi-Script Karaoke HUD -->
+        <section class="karaoke-display-card">
+          
+          <div class="hud-title-bar">
+            <h3 class="hud-title">
+              <span>📡</span> Real-Time Multi-Script Karaoke HUD
+            </h3>
+            <span class="playback-status-badge" id="playback-status-badge">STANDBY</span>
+          </div>
+
+          <!-- Ribbon 1: ॐ-Script Blueprint -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>1. ॐ-Script Mathematical Blueprint (Track Separation)</span>
+              <span style="color:var(--accent-saffron);">RULE 8: ZERO SANDHI</span>
+            </div>
+            <div class="ribbon-tokens" id="ribbon-om-tokens"></div>
+          </div>
+
+          <!-- Ribbon 2: Devanāgarī Surface Script -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>2. Devanāgarī Script (Surface Form)</span>
+              <span style="color:var(--text-dim);">CLASSICAL SANSKRIT</span>
+            </div>
+            <div class="ribbon-tokens" id="ribbon-deva-tokens"></div>
+          </div>
+
+          <!-- Ribbon 3: Telugu Surface Script -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>3. Telugu Script (No Vattulu Clusters)</span>
+              <span style="color:var(--accent-cyan);">SOUTH INDIC INTERFACE</span>
+            </div>
+            <div class="ribbon-tokens" id="ribbon-telugu-tokens"></div>
+          </div>
+
+          <!-- Ribbon 4: Roman IAST Script -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>4. Roman IAST Phonetic Alignment</span>
+              <span style="color:var(--text-dim);">INTERNATIONAL PHONETICS</span>
+            </div>
+            <div class="ribbon-tokens" id="ribbon-iast-tokens"></div>
+          </div>
+
+          <!-- Syntactic Grammar Roles -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>5. Syntactic Role Parser (Pāṇinian Kāraka Spine)</span>
+              <span style="color:var(--accent-emerald);">GRAMMAR DECODER</span>
+            </div>
+            <div class="syntax-roles-container" id="syntax-roles-container"></div>
+          </div>
+
+          <!-- Fluent English Translation -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>6. Fluent English Translation</span>
+              <span style="color:var(--text-dim);">SVO BRIDGE</span>
+            </div>
+            <div class="fluent-box" id="fluent-english-box"></div>
+          </div>
+
+          <!-- Modern Hindi SOV Translation -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>7. Modern Hindi Translation</span>
+              <span style="color:var(--accent-cyan);">SOV SYNTHESIS</span>
+            </div>
+            <div class="fluent-box hindi" id="fluent-hindi-box"></div>
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div>
+        <strong>ॐ-SYNTH</strong> &mdash; The Sanskrit Architecture Audio Synthesizer
+      </div>
+      <div>
+        Based on <em>Sanskrit by Architecture</em> &bull; Chapter 1 Vocal Stations &bull; Rule 8 Pure Acoustic Pipeline
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="phonology-data.js"></script>
+  <script src="om-bridge.js"></script>
+  <script src="om-audio.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
