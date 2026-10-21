@@ -425,20 +425,52 @@ function initStudio() {
   const voiceSelect = document.getElementById("voice-select");
   const populateVoices = (voices, selected) => {
     if (!voiceSelect || !voices.length) return;
-    voiceSelect.innerHTML = voices.map((v, idx) => {
+
+    const indicVoices = [];
+    const otherVoices = [];
+
+    const maleKeywords = ["male", "hemant", "madhur", "prabhat", "david", "mark", "ravi", "madhav", "rishi", "george", "guy", "eric", "christopher", "roger", "steffan", "alex", "fred", "daniel", "oliver", "thomas", "brian", "ryan"];
+    const femaleKeywords = ["female", "kalpana", "swara", "neerja", "heera", "zira", "jenny", "aria", "michelle", "ana", "natasha", "clara", "samantha", "victoria", "karen", "veena", "leena", "lekha", "google हिन्दी", "google us english"];
+
+    voices.forEach((v, idx) => {
       const lower = (v.name + " " + (v.gender || "")).toLowerCase();
       let genderBadge = "";
-      if ((lower.includes("male") && !lower.includes("female")) || lower.includes("hemant") || lower.includes("david") || lower.includes("mark") || lower.includes("ravi") || lower.includes("madhav") || lower.includes("rishi") || lower.includes("george") || lower.includes("alex")) {
+
+      if (maleKeywords.some(k => lower.includes(k)) && !lower.includes("female")) {
         genderBadge = "👨 [Male] ";
-      } else if (lower.includes("female") || lower.includes("kalpana") || lower.includes("zira") || lower.includes("swara") || lower.includes("neerja") || lower.includes("heera")) {
+      } else if (femaleKeywords.some(k => lower.includes(k))) {
+        genderBadge = "👩 [Female] ";
+      } else if (v.gender === "male") {
+        genderBadge = "👨 [Male] ";
+      } else if (v.gender === "female") {
         genderBadge = "👩 [Female] ";
       }
-      return `
+
+      const optHtml = `
         <option value="${idx}" ${v === selected ? 'selected' : ''}>
           ${genderBadge}${v.name} (${v.lang})
         </option>
       `;
-    }).join('');
+
+      if (v.lang.startsWith("hi") || v.lang.startsWith("sa") || v.lang.includes("IN")) {
+        indicVoices.push(optHtml);
+      } else {
+        otherVoices.push(optHtml);
+      }
+    });
+
+    if (indicVoices.length && otherVoices.length) {
+      voiceSelect.innerHTML = `
+        <optgroup label="── Indic / Sanskrit Chanters ──">
+          ${indicVoices.join('')}
+        </optgroup>
+        <optgroup label="── Other System Voices ──">
+          ${otherVoices.join('')}
+        </optgroup>
+      `;
+    } else {
+      voiceSelect.innerHTML = [...indicVoices, ...otherVoices].join('');
+    }
   };
 
   populateVoices(window.OmAudioEngine.availableVoices, window.OmAudioEngine.selectedVoice);
