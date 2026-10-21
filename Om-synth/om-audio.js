@@ -19,13 +19,25 @@ class OmAudioEngine {
     this.playbackEngine = "buffered"; // "buffered" (default continuous flow) or "step" (discrete)
     this.onTokenChange = null;
     this.onPlaybackEnd = null;
-    this.onVoicesLoaded = null;
+    this._onVoicesLoaded = null;
     this.activeUtterance = null;
 
     // Detect Indic speech synthesis voices
     this.availableVoices = [];
     this.selectedVoice = null;
+    this.voiceGender = "auto"; // "male", "female", "auto"
     this.initVoices();
+  }
+
+  get onVoicesLoaded() {
+    return this._onVoicesLoaded;
+  }
+
+  set onVoicesLoaded(fn) {
+    this._onVoicesLoaded = fn;
+    if (typeof fn === 'function' && this.availableVoices && this.availableVoices.length > 0) {
+      fn(this.availableVoices, this.selectedVoice);
+    }
   }
 
   getAudioContext() {
@@ -42,18 +54,84 @@ class OmAudioEngine {
   initVoices() {
     if ('speechSynthesis' in window) {
       const load = () => {
-        this.availableVoices = window.speechSynthesis.getVoices();
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          this.availableVoices = voices;
+        }
         // Priority 1: sa-IN (Sanskrit), Priority 2: hi-IN (Hindi), Priority 3: any Indic
         this.selectedVoice = this.availableVoices.find(v => v.lang === 'sa-IN' || v.lang === 'sa') ||
                              this.availableVoices.find(v => v.lang === 'hi-IN' || v.lang.startsWith('hi')) ||
                              this.availableVoices.find(v => v.lang.includes('IN')) ||
                              this.availableVoices[0];
-        if (this.onVoicesLoaded) {
-          this.onVoicesLoaded(this.availableVoices, this.selectedVoice);
+        if (this._onVoicesLoaded) {
+          this._onVoicesLoaded(this.availableVoices, this.selectedVoice);
         }
       };
+
       load();
+      if (window.speechSynthesis.addEventListener) {
+        window.speechSynthesis.addEventListener('voiceschanged', load);
+      }
       window.speechSynthesis.onvoiceschanged = load;
+
+      // Immediate & delayed polling fallback for browsers where voices load asynchronously
+      let attempts = 0;
+      const poll = setInterval(() => {
+        attempts++;
+        const voices = window.speechSynthesis.getVoices();
+        if ((voices && voices.length > 0) || attempts > 15) {
+          clearInterval(poll);
+          load();
+        }
+      }, 150);
+    }
+  }
+
+  detectVoiceGender(voice) {
+    if (!voice || !voice.name) return 'neutral';
+    const name = voice.name.toLowerCase();
+    const femaleKeywords = [
+      'female', 'woman', 'girl', 'swara', 'heera', 'kalpana', 'neerja',
+      'lekha', 'zira', 'jenny', 'ava', 'samantha', 'victoria', 'karen',
+      'fiona', 'moira', 'veena', 'anjali', 'geeta', 'sunita', 'shreya',
+      'priya', 'aarohi', 'aditi', 'kavya'
+    ];
+    const maleKeywords = [
+      'male', 'man', 'boy', 'madhur', 'hemant', 'prabhat', 'rishi',
+      'david', 'mark', 'guy', 'george', 'daniel', 'oliver', 'ravi',
+      'kunal', 'aravind', 'amit', 'rahul', 'rohit', 'suresh'
+    ];
+
+    for (const kw of femaleKeywords) {
+      if (name.includes(kw)) return 'female';
+    }
+    for (const kw of maleKeywords) {
+      if (name.includes(kw)) return 'male';
+    }
+    return 'neutral';
+  }
+
+  getVoiceGenderLabel(voice) {
+    const gender = this.detectVoiceGender(voice);
+    if (gender === 'female') return '👩 Female';
+    if (gender === 'male') return '👨 Male';
+    return '🎙️ Voice';
+  }
+
+  setVoiceGender(gender) {
+    this.voiceGender = gender;
+    if (gender === 'male') {
+      this.playbackPitch = 0.82; // Deep resonant male Vedic chanting
+      const maleVoice = this.availableVoices.find(v => this.detectVoiceGender(v) === 'male' && (v.lang.startsWith('hi') || v.lang.startsWith('sa') || v.lang.includes('IN'))) ||
+                         this.availableVoices.find(v => this.detectVoiceGender(v) === 'male');
+      if (maleVoice) this.selectedVoice = maleVoice;
+    } else if (gender === 'female') {
+      this.playbackPitch = 1.12; // Clear melodic female chanting
+      const femaleVoice = this.availableVoices.find(v => this.detectVoiceGender(v) === 'female' && (v.lang.startsWith('hi') || v.lang.startsWith('sa') || v.lang.includes('IN'))) ||
+                           this.availableVoices.find(v => this.detectVoiceGender(v) === 'female');
+      if (femaleVoice) this.selectedVoice = femaleVoice;
+    } else {
+      this.playbackPitch = 0.85;
     }
   }
 

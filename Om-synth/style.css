@@ -1170,3 +1170,25 @@ body {
   flex-wrap: wrap;
   gap: 12px;
 }
+
+/* Responsive Navigation & Layout */
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+  .nav-tabs {
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+  .tab-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    text-align: center;
+  }
+}
+

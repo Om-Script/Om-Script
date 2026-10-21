@@ -422,10 +422,42 @@ function initStudio() {
     updateStudioHUD();
   });
 
-  // Voice dropdown integration with Gender detection & Male voice indicators
-  const voiceSelect = document.getElementById("voice-select");
+  // Voice dropdown integration with Gender detection & Male/Female voice indicators
+  function updateGenderUI(gender) {
+    const genderSelects = [document.getElementById("gender-select"), document.getElementById("translator-gender-select")];
+    genderSelects.forEach(gs => {
+      if (gs && (gender === 'male' || gender === 'female')) gs.value = gender;
+    });
+    if (gender === 'male') {
+      window.OmAudioEngine.playbackPitch = 0.82;
+      if (pitchSlider) pitchSlider.value = 0.82;
+      if (pitchVal) pitchVal.innerText = "0.82x";
+    } else if (gender === 'female') {
+      window.OmAudioEngine.playbackPitch = 1.12;
+      if (pitchSlider) pitchSlider.value = 1.12;
+      if (pitchVal) pitchVal.innerText = "1.12x";
+    }
+  }
+
   const populateVoices = (voices, selected) => {
-    if (!voiceSelect || !voices.length) return;
+    const voiceSelects = [
+      document.getElementById("voice-select"),
+      document.getElementById("translator-voice-select")
+    ];
+
+    if (!voices || !voices.length) {
+      const fallbackOptions = `
+        <optgroup label="── Preset Acoustic Synthesis Voices ──">
+          <option value="-1" ${window.OmAudioEngine.voiceGender === 'male' ? 'selected' : ''}>👨 [Male] Vedic Baritone Chanting (0.82x)</option>
+          <option value="-2" ${window.OmAudioEngine.voiceGender === 'female' ? 'selected' : ''}>👩 [Female] Vedic Melodic Chanting (1.12x)</option>
+          <option value="-3">🎙️ Browser Speech Synthesis (Detecting...)</option>
+        </optgroup>
+      `;
+      voiceSelects.forEach(sel => {
+        if (sel) sel.innerHTML = fallbackOptions;
+      });
+      return;
+    }
 
     const indicVoices = [];
     const otherVoices = [];
@@ -435,7 +467,7 @@ function initStudio() {
 
     voices.forEach((v, idx) => {
       const lower = (v.name + " " + (v.gender || "")).toLowerCase();
-      let genderBadge = "";
+      let genderBadge = "🎙️ ";
 
       if (maleKeywords.some(k => lower.includes(k)) && !lower.includes("female")) {
         genderBadge = "👨 [Male] ";
@@ -447,8 +479,9 @@ function initStudio() {
         genderBadge = "👩 [Female] ";
       }
 
+      const isSel = (v === selected || v.name === selected?.name);
       const optHtml = `
-        <option value="${idx}" ${v === selected ? 'selected' : ''}>
+        <option value="${idx}" ${isSel ? 'selected' : ''}>
           ${genderBadge}${v.name} (${v.lang})
         </option>
       `;
@@ -460,8 +493,9 @@ function initStudio() {
       }
     });
 
+    let innerContent = "";
     if (indicVoices.length && otherVoices.length) {
-      voiceSelect.innerHTML = `
+      innerContent = `
         <optgroup label="── Indic / Sanskrit Chanters ──">
           ${indicVoices.join('')}
         </optgroup>
@@ -470,8 +504,12 @@ function initStudio() {
         </optgroup>
       `;
     } else {
-      voiceSelect.innerHTML = [...indicVoices, ...otherVoices].join('');
+      innerContent = [...indicVoices, ...otherVoices].join('');
     }
+
+    voiceSelects.forEach(sel => {
+      if (sel) sel.innerHTML = innerContent;
+    });
   };
 
   populateVoices(window.OmAudioEngine.availableVoices, window.OmAudioEngine.selectedVoice);
@@ -479,12 +517,68 @@ function initStudio() {
     populateVoices(voices, selected);
   };
 
-  if (voiceSelect) {
-    voiceSelect.addEventListener("change", (e) => {
+  const voiceSelects = [
+    document.getElementById("voice-select"),
+    document.getElementById("translator-voice-select")
+  ];
+
+  voiceSelects.forEach(sel => {
+    if (!sel) return;
+    sel.addEventListener("change", (e) => {
       const idx = parseInt(e.target.value, 10);
-      window.OmAudioEngine.selectedVoice = window.OmAudioEngine.availableVoices[idx];
+      if (idx === -1) {
+        window.OmAudioEngine.setVoiceGender('male');
+        updateGenderUI('male');
+        voiceSelects.forEach(other => { if (other && other !== sel) other.value = e.target.value; });
+        return;
+      }
+      if (idx === -2) {
+        window.OmAudioEngine.setVoiceGender('female');
+        updateGenderUI('female');
+        voiceSelects.forEach(other => { if (other && other !== sel) other.value = e.target.value; });
+        return;
+      }
+      if (idx < 0) return;
+
+      const chosenVoice = window.OmAudioEngine.availableVoices[idx];
+      window.OmAudioEngine.selectedVoice = chosenVoice;
+      // Synchronize other dropdown
+      voiceSelects.forEach(other => {
+        if (other && other !== sel) other.value = e.target.value;
+      });
+      // Detect gender from chosen voice and update timbre
+      const detected = window.OmAudioEngine.detectVoiceGender(chosenVoice);
+      updateGenderUI(detected);
     });
-  }
+  });
+
+  // Gender tuning selectors (Male Vedic Chanting vs Female Melodic Chanting)
+  const genderSelects = [
+    document.getElementById("gender-select"),
+    document.getElementById("translator-gender-select")
+  ];
+
+  genderSelects.forEach(gs => {
+    if (!gs) return;
+    gs.addEventListener("change", (e) => {
+      const gender = e.target.value;
+      window.OmAudioEngine.setVoiceGender(gender);
+      genderSelects.forEach(other => {
+        if (other && other !== gs) other.value = gender;
+      });
+      if (gender === 'male') {
+        if (pitchSlider) pitchSlider.value = 0.82;
+        if (pitchVal) pitchVal.innerText = "0.82x";
+      } else if (gender === 'female') {
+        if (pitchSlider) pitchSlider.value = 1.12;
+        if (pitchVal) pitchVal.innerText = "1.12x";
+      } else {
+        if (pitchSlider) pitchSlider.value = 0.85;
+        if (pitchVal) pitchVal.innerText = "0.85x";
+      }
+      populateVoices(window.OmAudioEngine.availableVoices, window.OmAudioEngine.selectedVoice);
+    });
+  });
 
   // Audio Flow / Buffering selector
   const engineModeSelect = document.getElementById("engine-mode-select");
@@ -753,16 +847,14 @@ async function initTranslatorStudio() {
   if (sendToStudioBtn) {
     sendToStudioBtn.addEventListener("click", () => {
       if (!currentCompiledResult) return;
-      const studioInput = document.getElementById("studio-text-input");
+      const studioInput = document.getElementById("om-input-textarea");
       if (studioInput) {
         studioInput.value = currentCompiledResult.iast;
       }
       const studioTab = document.getElementById("tab-studio-btn");
       if (studioTab) {
         studioTab.click();
-        if (typeof updateStudioDisplay === "function") {
-          updateStudioDisplay();
-        }
+        updateStudioHUD();
       }
     });
   }
