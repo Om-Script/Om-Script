@@ -138,7 +138,7 @@ class OmCompiler {
 
     // Tokenize into clean words
     const rawTokens = cleanSentence.split(/\s+/);
-    const parsedTokens = [];
+    let parsedTokens = [];
 
     // Pre-pass: Identify Prepositions, Verb candidates, Subject candidate
     let subjectFound = false;
