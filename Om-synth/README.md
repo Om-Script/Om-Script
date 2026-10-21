@@ -28,7 +28,7 @@ It bridges ancient vocal-tract physiology with modern Web Audio DSP, multi-scrip
 ## 🌟 Key Features
 
 ### Mode 1: The Pāṇinian Vocal Tract Matrix (The 5 Sthānas)
-* **Anatomical Phonology Grid:** Organized strictly across the 5 vocal stations (*sthāna*: Kaṇṭhya $\to$ Tālavya $\to$ Mūrdhanya $\to$ Dantya $\to$ Oṣṭhya) plus compound throat-palatal and throat-lip stations.
+* **Anatomical Phonology Grid:** Organized strictly across the 5 vocal stations (*sthāna*: Kaṇṭhya → Tālavya → Mūrdhanya → Dantya → Oṣṭhya) plus compound throat-palatal and throat-lip stations.
 * **Dynamic Script Toggle:** Easily toggle **Telugu (South Indic)** on/off with a single click. When turned off, **Devanāgarī** and **IAST** are prominently enlarged for focused Sanskrit and Modern Hindi vocabulary study.
 * **Studio Audio Library:** 76 high-fidelity studio phoneme and vocabulary recordings bundled locally in `sounds/` for zero-latency playback.
 * **DSP Auto-Silence Trimmer:** Real-time Web Audio API PCM amplitude gating strips encoder dead air down to exact vocal onset (<12ms latency).
@@ -58,6 +58,19 @@ It bridges ancient vocal-tract physiology with modern Web Audio DSP, multi-scrip
   6. **Fluent English Bridge** (SVO natural sentence)
   7. **Modern Hindi Synthesis** (SOV natural sentence)
 * **Pre-Loaded Canonical Presets:** Instant testing of sentences from Chapters 1 through 7 of *Sanskrit by Architecture*.
+
+### Mode 3: ⚡ ॐ-Script Architecture Studio (Offline Translator & Compiler Workbench)
+* **Zero-LLM Offline Translation Pipeline:** Directly converts English natural language and Classical Sanskrit (IAST or Devanāgarī) into canonical Two-Track ॐ-Script in the browser with zero external API calls or server fees.
+* **9,444+ Root Offline Lexicon (`om_lexicon.json`):** Pure static 520 KB dictionary combining lemmas from the Digital Corpus of Sanskrit (DCS) and IndoWordNet with core pronoun overrides (`mad`, `tad`, `yuṣmad`) and classical normalizers.
+* **Pāṇinian Kāraka SVO → SOV Chunker:** Automatically reorders English Subject-Verb-Object clauses into classical Sanskrit *Kartā → Karaṇa → Karma → Kriyā* sequences.
+* **Interactive AST Workbench (Chip Board):**
+  * Displays every parsed token as an interactive visual card showing original word, Part-of-Speech, and Sanskrit root.
+  * **Root Stem Editor:** Edit Sanskrit root stems in real-time.
+  * **Universal Role Tag Dropdown (20 Tags):** Live override of grammatical functions (`·ḥ`, `·ṃ`, `·ena`, `·bhiḥ`, `·ya`, `·bhyam`, `·āt`, `·taḥ`, `·sya`, `·e`, `·su`, verb tenses, and kinetic opcodes `·ant`, `·ta`, `·tvā`, `·tum`).
+* **Two-Track Breath Envelope Weaver (Rule 8):** Auto-injects acoustic mortar (`ATHA` boot carrier, `him` staccato modifier link, `hūṃऽऽ` subject anchor, `hūṃ` clause bridge, and `OM ... ॥` tonic verb lock).
+* **Multi-Script Switchers:** Instant one-click toggle between **IAST**, **Devanāgarī**, and **Telugu** scripts.
+* **Live Web Audio Chanting:** Voice synthesis with 136.1 Hz singing bowl drones and real-time card glowing synchronization.
+* **English & Hindi Reverse Verification Bridges:** Dual back-translation panels proving semantic fidelity in real time.
 
 ---
 
@@ -103,15 +116,18 @@ Open the URL in Microsoft Edge or Google Chrome, and click the **"Install ॐ-SY
 ## 📁 Repository Structure
 
 ```text
-Om-Script/
+Om-synth/
 ├── .nojekyll                 # Bypasses Jekyll on GitHub Pages for raw asset delivery
-├── index.html                # Semantic HTML5 dual-mode application shell
+├── index.html                # Semantic HTML5 three-mode application shell
 ├── style.css                 # Vanilla CSS design system with glassmorphism & dark theme
-├── app.js                    # Dual-mode controller, DOM binding, and script toggle
+├── app.js                    # Multi-mode controller, DOM binding, and studio manager
+├── om-compiler.js            # Pāṇinian Kāraka SVO → SOV chunker & Two-Track breath weaver
+├── om-bridge.js              # Multi-script matrix (IAST ↔ Deva ↔ Telugu) & reverse bridges
+├── om-audio.js               # Web Audio API engine, 136.1Hz Tibetan drone, & speech streamer
+├── om_lexicon.json           # 520 KB offline lexicon (9,444+ words, pronoun overrides & normalizers)
 ├── phonology-data.js         # Pāṇinian phonological dataset, Hindi cognates & meanings
-├── om-audio.js               # Web Audio API engine, DSP silence trimmer, & speech streamer
 ├── desktop_app.py            # Zero-dependency borderless desktop app launcher
-├── serve.py                  # Local UTF-8 HTTP development daemon
+├── serve.py                  # Local multi-threaded UTF-8 HTTP development daemon
 ├── manifest.json             # Progressive Web App (PWA) manifest
 ├── qr_om_synth_300dpi.png    # 300 DPI print-ready QR code for physical book editions
 ├── LICENSE                   # Custom non-commercial educational license
