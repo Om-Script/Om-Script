@@ -30,18 +30,23 @@
         </div>
       </div>
 
-      <!-- Mode Switcher -->
-      <nav class="nav-tabs" aria-label="App Navigation">
-        <button class="tab-btn active" data-target="matrix-panel" id="tab-matrix-btn">
-          <span>🏛️</span> Phonology Matrix (5 Sthānas)
-        </button>
-        <button class="tab-btn" data-target="studio-panel" id="tab-studio-btn">
-          <span>🎙️</span> ॐ-Script Read-Aloud Studio
-        </button>
-        <button class="tab-btn" data-target="translator-panel" id="tab-translator-btn">
-          <span>⚡</span> ॐ-Script Architecture Studio
-        </button>
-      </nav>
+      <!-- Mode Switcher & Community Discussions -->
+      <div class="header-nav-group">
+        <nav class="nav-tabs" aria-label="App Navigation">
+          <button class="tab-btn active" data-target="matrix-panel" id="tab-matrix-btn">
+            <span>🏛️</span> Phonology Matrix (5 Sthānas)
+          </button>
+          <button class="tab-btn" data-target="studio-panel" id="tab-studio-btn">
+            <span>🎙️</span> ॐ-Script Read-Aloud Studio
+          </button>
+          <button class="tab-btn" data-target="translator-panel" id="tab-translator-btn">
+            <span>⚡</span> ॐ-Script Architecture Studio
+          </button>
+        </nav>
+        <a href="#community-section" class="community-header-link" title="Jump to Community Discussions & Reader Feedback">
+          <span>💬</span> Discussions
+        </a>
+      </div>
     </header>
 
     <!-- ===================================================================== -->
@@ -561,6 +566,34 @@
       </div>
     </main>
 
+    <!-- Community Discussions & Reader Feedback Section -->
+    <section class="community-card" id="community-section">
+      <div class="community-header">
+        <div class="community-title-wrap">
+          <span class="community-icon">💬</span>
+          <div>
+            <h3 class="community-title">Community Discussions & Reader Feedback</h3>
+            <p class="community-subtitle">
+              Have questions about pronunciation, sentence architecture, or rule proofs? Connect with readers and linguists.
+            </p>
+          </div>
+        </div>
+        <div class="community-actions">
+          <a href="https://github.com/om-script/Om-Script/discussions" target="_blank" rel="noopener noreferrer" class="btn-community-primary">
+            <span>💬</span> Open GitHub Discussions
+          </a>
+          <a href="https://github.com/om-script/Om-Script/issues/new" target="_blank" rel="noopener noreferrer" class="btn-community-secondary">
+            <span>🐛</span> Report an Issue / Errata
+          </a>
+        </div>
+      </div>
+
+      <!-- Embedded Giscus Live Comments Container -->
+      <div class="giscus-wrapper">
+        <div class="giscus"></div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="app-footer">
       <div>
@@ -569,16 +602,38 @@
       <div>
         Based on <em>Sanskrit by Architecture</em> &bull; Chapter 1 Vocal Stations &bull; Rule 8 Pure Acoustic Pipeline
       </div>
+      <div class="footer-links">
+        <a href="https://github.com/om-script/Om-Script/discussions" target="_blank" rel="noopener noreferrer">💬 Discussions</a>
+        &bull;
+        <a href="https://github.com/om-script/Om-Script" target="_blank" rel="noopener noreferrer">⭐ GitHub Repository</a>
+      </div>
     </footer>
 
   </div>
 
   <!-- Application Scripts -->
-  <script src="phonology-data.js?v=2.2.1"></script>
-  <script src="om-bridge.js?v=2.2.1"></script>
-  <script src="om-compiler.js?v=2.2.1"></script>
-  <script src="om-audio.js?v=2.2.1"></script>
-  <script src="app.js?v=2.2.1"></script>
+  <script src="phonology-data.js?v=2.3.0"></script>
+  <script src="om-bridge.js?v=2.3.0"></script>
+  <script src="om-compiler.js?v=2.3.0"></script>
+  <script src="om-audio.js?v=2.3.0"></script>
+  <script src="app.js?v=2.3.0"></script>
+
+  <!-- Giscus Community Comments Loader -->
+  <script src="https://giscus.app/client.js"
+          data-repo="om-script/Om-Script"
+          data-repo-id="R_kgDOVQqgWA"
+          data-category="General"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="dark_dimmed"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
 
 </body>
 </html>
