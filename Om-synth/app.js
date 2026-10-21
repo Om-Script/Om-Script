@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPhonologyMatrix();
   initVocalTractSVG();
   initStudio();
+  initTranslatorStudio();
 });
 
 // =========================================================================
@@ -639,4 +640,365 @@ function setPlaybackStatus(isPlaying) {
     badge.classList.remove("live");
     playBtn.innerHTML = `<span>▶</span> Read Out Loud`;
   }
+}
+
+// =========================================================================
+// 4. TRANSLATOR & ARCHITECTURE STUDIO (MODE 3)
+// =========================================================================
+let currentTranslatorAST = null;
+let currentCompiledResult = null;
+let activeTranslatorScript = 'iast';
+
+async function initTranslatorStudio() {
+  const sourceLangSelect = document.getElementById("translator-source-lang");
+  const inputArea = document.getElementById("translator-input-text");
+  const compileBtn = document.getElementById("translator-compile-btn");
+  const clearBtn = document.getElementById("translator-clear-btn");
+  const chantBtn = document.getElementById("translator-chant-btn");
+  const carrierSelect = document.getElementById("translator-carrier-style");
+  const copyBtn = document.getElementById("btn-copy-om");
+  const sendToStudioBtn = document.getElementById("btn-send-to-studio");
+  const statusBadge = document.getElementById("translator-status-badge");
+  const lexiconBadge = document.getElementById("lexicon-status-badge");
+
+  // Load offline lexicon
+  if (window.omCompiler) {
+    await window.omCompiler.init('./om_lexicon.json');
+    if (lexiconBadge) {
+      const count = Object.keys(window.omCompiler.lexicon).length || 9444;
+      lexiconBadge.innerHTML = `<span class="pulse-dot"></span> ${count.toLocaleString()}+ Root Lexicon Ready`;
+    }
+  }
+
+  // Preset example buttons
+  const presetContainer = document.getElementById("translator-presets-container");
+  if (presetContainer) {
+    presetContainer.querySelectorAll(".example-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const text = chip.dataset.text;
+        if (text.includes("vanaṃ") || text.includes("rāmaḥ") || text.includes("kṣetre")) {
+          sourceLangSelect.value = "classical";
+        } else {
+          sourceLangSelect.value = "english";
+        }
+        inputArea.value = text;
+        runCompiler();
+      });
+    });
+  }
+
+  // Compile button & Live typing trigger
+  if (compileBtn) {
+    compileBtn.addEventListener("click", () => runCompiler());
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      inputArea.value = "";
+      document.getElementById("interactive-chips-container").innerHTML = "";
+      document.getElementById("om-compiled-output").innerHTML = "";
+      document.getElementById("translator-reconstructed-english").innerText = "";
+      document.getElementById("translator-reconstructed-hindi").innerText = "";
+      statusBadge.innerText = "READY";
+      statusBadge.classList.remove("live");
+    });
+  }
+
+  if (inputArea) {
+    let debounceTimer = null;
+    inputArea.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        runCompiler();
+      }, 350);
+    });
+  }
+
+  // Script display switcher (IAST, Devanāgarī, Telugu)
+  const scriptBtns = [
+    { btn: document.getElementById("trans-btn-iast"), script: 'iast' },
+    { btn: document.getElementById("trans-btn-deva"), script: 'deva' },
+    { btn: document.getElementById("trans-btn-telugu"), script: 'telugu' }
+  ];
+
+  scriptBtns.forEach(({ btn, script }) => {
+    if (btn) {
+      btn.addEventListener("click", () => {
+        scriptBtns.forEach(b => b.btn.classList.remove("active"));
+        btn.classList.add("active");
+        activeTranslatorScript = script;
+        if (currentCompiledResult) {
+          renderCompiledOmDisplay(currentCompiledResult, activeTranslatorScript);
+        }
+      });
+    }
+  });
+
+  // Copy to clipboard
+  if (copyBtn) {
+    copyBtn.addEventListener("click", () => {
+      if (!currentCompiledResult) return;
+      let textToCopy = currentCompiledResult.iast;
+      if (activeTranslatorScript === 'deva') textToCopy = currentCompiledResult.devanagari;
+      else if (activeTranslatorScript === 'telugu') textToCopy = currentCompiledResult.telugu;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const orig = copyBtn.innerText;
+        copyBtn.innerText = "✓ Copied!";
+        setTimeout(() => { copyBtn.innerText = orig; }, 1500);
+      });
+    });
+  }
+
+  // Send to Studio Tab
+  if (sendToStudioBtn) {
+    sendToStudioBtn.addEventListener("click", () => {
+      if (!currentCompiledResult) return;
+      const studioInput = document.getElementById("studio-text-input");
+      if (studioInput) {
+        studioInput.value = currentCompiledResult.iast;
+      }
+      const studioTab = document.getElementById("tab-studio-btn");
+      if (studioTab) {
+        studioTab.click();
+        if (typeof updateStudioDisplay === "function") {
+          updateStudioDisplay();
+        }
+      }
+    });
+  }
+
+  // Chant Audio button
+  if (chantBtn) {
+    chantBtn.addEventListener("click", () => {
+      if (!currentCompiledResult) {
+        runCompiler();
+        if (!currentCompiledResult) return;
+      }
+
+      if (window.OmAudioEngine && window.OmAudioEngine.isPlaying) {
+        window.OmAudioEngine.stop();
+        chantBtn.innerHTML = `<span>🎙️</span> Chant ॐ-Script Aloud`;
+        statusBadge.innerText = "READY";
+        statusBadge.classList.remove("live");
+        return;
+      }
+
+      // Configure carrier wave style
+      if (window.OmAudioEngine) {
+        window.OmAudioEngine.bijaMode = carrierSelect ? carrierSelect.value : "human";
+      }
+
+      // Parse sentence via OmBridge to get durations and carrier hooks
+      const parsed = window.omBridge.parseSentence(currentCompiledResult.iast);
+      if (!parsed || !parsed.tokens) return;
+
+      statusBadge.innerText = "● LIVE AUDIO STREAMING";
+      statusBadge.classList.add("live");
+      chantBtn.innerHTML = `<span>⏹</span> Stop Chanting`;
+
+      window.OmAudioEngine.playSentenceTokens(
+        parsed.tokens,
+        (idx, token) => {
+          // Highlight active token chip
+          document.querySelectorAll(".token-chip-card").forEach((card, cIdx) => {
+            if (cIdx === idx) {
+              card.style.transform = "scale(1.05)";
+              card.style.borderColor = "var(--accent-saffron)";
+            } else {
+              card.style.transform = "none";
+              card.style.borderColor = "var(--border-subtle)";
+            }
+          });
+        },
+        () => {
+          statusBadge.innerText = "READY";
+          statusBadge.classList.remove("live");
+          chantBtn.innerHTML = `<span>🎙️</span> Chant ॐ-Script Aloud`;
+          document.querySelectorAll(".token-chip-card").forEach(c => {
+            c.style.transform = "none";
+            c.style.borderColor = "var(--border-subtle)";
+          });
+        }
+      );
+    });
+  }
+
+  // Initial compilation on page load
+  runCompiler();
+}
+
+function runCompiler() {
+  const sourceLang = document.getElementById("translator-source-lang")?.value || "english";
+  const text = document.getElementById("translator-input-text")?.value?.trim() || "";
+  const statusBadge = document.getElementById("translator-status-badge");
+
+  if (!text) {
+    document.getElementById("interactive-chips-container").innerHTML = "";
+    document.getElementById("om-compiled-output").innerHTML = "";
+    document.getElementById("translator-reconstructed-english").innerText = "";
+    document.getElementById("translator-reconstructed-hindi").innerText = "";
+    return;
+  }
+
+  if (statusBadge) statusBadge.innerText = "PARSING";
+
+  let result = null;
+  if (sourceLang === "english") {
+    result = window.omCompiler.compileEnglish(text);
+  } else {
+    result = window.omCompiler.compileClassical(text);
+  }
+
+  if (!result) return;
+  currentCompiledResult = result;
+  currentTranslatorAST = result.ast;
+
+  renderInteractiveChips(result.ast);
+  renderCompiledOmDisplay(result, activeTranslatorScript);
+  renderReconstructedBridges(result.iast);
+
+  if (statusBadge) statusBadge.innerText = "READY";
+}
+
+function renderInteractiveChips(ast) {
+  const container = document.getElementById("interactive-chips-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  ast.forEach(token => {
+    const card = document.createElement("div");
+    card.className = "token-chip-card";
+
+    // Set border accent color based on role
+    if (token.tag.includes("ti") || token.tag.includes("mi") || token.tag.includes("a·...·")) {
+      card.classList.add("is-verb");
+    } else if (token.tag === "·ḥ") {
+      card.classList.add("is-subject");
+    } else if (token.tag === "·ṃ") {
+      card.classList.add("is-object");
+    } else if (token.tag === "·ena") {
+      card.classList.add("is-instrument");
+    }
+
+    // Header: Original Word
+    const header = document.createElement("div");
+    header.className = "token-chip-header";
+    header.innerHTML = `
+      <span class="token-chip-orig">${token.origWord}</span>
+      <span style="font-size:0.68rem;color:var(--text-dim);">${token.pos || 'root'}</span>
+    `;
+
+    // Root Input Row
+    const rootRow = document.createElement("div");
+    rootRow.className = "token-chip-root-row";
+    const rootInput = document.createElement("input");
+    rootInput.type = "text";
+    rootInput.className = "token-chip-root-input";
+    rootInput.value = token.sktRoot;
+    rootInput.title = "Edit Sanskrit root stem";
+    rootInput.addEventListener("change", (e) => {
+      const res = window.omCompiler.updateTokenRoot(token.id, e.target.value);
+      if (res) {
+        currentCompiledResult = res;
+        renderCompiledOmDisplay(res, activeTranslatorScript);
+        renderReconstructedBridges(res.iast);
+      }
+    });
+    rootRow.appendChild(rootInput);
+
+    // Role Tag Dropdown
+    const tagSelect = document.createElement("select");
+    tagSelect.className = "token-tag-select";
+    token.tagOptions.forEach(opt => {
+      const optEl = document.createElement("option");
+      optEl.value = opt.tag;
+      optEl.innerText = opt.label;
+      if (opt.tag === token.tag) {
+        optEl.selected = true;
+      }
+      tagSelect.appendChild(optEl);
+    });
+
+    tagSelect.addEventListener("change", (e) => {
+      const res = window.omCompiler.updateTokenTag(token.id, e.target.value);
+      if (res) {
+        currentCompiledResult = res;
+        renderInteractiveChips(res.ast);
+        renderCompiledOmDisplay(res, activeTranslatorScript);
+        renderReconstructedBridges(res.iast);
+      }
+    });
+
+    card.appendChild(header);
+    card.appendChild(rootRow);
+    card.appendChild(tagSelect);
+    container.appendChild(card);
+  });
+}
+
+function renderCompiledOmDisplay(result, script = 'iast') {
+  const box = document.getElementById("om-compiled-output");
+  if (!box || !result) return;
+
+  box.className = "om-compiled-box";
+  if (script === 'deva') box.classList.add("deva");
+  else if (script === 'telugu') box.classList.add("telugu");
+
+  let displayText = result.iast;
+  if (script === 'deva') displayText = result.devanagari || window.omBridge.iastToDevanagari(result.iast);
+  else if (script === 'telugu') displayText = result.telugu || window.omBridge.iastToTelugu(result.iast);
+
+  // Parse words to apply Two-Track CSS spans (bold data vs underlined breath)
+  const words = displayText.split(/\s+/);
+  let html = "";
+
+  words.forEach(w => {
+    if (w === "ATHA" || w === "him" || w === "hūṃ" || w === "hūṃऽऽ" || w === "OM" ||
+        w === "अथ" || w === "हिम्" || w === "हूँ" || w === "हूँऽऽ" || w === "ॐ" ||
+        w === "అథ" || w === "హిమ్" || w === "హూం" || w === "ఓమ్") {
+      html += `<span class="track-breath">${w}</span> `;
+    } else if (w === "॥" || w === "।") {
+      html += `<span class="track-halt">${w}</span> `;
+    } else {
+      if (w.includes("·")) {
+        const parts = w.split("·");
+        const rootPart = parts[0];
+        const tagPart = parts.slice(1).join("·");
+        html += `<span class="track-data">${rootPart}</span><span class="track-tag">·${tagPart}</span> `;
+      } else {
+        html += `<span class="track-data">${w}</span> `;
+      }
+    }
+  });
+
+  box.innerHTML = html;
+}
+
+function renderReconstructedBridges(omSentence) {
+  const engBox = document.getElementById("translator-reconstructed-english");
+  const hiBox = document.getElementById("translator-reconstructed-hindi");
+  if (!engBox || !hiBox || !window.omBridge) return;
+
+  const parsed = window.omBridge.parseSentence(omSentence);
+  if (!parsed || !parsed.tokens) return;
+
+  let engWords = [];
+  let hiWords = [];
+
+  parsed.tokens.forEach(t => {
+    if (t.isBija) return;
+    if (t.englishWord && t.englishWord !== "(breath)") {
+      engWords.push(t.englishWord);
+    } else if (t.iast) {
+      const clean = t.iast.replace(/·[a-zāīūṛḥṃsya]+/g, "");
+      engWords.push(clean);
+    }
+
+    if (t.hindiWord) {
+      hiWords.push(t.hindiWord);
+    }
+  });
+
+  engBox.innerText = engWords.length > 0 ? "English: " + engWords.join(" ") : "English: (analyzing structural keys...)";
+  hiBox.innerText = hiWords.length > 0 ? "Hindi: " + hiWords.join(" ") : "Hindi: (प्रतीक्षारत...)";
 }

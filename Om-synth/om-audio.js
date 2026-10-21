@@ -288,7 +288,8 @@ class OmAudioEngine {
         } else {
           // Human voice chanting without artificial comma pauses
           const bBase = token.bijaBase || token.raw;
-          if (bBase === "him" || bBase === "hum") spokenSegment = "हिम्";
+          if (bBase === "ATHA" || bBase === "atha") spokenSegment = "अथ";
+          else if (bBase === "him" || bBase === "hum") spokenSegment = "हिम्";
           else if (bBase === "hūṃ" || bBase === "hīṃ") spokenSegment = "हूँ";
           else if (bBase === "OM") spokenSegment = "ॐ";
           else if (bBase === "॥" || bBase === "।") spokenSegment = "";
@@ -335,7 +336,9 @@ class OmAudioEngine {
           // Concurrent acoustic singing bowl layers on bījas
           const mult = matched.token.durationMultiplier || 1.0;
           const bBase = matched.token.bijaBase || matched.token.raw;
-          if (bBase === "OM") {
+          if (bBase === "ATHA" || bBase === "atha") {
+            this.playSingingBowlChime(136.1, (1.2 * mult) / this.playbackRate, 0.2);
+          } else if (bBase === "OM") {
             this.playSingingBowlChime(136.1, (1.8 * mult) / this.playbackRate, 0.22);
           } else if (bBase === "him" || bBase === "hum") {
             this.playSoftBreath((0.18 * mult) / this.playbackRate);
