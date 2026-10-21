@@ -1317,6 +1317,14 @@ body {
   color: #fff;
 }
 
+.footer-credits {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
 @media (max-width: 900px) {
   .app-header {
     flex-direction: column;
