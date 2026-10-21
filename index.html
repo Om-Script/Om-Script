@@ -38,6 +38,9 @@
         <button class="tab-btn" data-target="studio-panel" id="tab-studio-btn">
           <span>🎙️</span> ॐ-Script Read-Aloud Studio
         </button>
+        <button class="tab-btn" data-target="translator-panel" id="tab-translator-btn">
+          <span>⚡</span> ॐ-Script Architecture Studio
+        </button>
       </nav>
     </header>
 
@@ -239,9 +242,18 @@
 
           <!-- Voice & Mode Selection -->
           <div class="form-group">
-            <label class="form-label" for="voice-select">Vocalist / Speech Voice</label>
+            <label class="form-label" for="voice-select">Vocalist Voice (Male / Female)</label>
             <select class="preset-select" id="voice-select">
-              <!-- Populated by app.js -->
+              <!-- Populated by app.js with [👨 Male] and [👩 Female] badges -->
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 8px;">
+            <label class="form-label" for="gender-select">Vocal Timbre / Gender Tuning</label>
+            <select class="preset-select" id="gender-select">
+              <option value="auto">🎙️ Automatic Timbre Detection</option>
+              <option value="male">👨 Male Vedic Chanting (Deep Resonance · 0.82x)</option>
+              <option value="female">👩 Female Vedic Chanting (Clear Harmonic · 1.12x)</option>
             </select>
           </div>
 
@@ -271,6 +283,11 @@
               <input type="range" class="slider-input" id="speed-slider" min="0.6" max="1.4" step="0.1" value="1.0">
               <span id="speed-val" style="font-family:var(--font-mono);color:var(--accent-saffron);width:36px;text-align:right;">1.0x</span>
             </div>
+            <div class="slider-row" style="margin-top: 8px;">
+              <span style="color:var(--text-muted);font-weight:600;">Pitch / Timbre:</span>
+              <input type="range" class="slider-input" id="pitch-slider" min="0.5" max="1.3" step="0.05" value="0.85">
+              <span id="pitch-val" style="font-family:var(--font-mono);color:var(--accent-cyan);width:36px;text-align:right;">0.85x</span>
+            </div>
           </div>
 
 
@@ -281,9 +298,17 @@
             </div>
             <div class="carrier-chip-row">
               <div class="carrier-tag him">him: 150ms Breath</div>
-              <div class="carrier-tag hum">hūṃ: 108Hz Drone</div>
+              <div class="carrier-tag hum">hūṃ: 216Hz Drone</div>
               <div class="carrier-tag om">OM: 136.1Hz Cosmic Chime</div>
               <div class="carrier-tag halt">॥: Bell Halt</div>
+            </div>
+            <div style="font-weight: 600; color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; margin-top: 10px;">
+              Rhythmic Cadence Delimiters:
+            </div>
+            <div class="carrier-chip-row" style="margin-top: 4px;">
+              <div class="carrier-tag" style="border-style:dotted;" title="Staccato flick: 0.5x duration">. (him.) ½ Mātrā</div>
+              <div class="carrier-tag" style="border-style:dashed;" title="Breath wave hold: 1.6x - 2.5x duration">- / ~ Wave Hold</div>
+              <div class="carrier-tag" style="border-style:solid;" title="Avagraha multiplier: 2.0x, 3.0x duration">ऽ (हूँऽऽ) Avagraha</div>
             </div>
           </div>
 
@@ -368,6 +393,174 @@
 
     </main>
 
+    <!-- ===================================================================== -->
+    <!-- MODE 3: ॐ-SCRIPT ARCHITECTURE & TRANSLATION STUDIO                   -->
+    <!-- ===================================================================== -->
+    <main id="translator-panel" class="tab-panel">
+
+      <!-- Header Bar -->
+      <div class="matrix-header-bar">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 700;">Universal Language → ॐ-Script Architecture Studio</h2>
+          <p style="color: var(--text-dim); font-size: 0.9rem;">
+            Deterministic, offline compiler into ॐ-Script without external LLMs. Inspect internal Pāṇinian Kāraka role tags, customize interactively, and synthesize real-time voice & singing bowl audio.
+          </p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <span class="status-indicator-chip" id="lexicon-status-badge">
+            <span class="pulse-dot"></span> 9,400+ Root Lexicon Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Studio Grid Layout -->
+      <div class="studio-grid">
+        <!-- Left: Source Language Input & Controls -->
+        <aside class="studio-controls">
+          <div class="controls-card-header">
+            <h3 class="controls-title">Source Translation Engine</h3>
+            <span style="font-size: 0.75rem; color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 600;">OFFLINE AST</span>
+          </div>
+
+          <!-- Source Language Selector -->
+          <div class="form-group">
+            <label class="form-label" for="translator-source-lang">Source Language</label>
+            <select class="preset-select" id="translator-source-lang">
+              <option value="english">🇺🇸 English (Natural Language → ॐ-Script)</option>
+              <option value="classical">🇮🇳 Classical Sanskrit (IAST Inflections → ॐ-Script)</option>
+            </select>
+          </div>
+
+          <!-- Quick Preset Examples -->
+          <div class="form-group">
+            <label class="form-label">Example Blueprints</label>
+            <div class="preset-chip-grid" id="translator-presets-container">
+              <button class="example-chip" data-text="The king protects the forest.">King & Forest</button>
+              <button class="example-chip" data-text="The hero struck the demon with an arrow.">Hero's Arrow</button>
+              <button class="example-chip" data-text="The dark army destroyed the vast city.">Dark Army</button>
+              <button class="example-chip" data-text="I will see Krishna.">1st Person Future</button>
+              <button class="example-chip" data-text="rāmaḥ vanaṃ gacchati">Classical Sanskrit</button>
+            </div>
+          </div>
+
+          <!-- Input Textarea -->
+          <div class="form-group">
+            <label class="form-label" for="translator-input-text">Input Sentence</label>
+            <textarea id="translator-input-text" class="preset-select" style="height: 100px; resize: vertical; font-family: var(--font-main); line-height: 1.4; padding: 10px;" placeholder="Type an English or Classical Sanskrit sentence...">The king protects the forest.</textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="action-btn play-btn" id="translator-compile-btn" style="flex: 1;">
+              <span>⚡</span> Compile ॐ-Script
+            </button>
+            <button class="action-btn reset-btn" id="translator-clear-btn" style="width: auto; padding: 0 16px;">
+              <span>↺</span>
+            </button>
+          </div>
+
+          <!-- Audio Carrier Settings -->
+          <div style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="translator-voice-select">Vocalist Voice (Male / Female)</label>
+              <select class="preset-select" id="translator-voice-select">
+                <!-- Populated dynamically with [👨 Male] and [👩 Female] badges -->
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label class="form-label" for="translator-gender-select">Vocal Timbre / Gender Tuning</label>
+              <select class="preset-select" id="translator-gender-select">
+                <option value="auto">🎙️ Automatic Timbre Detection</option>
+                <option value="male">👨 Male Vedic Chanting (Deep Resonance · 0.82x)</option>
+                <option value="female">👩 Female Vedic Chanting (Clear Harmonic · 1.12x)</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label class="form-label" for="translator-carrier-style">Synthesis Carrier Wave</label>
+              <select class="preset-select" id="translator-carrier-style">
+                <option value="human">🎙️ Human Vedic Voice + Singing Bowl</option>
+                <option value="bell">🔔 Tibetan Singing Bowl Drone (136.1 Hz + 216 Hz)</option>
+                <option value="mute">🔇 Speech Only (Bījas Paused)</option>
+              </select>
+            </div>
+
+            <button class="action-btn" id="translator-chant-btn" style="background: linear-gradient(135deg, var(--accent-saffron), var(--accent-amber)); color: #000; font-weight: 700; width: 100%; justify-content: center; margin-top: 10px;">
+              <span>🎙️</span> Chant ॐ-Script Aloud
+            </button>
+          </div>
+        </aside>
+
+        <!-- Right: Interactive AST Board & Multi-Script Output -->
+        <section class="karaoke-display-card">
+          <div class="hud-title-bar">
+            <h3 class="hud-title">
+              <span>🧩</span> Interactive Pāṇinian Kāraka Workbench
+            </h3>
+            <span class="playback-status-badge" id="translator-status-badge">READY</span>
+          </div>
+
+          <!-- Interactive Word & Tag Chips -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>1. Morpho-Syntactic AST Chips (Click any badge to override role)</span>
+              <span style="color:var(--accent-saffron);">INTERACTIVE CPU</span>
+            </div>
+            <div class="interactive-chips-wrapper" id="interactive-chips-container">
+              <!-- Filled dynamically by om-compiler.js / app.js -->
+            </div>
+          </div>
+
+          <!-- Compiled ॐ-Script Output Ribbon -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>2. Compiled ॐ-Script (Two-Track Architecture)</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="script-mini-btn active" data-script="iast" id="trans-btn-iast">IAST</button>
+                <button class="script-mini-btn" data-script="deva" id="trans-btn-deva">Devanāgarī</button>
+                <button class="script-mini-btn" data-script="telugu" id="trans-btn-telugu">Telugu</button>
+              </div>
+            </div>
+            <div class="om-compiled-box" id="om-compiled-output">
+              <!-- Two-Track highlighted text -->
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+              <button class="mini-tool-btn" id="btn-copy-om">📋 Copy ॐ-Script</button>
+              <button class="mini-tool-btn" id="btn-send-to-studio">↗️ Send to Read-Aloud Studio</button>
+            </div>
+          </div>
+
+          <!-- Two-Track Acoustic Legend -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>3. Acoustic Carrier Protocol (Rule 8: Sandhi Banned)</span>
+              <span style="color:var(--accent-cyan);">BĪJA SIGNAL CHAIN</span>
+            </div>
+            <div class="carrier-chip-row" style="margin-top: 6px;">
+              <div class="carrier-tag him">ATHA / him: Breath Carrier Inhale & Adjective Bond</div>
+              <div class="carrier-tag hum">hūṃऽऽ: Sustained Clause Hold (2-3 Mātrās)</div>
+              <div class="carrier-tag om">OM: Threshold Lock (136.1 Hz Cosmic Hum)</div>
+              <div class="carrier-tag halt">॥: Svāhā Pulmonary Flush</div>
+            </div>
+          </div>
+
+          <!-- Reverse Translation Bridge Verification -->
+          <div class="ribbon-section">
+            <div class="ribbon-label">
+              <span>4. Deterministic English & Hindi Verification</span>
+              <span style="color:var(--text-dim);">LEVEL 4 & 5 BRIDGES</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
+              <div class="fluent-box" id="translator-reconstructed-english" style="font-size: 0.95rem;"></div>
+              <div class="fluent-box hindi" id="translator-reconstructed-hindi" style="font-size: 0.95rem;"></div>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </main>
+
     <!-- Footer -->
     <footer class="app-footer">
       <div>
@@ -383,6 +576,7 @@
   <!-- Application Scripts -->
   <script src="phonology-data.js"></script>
   <script src="om-bridge.js"></script>
+  <script src="om-compiler.js"></script>
   <script src="om-audio.js"></script>
   <script src="app.js"></script>
 

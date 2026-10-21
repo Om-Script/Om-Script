@@ -218,6 +218,11 @@ const PRESET_SENTENCES = [
     title: "Chapter 7: The Master of the Chariot",
     om: "him ratha·e sthit·aḥ arjun·aḥ dhanu·ḥ ā·dā·ti ॥",
     meaning: "Standing on the chariot, Arjuna takes up the bow."
+  },
+  {
+    title: "Chapter 8: Rhythmic Cadence (Avagraha & Waves)",
+    om: "him. ratha·e sthit·aḥ hūṃऽऽ arjun·aḥ hūṃ-- dhanu·ḥ OM~~ ā·dā·ti ॥",
+    meaning: "Standing on the chariot, Arjuna takes up the bow (with rhythmic pulse and breath holds)."
   }
 ];
 

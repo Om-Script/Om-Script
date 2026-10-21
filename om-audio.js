@@ -14,6 +14,7 @@ class OmAudioEngine {
     this.playbackQueue = [];
     this.currentStep = 0;
     this.playbackRate = 1.0;
+    this.playbackPitch = 0.85; // Default 0.85 for deep resonant Vedic chanting
     this.bijaMode = "human"; // "human", "bell", "mute"
     this.playbackEngine = "buffered"; // "buffered" (default continuous flow) or "step" (discrete)
     this.onTokenChange = null;
@@ -24,6 +25,7 @@ class OmAudioEngine {
     // Detect Indic speech synthesis voices
     this.availableVoices = [];
     this.selectedVoice = null;
+    this.voiceGender = "auto"; // "male", "female", "auto"
     this.initVoices();
   }
 
@@ -53,6 +55,54 @@ class OmAudioEngine {
       };
       load();
       window.speechSynthesis.onvoiceschanged = load;
+    }
+  }
+
+  detectVoiceGender(voice) {
+    if (!voice || !voice.name) return 'neutral';
+    const name = voice.name.toLowerCase();
+    const femaleKeywords = [
+      'female', 'woman', 'girl', 'swara', 'heera', 'kalpana', 'neerja',
+      'lekha', 'zira', 'jenny', 'ava', 'samantha', 'victoria', 'karen',
+      'fiona', 'moira', 'veena', 'anjali', 'geeta', 'sunita', 'shreya',
+      'priya', 'aarohi', 'aditi', 'kavya'
+    ];
+    const maleKeywords = [
+      'male', 'man', 'boy', 'madhur', 'hemant', 'prabhat', 'rishi',
+      'david', 'mark', 'guy', 'george', 'daniel', 'oliver', 'ravi',
+      'kunal', 'aravind', 'amit', 'rahul', 'rohit', 'suresh'
+    ];
+
+    for (const kw of femaleKeywords) {
+      if (name.includes(kw)) return 'female';
+    }
+    for (const kw of maleKeywords) {
+      if (name.includes(kw)) return 'male';
+    }
+    return 'neutral';
+  }
+
+  getVoiceGenderLabel(voice) {
+    const gender = this.detectVoiceGender(voice);
+    if (gender === 'female') return '👩 Female';
+    if (gender === 'male') return '👨 Male';
+    return '🎙️ Voice';
+  }
+
+  setVoiceGender(gender) {
+    this.voiceGender = gender;
+    if (gender === 'male') {
+      this.playbackPitch = 0.82; // Deep resonant male Vedic chanting
+      const maleVoice = this.availableVoices.find(v => this.detectVoiceGender(v) === 'male' && (v.lang.startsWith('hi') || v.lang.startsWith('sa') || v.lang.includes('IN'))) ||
+                         this.availableVoices.find(v => this.detectVoiceGender(v) === 'male');
+      if (maleVoice) this.selectedVoice = maleVoice;
+    } else if (gender === 'female') {
+      this.playbackPitch = 1.12; // Clear melodic female chanting
+      const femaleVoice = this.availableVoices.find(v => this.detectVoiceGender(v) === 'female' && (v.lang.startsWith('hi') || v.lang.startsWith('sa') || v.lang.includes('IN'))) ||
+                           this.availableVoices.find(v => this.detectVoiceGender(v) === 'female');
+      if (femaleVoice) this.selectedVoice = femaleVoice;
+    } else {
+      this.playbackPitch = 0.85;
     }
   }
 
@@ -286,10 +336,12 @@ class OmAudioEngine {
           spokenSegment = ""; // Sound triggered acoustically
         } else {
           // Human voice chanting without artificial comma pauses
-          if (token.raw === "him") spokenSegment = "हिम्";
-          else if (token.raw === "hūṃ") spokenSegment = "हूँ";
-          else if (token.raw === "OM") spokenSegment = "ॐ";
-          else if (token.raw === "॥" || token.raw === "।") spokenSegment = "";
+          const bBase = token.bijaBase || token.raw;
+          if (bBase === "ATHA" || bBase === "atha") spokenSegment = "अथ";
+          else if (bBase === "him" || bBase === "hum") spokenSegment = "हिम्";
+          else if (bBase === "hūṃ" || bBase === "hīṃ") spokenSegment = "हूँ";
+          else if (bBase === "OM") spokenSegment = "ॐ";
+          else if (bBase === "॥" || bBase === "।") spokenSegment = "";
         }
       } else {
         spokenSegment = token.deva || token.iast;
@@ -310,7 +362,7 @@ class OmAudioEngine {
     this.activeUtterance = utter;
     if (this.selectedVoice) utter.voice = this.selectedVoice;
     utter.rate = Math.max(0.65, Math.min(1.3, this.playbackRate * 0.9));
-    utter.pitch = 1.0;
+    utter.pitch = this.playbackPitch;
 
     let currentHighlightedToken = -1;
 
@@ -331,14 +383,18 @@ class OmAudioEngine {
           }
 
           // Concurrent acoustic singing bowl layers on bījas
-          if (matched.token.raw === "OM") {
-            this.playSingingBowlChime(136.1, 1.8 / this.playbackRate, 0.22);
-          } else if (matched.token.raw === "him") {
-            this.playSoftBreath(0.18 / this.playbackRate);
-          } else if (matched.token.raw === "hūṃ") {
-            this.playSingingBowlChime(216, 0.9 / this.playbackRate, 0.12);
-          } else if (matched.token.raw === "॥") {
-            this.playSingingBowlChime(432, 1.6 / this.playbackRate, 0.3);
+          const mult = matched.token.durationMultiplier || 1.0;
+          const bBase = matched.token.bijaBase || matched.token.raw;
+          if (bBase === "ATHA" || bBase === "atha") {
+            this.playSingingBowlChime(136.1, (1.2 * mult) / this.playbackRate, 0.2);
+          } else if (bBase === "OM") {
+            this.playSingingBowlChime(136.1, (1.8 * mult) / this.playbackRate, 0.22);
+          } else if (bBase === "him" || bBase === "hum") {
+            this.playSoftBreath((0.18 * mult) / this.playbackRate);
+          } else if (bBase === "hūṃ" || bBase === "hīṃ") {
+            this.playSingingBowlChime(216, (0.9 * mult) / this.playbackRate, 0.12);
+          } else if (bBase === "॥" || bBase === "।") {
+            this.playSingingBowlChime(432, (1.6 * mult) / this.playbackRate, 0.3);
           }
         }
       }
@@ -388,38 +444,40 @@ class OmAudioEngine {
       }
 
       if (token.isBija) {
+        const mult = token.durationMultiplier || 1.0;
+        const bBase = token.bijaBase || token.raw;
         if (this.bijaMode === "mute") {
-          await new Promise(r => setTimeout(r, 260 / this.playbackRate));
+          await new Promise(r => setTimeout(r, (260 * mult) / this.playbackRate));
         } else if (this.bijaMode === "bell") {
-          if (token.raw === "him") {
-            this.playSoftBreath(0.2 / this.playbackRate);
-            await new Promise(r => setTimeout(r, 220 / this.playbackRate));
-          } else if (token.raw === "hūṃ") {
-            this.playSingingBowlChime(216, 1.2 / this.playbackRate, 0.2);
-            await new Promise(r => setTimeout(r, 350 / this.playbackRate));
-          } else if (token.raw === "OM") {
-            this.playSingingBowlChime(136.1, 1.8 / this.playbackRate, 0.25);
-            await new Promise(r => setTimeout(r, 600 / this.playbackRate));
-          } else if (token.raw === "॥" || token.raw === "।") {
-            const chimeMs = this.playSingingBowlChime(432, 1.6 / this.playbackRate, 0.3);
-            await new Promise(r => setTimeout(r, Math.min(600, chimeMs)));
+          if (bBase === "him" || bBase === "hum") {
+            this.playSoftBreath((0.2 * mult) / this.playbackRate);
+            await new Promise(r => setTimeout(r, (220 * mult) / this.playbackRate));
+          } else if (bBase === "hūṃ" || bBase === "hīṃ") {
+            this.playSingingBowlChime(216, (1.2 * mult) / this.playbackRate, 0.2);
+            await new Promise(r => setTimeout(r, (350 * mult) / this.playbackRate));
+          } else if (bBase === "OM") {
+            this.playSingingBowlChime(136.1, (1.8 * mult) / this.playbackRate, 0.25);
+            await new Promise(r => setTimeout(r, (600 * mult) / this.playbackRate));
+          } else if (bBase === "॥" || bBase === "।") {
+            const chimeMs = this.playSingingBowlChime(432, (1.6 * mult) / this.playbackRate, 0.3);
+            await new Promise(r => setTimeout(r, Math.min(600 * mult, chimeMs)));
           }
         } else {
-          if (token.raw === "him") {
-            this.playSoftBreath(0.18 / this.playbackRate);
-            await this.speakWordAsync("हिम्", { pitch: 0.95, rate: this.playbackRate * 0.95, volume: 0.85 });
-            await new Promise(r => setTimeout(r, 100 / this.playbackRate));
-          } else if (token.raw === "hūṃ") {
-            this.playSingingBowlChime(216, 0.9 / this.playbackRate, 0.12);
-            await this.speakWordAsync("हूँ", { pitch: 0.85, rate: this.playbackRate * 0.85, volume: 0.9 });
-            await new Promise(r => setTimeout(r, 140 / this.playbackRate));
-          } else if (token.raw === "OM") {
-            this.playSingingBowlChime(136.1, 1.8 / this.playbackRate, 0.22);
-            await this.speakWordAsync("ॐ", { pitch: 0.9, rate: this.playbackRate * 0.8, volume: 1.0 });
-            await new Promise(r => setTimeout(r, 200 / this.playbackRate));
-          } else if (token.raw === "॥" || token.raw === "।") {
-            const chimeMs = this.playSingingBowlChime(432, 1.5 / this.playbackRate, 0.3);
-            await new Promise(r => setTimeout(r, Math.min(600, chimeMs)));
+          if (bBase === "him" || bBase === "hum") {
+            this.playSoftBreath((0.18 * mult) / this.playbackRate);
+            await this.speakWordAsync("हिम्", { pitch: 0.95, rate: this.playbackRate * (mult < 1 ? 1.2 : 0.95), volume: 0.85 });
+            await new Promise(r => setTimeout(r, (100 * mult) / this.playbackRate));
+          } else if (bBase === "hūṃ" || bBase === "hīṃ") {
+            this.playSingingBowlChime(216, (0.9 * mult) / this.playbackRate, 0.12);
+            await this.speakWordAsync("हूँ", { pitch: 0.85, rate: this.playbackRate * (mult < 1 ? 1.2 : 0.8), volume: 0.9 });
+            await new Promise(r => setTimeout(r, (160 * mult) / this.playbackRate));
+          } else if (bBase === "OM") {
+            this.playSingingBowlChime(136.1, (1.8 * mult) / this.playbackRate, 0.22);
+            await this.speakWordAsync("ॐ", { pitch: 0.9, rate: this.playbackRate * (mult < 1 ? 1.1 : 0.75), volume: 1.0 });
+            await new Promise(r => setTimeout(r, (250 * mult) / this.playbackRate));
+          } else if (bBase === "॥" || bBase === "।") {
+            const chimeMs = this.playSingingBowlChime(432, (1.5 * mult) / this.playbackRate, 0.3);
+            await new Promise(r => setTimeout(r, Math.min(600 * mult, chimeMs)));
           }
         }
       } else {
@@ -445,7 +503,7 @@ class OmAudioEngine {
       const utter = new SpeechSynthesisUtterance(text);
       if (this.selectedVoice) utter.voice = this.selectedVoice;
       utter.rate = options.rate || Math.max(0.6, Math.min(1.4, this.playbackRate * 0.9));
-      utter.pitch = options.pitch !== undefined ? options.pitch : 1.0;
+      utter.pitch = options.pitch !== undefined ? options.pitch : this.playbackPitch;
       utter.volume = options.volume !== undefined ? options.volume : 1.0;
 
       utter.onend = () => resolve();

@@ -30,6 +30,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         super().end_headers()
 
+class ThreadingServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+
 def start_server():
     os.chdir(DIRECTORY)
     port = 8080
@@ -38,7 +41,7 @@ def start_server():
 
     for attempt in range(max_tries):
         try:
-            httpd = socketserver.TCPServer(("", port), Handler)
+            httpd = ThreadingServer(("", port), Handler)
             break
         except OSError:
             port += 1

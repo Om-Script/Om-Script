@@ -281,11 +281,54 @@ class OmBridge {
     let tokenItems = [];
 
     for (let raw of rawTokens) {
-      let isBija = ["him", "hūṃ", "OM", "॥", "।"].includes(raw);
+      const bijaMatch = raw.match(/^(ATHA|atha|अथ|అథ|him|hum|hūṃ|hīṃ|OM|om|हिम्|हुम्|हूँ|हीं|ॐ|॥|।)([\.ऽ~-]+)?$/i);
+      let isBija = !!bijaMatch;
+      let bijaBase = null;
+      let bijaMod = "";
+      let durationMultiplier = 1.0;
+      let durationLabel = "";
+
+      if (bijaMatch) {
+        bijaBase = bijaMatch[1];
+        bijaMod = bijaMatch[2] || "";
+        
+        // Normalize base
+        const bLower = bijaBase.toLowerCase();
+        if (bLower === "atha" || bijaBase === "अथ" || bijaBase === "అథ") {
+          bijaBase = "ATHA";
+        } else if (bLower === "him" || bLower === "hum" || bijaBase === "हिम्" || bijaBase === "हुम्") {
+          bijaBase = "him";
+        } else if (bLower === "hūṃ" || bLower === "hīṃ" || bijaBase === "हूँ" || bijaBase === "हीं") {
+          bijaBase = "hūṃ";
+        } else if (bLower === "om" || bijaBase === "ॐ") {
+          bijaBase = "OM";
+        } else if (bijaBase === "॥" || bijaBase === "।") {
+          bijaBase = "॥";
+        }
+
+        // Method 2 (Dashes, Tildes, Dots) & Method 3 (Avagraha ऽ)
+        if (bijaMod.includes(".")) {
+          durationMultiplier = 0.5;
+          durationLabel = "Staccato Flick (½ Mātrā)";
+        } else if (bijaMod.includes("ऽ")) {
+          const avCount = (bijaMod.match(/ऽ/g) || []).length;
+          durationMultiplier = 1.0 + avCount;
+          durationLabel = `Avagraha Wave (${durationMultiplier} Mātrās)`;
+        } else if (bijaMod.includes("-") || bijaMod.includes("~")) {
+          const dCount = bijaMod.length;
+          durationMultiplier = dCount === 1 ? 1.6 : (dCount === 2 ? 2.5 : 3.5);
+          durationLabel = dCount === 1 ? "Sustained Breath (1.6x)" : (dCount === 2 ? "Extended Hold (2.5x)" : "Deep Fermata (3.5x)");
+        }
+      }
+
       let item = {
         raw: raw,
         isBija: isBija,
-        bijaType: isBija ? raw : null,
+        bijaType: isBija ? bijaBase : null,
+        bijaBase: bijaBase,
+        bijaMod: bijaMod,
+        durationMultiplier: durationMultiplier,
+        durationLabel: durationLabel,
         deva: "",
         telugu: "",
         iast: "",
@@ -295,23 +338,39 @@ class OmBridge {
       };
 
       if (isBija) {
-        item.deva = raw;
-        item.telugu = raw;
-        item.iast = raw;
-        if (raw === "him") {
-          item.role = "Carrier Breath [Reset]";
-          item.englishWord = "(breath)";
-          item.hindiWord = "";
-        } else if (raw === "hūṃ") {
-          item.role = "Acoustic Hum [Clause]";
-          item.englishWord = ",";
-          item.hindiWord = "";
-        } else if (raw === "OM") {
-          item.role = "Tonic Lock [Verb]";
+        if (bijaBase === "ATHA") {
+          item.deva = "अथ" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "అథ" + bijaMod;
+          item.iast = "ATHA" + bijaMod;
+          item.role = durationLabel ? `Carrier Boot [${durationLabel}]` : "Carrier Boot [Initial Flow]";
           item.englishWord = "";
           item.hindiWord = "";
-        } else if (raw === "॥") {
-          item.role = "Terminal Halt";
+        } else if (bijaBase === "him") {
+          item.deva = "हिम्" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "హిమ్" + bijaMod;
+          item.iast = "him" + bijaMod;
+          item.role = durationLabel ? `Carrier Breath [${durationLabel}]` : "Carrier Breath [Reset]";
+          item.englishWord = "(breath)";
+          item.hindiWord = "";
+        } else if (bijaBase === "hūṃ") {
+          item.deva = "हूँ" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "హూం" + bijaMod;
+          item.iast = "hūṃ" + bijaMod;
+          item.role = durationLabel ? `Acoustic Hum [${durationLabel}]` : "Acoustic Hum [Clause]";
+          item.englishWord = ",";
+          item.hindiWord = "";
+        } else if (bijaBase === "OM") {
+          item.deva = "ॐ" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "ఓం" + bijaMod;
+          item.iast = "OM" + bijaMod;
+          item.role = durationLabel ? `Tonic Lock [${durationLabel}]` : "Tonic Lock [Verb]";
+          item.englishWord = "";
+          item.hindiWord = "";
+        } else if (bijaBase === "॥") {
+          item.deva = "॥" + bijaMod;
+          item.telugu = "॥" + bijaMod;
+          item.iast = "॥" + bijaMod;
+          item.role = durationLabel ? `Terminal Halt [${durationLabel}]` : "Terminal Halt";
           item.englishWord = ".";
           item.hindiWord = "।";
         }
@@ -371,9 +430,9 @@ class OmBridge {
     // Assemble fluent translations
     let fluentEnglish = this.buildFluentEnglish(tokenItems);
     let fluentHindi = this.buildFluentHindi(tokenItems);
-    let devaLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.deva).join(" ");
-    let teluguLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.telugu).join(" ");
-    let iastLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.iast).join(" ");
+    let devaLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.deva).join(" ");
+    let teluguLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.telugu).join(" ");
+    let iastLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.iast).join(" ");
 
     return {
       tokens: tokenItems,
@@ -433,6 +492,83 @@ class OmBridge {
     if (!res.endsWith("।")) res += " ।";
     return res;
   }
+
+  // Devanagari detection & reverse transliteration
+  isDevanagari(text) {
+    if (!text) return false;
+    return /[\u0900-\u097F]/.test(text);
+  }
+
+  devanagariToIAST(text) {
+    if (!text) return "";
+    const IND_VOWELS = {
+      'अ': 'a', 'आ': 'ā', 'इ': 'i', 'ई': 'ī', 'उ': 'u', 'ऊ': 'ū',
+      'ऋ': 'ṛ', 'ॠ': 'ṝ', 'ऌ': 'ḷ', 'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au'
+    };
+    const MATRAS = {
+      'ा': 'ā', 'ि': 'i', 'ी': 'ī', 'ु': 'u', 'ू': 'ū',
+      'ृ': 'ṛ', 'ॄ': 'ṝ', 'ॢ': 'ḷ', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au'
+    };
+    const CONSONANTS = {
+      'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh', 'ङ': 'ṅ',
+      'च': 'c', 'छ': 'ch', 'ज': 'j', 'झ': 'jh', 'ञ': 'ñ',
+      'ट': 'ṭ', 'ठ': 'ṭh', 'ड': 'ḍ', 'ढ': 'ḍh', 'ण': 'ṇ',
+      'त': 't', 'थ': 'th', 'द': 'd', 'ध': 'dh', 'न': 'n',
+      'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh', 'म': 'm',
+      'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v',
+      'श': 'ś', 'ष': 'ṣ', 'स': 's', 'ह': 'h'
+    };
+
+    let res = "";
+    let i = 0;
+    const n = text.length;
+
+    while (i < n) {
+      const ch = text[i];
+      if (ch === 'ॐ') {
+        res += 'OM';
+        i++;
+      } else if (ch === 'ं' || ch === 'ँ') {
+        res += 'ṃ';
+        i++;
+      } else if (ch === 'ः') {
+        res += 'ḥ';
+        i++;
+      } else if (IND_VOWELS[ch]) {
+        res += IND_VOWELS[ch];
+        i++;
+      } else if (CONSONANTS[ch]) {
+        const c = CONSONANTS[ch];
+        const nextCh = i + 1 < n ? text[i + 1] : null;
+        if (nextCh === '्') {
+          res += c;
+          i += 2;
+        } else if (nextCh && MATRAS[nextCh]) {
+          res += c + MATRAS[nextCh];
+          i += 2;
+        } else {
+          res += c + 'a';
+          i += 1;
+        }
+      } else if (MATRAS[ch]) {
+        res += MATRAS[ch];
+        i++;
+      } else {
+        res += ch;
+        i++;
+      }
+    }
+    return res;
+  }
+
+  toIAST(text) {
+    if (this.isDevanagari(text)) {
+      return this.devanagariToIAST(text);
+    }
+    return text;
+  }
 }
 
 window.OmBridge = new OmBridge();
+window.omBridge = window.OmBridge;
+
