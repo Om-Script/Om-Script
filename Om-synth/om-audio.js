@@ -373,7 +373,7 @@ class OmAudioEngine {
           else if (bBase === "॥" || bBase === "।") spokenSegment = "";
         }
       } else {
-        spokenSegment = token.spoken || token.deva || token.iast;
+        spokenSegment = token.spoken || token.deva || (token.iast && window.OmBridge ? window.OmBridge.iastToDevanagari(token.iast) : token.iast);
         if (spokenSegment) spokenSegment = spokenSegment.replace(/·/g, "-");
       }
 
@@ -511,7 +511,7 @@ class OmAudioEngine {
           }
         }
       } else {
-        const speechText = (token.spoken || token.deva || token.iast || "").replace(/·/g, "-");
+        const speechText = token.spoken || token.deva || (token.iast && window.OmBridge ? window.OmBridge.iastToDevanagari(token.iast) : (token.iast || "").replace(/·/g, "-"));
         await this.speakWordAsync(speechText, { pitch: 1.0, rate: this.playbackRate * 0.92 });
         await new Promise(r => setTimeout(r, 130 / this.playbackRate));
       }

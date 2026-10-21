@@ -134,6 +134,7 @@ class OmBridge {
     let isStart = true;
 
     while (i < n) {
+      if (word[i] === '-') { res += '-'; i++; isStart = true; continue; }
       // Check anusvara and visarga
       if (word[i] === 'ṃ') { res += 'ं'; i++; isStart = false; continue; }
       if (word[i] === 'ḥ') { res += 'ः'; i++; isStart = false; continue; }
@@ -219,6 +220,7 @@ class OmBridge {
     let isStart = true;
 
     while (i < n) {
+      if (word[i] === '-') { res += '-'; i++; isStart = true; continue; }
       if (word[i] === 'ṃ') { res += 'ం'; i++; isStart = false; continue; }
       if (word[i] === 'ḥ') { res += 'ః'; i++; isStart = false; continue; }
 
@@ -405,7 +407,7 @@ class OmBridge {
           item.iast = raw;
           item.deva = this.iastToDevanagari(surfaceIast);
           item.telugu = this.iastToTelugu(surfaceIast);
-          item.spoken = this.iastToDevanagari(raw.replace(/·/g, "-"));
+          item.spoken = item.deva; // Spoken full Sanskrit form (e.g. vanam -> वनम्, naraḥ -> नरः)
 
           // Role determination
           if (suffix === "aḥ" || suffix === "ḥ" || suffix === "ā") {
