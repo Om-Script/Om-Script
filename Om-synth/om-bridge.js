@@ -281,11 +281,52 @@ class OmBridge {
     let tokenItems = [];
 
     for (let raw of rawTokens) {
-      let isBija = ["him", "hūṃ", "OM", "॥", "।"].includes(raw);
+      const bijaMatch = raw.match(/^(him|hum|hūṃ|hīṃ|OM|om|हिम्|हुम्|हूँ|हीं|ॐ|॥|।)([\.ऽ~-]+)?$/i);
+      let isBija = !!bijaMatch;
+      let bijaBase = null;
+      let bijaMod = "";
+      let durationMultiplier = 1.0;
+      let durationLabel = "";
+
+      if (bijaMatch) {
+        bijaBase = bijaMatch[1];
+        bijaMod = bijaMatch[2] || "";
+        
+        // Normalize base
+        const bLower = bijaBase.toLowerCase();
+        if (bLower === "him" || bLower === "hum" || bijaBase === "हिम्" || bijaBase === "हुम्") {
+          bijaBase = "him";
+        } else if (bLower === "hūṃ" || bLower === "hīṃ" || bijaBase === "हूँ" || bijaBase === "हीं") {
+          bijaBase = "hūṃ";
+        } else if (bLower === "om" || bijaBase === "ॐ") {
+          bijaBase = "OM";
+        } else if (bijaBase === "॥" || bijaBase === "।") {
+          bijaBase = "॥";
+        }
+
+        // Method 2 (Dashes, Tildes, Dots) & Method 3 (Avagraha ऽ)
+        if (bijaMod.includes(".")) {
+          durationMultiplier = 0.5;
+          durationLabel = "Staccato Flick (½ Mātrā)";
+        } else if (bijaMod.includes("ऽ")) {
+          const avCount = (bijaMod.match(/ऽ/g) || []).length;
+          durationMultiplier = 1.0 + avCount;
+          durationLabel = `Avagraha Wave (${durationMultiplier} Mātrās)`;
+        } else if (bijaMod.includes("-") || bijaMod.includes("~")) {
+          const dCount = bijaMod.length;
+          durationMultiplier = dCount === 1 ? 1.6 : (dCount === 2 ? 2.5 : 3.5);
+          durationLabel = dCount === 1 ? "Sustained Breath (1.6x)" : (dCount === 2 ? "Extended Hold (2.5x)" : "Deep Fermata (3.5x)");
+        }
+      }
+
       let item = {
         raw: raw,
         isBija: isBija,
-        bijaType: isBija ? raw : null,
+        bijaType: isBija ? bijaBase : null,
+        bijaBase: bijaBase,
+        bijaMod: bijaMod,
+        durationMultiplier: durationMultiplier,
+        durationLabel: durationLabel,
         deva: "",
         telugu: "",
         iast: "",
@@ -295,23 +336,32 @@ class OmBridge {
       };
 
       if (isBija) {
-        item.deva = raw;
-        item.telugu = raw;
-        item.iast = raw;
-        if (raw === "him") {
-          item.role = "Carrier Breath [Reset]";
+        if (bijaBase === "him") {
+          item.deva = "हिम्" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "హిమ్" + bijaMod;
+          item.iast = "him" + bijaMod;
+          item.role = durationLabel ? `Carrier Breath [${durationLabel}]` : "Carrier Breath [Reset]";
           item.englishWord = "(breath)";
           item.hindiWord = "";
-        } else if (raw === "hūṃ") {
-          item.role = "Acoustic Hum [Clause]";
+        } else if (bijaBase === "hūṃ") {
+          item.deva = "हूँ" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "హూం" + bijaMod;
+          item.iast = "hūṃ" + bijaMod;
+          item.role = durationLabel ? `Acoustic Hum [${durationLabel}]` : "Acoustic Hum [Clause]";
           item.englishWord = ",";
           item.hindiWord = "";
-        } else if (raw === "OM") {
-          item.role = "Tonic Lock [Verb]";
+        } else if (bijaBase === "OM") {
+          item.deva = "ॐ" + (bijaMod.replace(/-/g, "ऽ").replace(/~/g, "ऽ"));
+          item.telugu = "ఓం" + bijaMod;
+          item.iast = "OM" + bijaMod;
+          item.role = durationLabel ? `Tonic Lock [${durationLabel}]` : "Tonic Lock [Verb]";
           item.englishWord = "";
           item.hindiWord = "";
-        } else if (raw === "॥") {
-          item.role = "Terminal Halt";
+        } else if (bijaBase === "॥") {
+          item.deva = "॥" + bijaMod;
+          item.telugu = "॥" + bijaMod;
+          item.iast = "॥" + bijaMod;
+          item.role = durationLabel ? `Terminal Halt [${durationLabel}]` : "Terminal Halt";
           item.englishWord = ".";
           item.hindiWord = "।";
         }
@@ -371,9 +421,9 @@ class OmBridge {
     // Assemble fluent translations
     let fluentEnglish = this.buildFluentEnglish(tokenItems);
     let fluentHindi = this.buildFluentHindi(tokenItems);
-    let devaLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.deva).join(" ");
-    let teluguLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.telugu).join(" ");
-    let iastLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.raw)).map(t => t.iast).join(" ");
+    let devaLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.deva).join(" ");
+    let teluguLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.telugu).join(" ");
+    let iastLine = tokenItems.filter(t => !["him", "hūṃ", "OM"].includes(t.bijaBase)).map(t => t.iast).join(" ");
 
     return {
       tokens: tokenItems,

@@ -834,6 +834,25 @@ body {
   box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
 }
 
+.token-span.bija-span {
+  border: 1px dashed rgba(6, 182, 212, 0.35);
+  color: var(--accent-cyan);
+}
+
+.token-span.bija-extended {
+  border-style: solid;
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.12);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.token-span.bija-staccato {
+  border-style: dotted;
+  border-color: rgba(6, 182, 212, 0.6);
+  opacity: 0.85;
+}
+
 /* Syntactic Parsing Cards */
 .syntax-roles-container {
   display: flex;

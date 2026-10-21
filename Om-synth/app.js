@@ -396,6 +396,8 @@ function initStudio() {
   const stopBtn = document.getElementById("studio-stop-btn");
   const speedSlider = document.getElementById("speed-slider");
   const speedVal = document.getElementById("speed-val");
+  const pitchSlider = document.getElementById("pitch-slider");
+  const pitchVal = document.getElementById("pitch-val");
 
   // Populate presets
   presetSelect.innerHTML = window.PhonologyData.PRESET_SENTENCES.map((p, idx) => `
@@ -419,15 +421,24 @@ function initStudio() {
     updateStudioHUD();
   });
 
-  // Voice dropdown integration
+  // Voice dropdown integration with Gender detection & Male voice indicators
   const voiceSelect = document.getElementById("voice-select");
   const populateVoices = (voices, selected) => {
     if (!voiceSelect || !voices.length) return;
-    voiceSelect.innerHTML = voices.map((v, idx) => `
-      <option value="${idx}" ${v === selected ? 'selected' : ''}>
-        ${v.name} (${v.lang})
-      </option>
-    `).join('');
+    voiceSelect.innerHTML = voices.map((v, idx) => {
+      const lower = (v.name + " " + (v.gender || "")).toLowerCase();
+      let genderBadge = "";
+      if ((lower.includes("male") && !lower.includes("female")) || lower.includes("hemant") || lower.includes("david") || lower.includes("mark") || lower.includes("ravi") || lower.includes("madhav") || lower.includes("rishi") || lower.includes("george") || lower.includes("alex")) {
+        genderBadge = "👨 [Male] ";
+      } else if (lower.includes("female") || lower.includes("kalpana") || lower.includes("zira") || lower.includes("swara") || lower.includes("neerja") || lower.includes("heera")) {
+        genderBadge = "👩 [Female] ";
+      }
+      return `
+        <option value="${idx}" ${v === selected ? 'selected' : ''}>
+          ${genderBadge}${v.name} (${v.lang})
+        </option>
+      `;
+    }).join('');
   };
 
   populateVoices(window.OmAudioEngine.availableVoices, window.OmAudioEngine.selectedVoice);
@@ -465,6 +476,15 @@ function initStudio() {
     speedVal.innerText = `${val.toFixed(1)}x`;
     window.OmAudioEngine.playbackRate = val;
   });
+
+  // Pitch / Baritone slider
+  if (pitchSlider && pitchVal) {
+    pitchSlider.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value);
+      pitchVal.innerText = `${val.toFixed(2)}x`;
+      window.OmAudioEngine.playbackPitch = val;
+    });
+  }
 
   // Play button
   playBtn.addEventListener("click", () => {
@@ -519,11 +539,15 @@ function renderRibbonTokens(containerId, tokens, textExtractor, customClass = ""
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  container.innerHTML = tokens.map((token, idx) => `
-    <span class="token-span ${customClass} ${token.isBija ? 'bija-span' : ''}" id="${containerId}-token-${idx}">
-      ${textExtractor(token)}
-    </span>
-  `).join('');
+  container.innerHTML = tokens.map((token, idx) => {
+    const extClass = token.durationMultiplier && token.durationMultiplier > 1.2 ? 'bija-extended' : (token.durationMultiplier && token.durationMultiplier < 0.9 ? 'bija-staccato' : '');
+    const titleAttr = token.durationLabel ? `title="${token.durationLabel}"` : '';
+    return `
+      <span class="token-span ${customClass} ${token.isBija ? 'bija-span' : ''} ${extClass}" id="${containerId}-token-${idx}" ${titleAttr}>
+        ${textExtractor(token)}
+      </span>
+    `;
+  }).join('');
 }
 
 function playStudioSentence() {
