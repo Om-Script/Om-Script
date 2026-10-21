@@ -422,15 +422,42 @@ function initStudio() {
     updateStudioHUD();
   });
 
-  // Voice dropdown integration with Gender detection & Male voice indicators
   // Voice dropdown integration with Gender detection & Male/Female voice indicators
-  const populateVoices = (voices, selected) => {
-    if (!voices || !voices.length) return;
+  function updateGenderUI(gender) {
+    const genderSelects = [document.getElementById("gender-select"), document.getElementById("translator-gender-select")];
+    genderSelects.forEach(gs => {
+      if (gs && (gender === 'male' || gender === 'female')) gs.value = gender;
+    });
+    if (gender === 'male') {
+      window.OmAudioEngine.playbackPitch = 0.82;
+      if (pitchSlider) pitchSlider.value = 0.82;
+      if (pitchVal) pitchVal.innerText = "0.82x";
+    } else if (gender === 'female') {
+      window.OmAudioEngine.playbackPitch = 1.12;
+      if (pitchSlider) pitchSlider.value = 1.12;
+      if (pitchVal) pitchVal.innerText = "1.12x";
+    }
+  }
 
+  const populateVoices = (voices, selected) => {
     const voiceSelects = [
       document.getElementById("voice-select"),
       document.getElementById("translator-voice-select")
     ];
+
+    if (!voices || !voices.length) {
+      const fallbackOptions = `
+        <optgroup label="── Preset Acoustic Synthesis Voices ──">
+          <option value="-1" ${window.OmAudioEngine.voiceGender === 'male' ? 'selected' : ''}>👨 [Male] Vedic Baritone Chanting (0.82x)</option>
+          <option value="-2" ${window.OmAudioEngine.voiceGender === 'female' ? 'selected' : ''}>👩 [Female] Vedic Melodic Chanting (1.12x)</option>
+          <option value="-3">🎙️ Browser Speech Synthesis (Detecting...)</option>
+        </optgroup>
+      `;
+      voiceSelects.forEach(sel => {
+        if (sel) sel.innerHTML = fallbackOptions;
+      });
+      return;
+    }
 
     const indicVoices = [];
     const otherVoices = [];
@@ -499,6 +526,20 @@ function initStudio() {
     if (!sel) return;
     sel.addEventListener("change", (e) => {
       const idx = parseInt(e.target.value, 10);
+      if (idx === -1) {
+        window.OmAudioEngine.setVoiceGender('male');
+        updateGenderUI('male');
+        voiceSelects.forEach(other => { if (other && other !== sel) other.value = e.target.value; });
+        return;
+      }
+      if (idx === -2) {
+        window.OmAudioEngine.setVoiceGender('female');
+        updateGenderUI('female');
+        voiceSelects.forEach(other => { if (other && other !== sel) other.value = e.target.value; });
+        return;
+      }
+      if (idx < 0) return;
+
       const chosenVoice = window.OmAudioEngine.availableVoices[idx];
       window.OmAudioEngine.selectedVoice = chosenVoice;
       // Synchronize other dropdown
@@ -507,19 +548,7 @@ function initStudio() {
       });
       // Detect gender from chosen voice and update timbre
       const detected = window.OmAudioEngine.detectVoiceGender(chosenVoice);
-      const genderSelects = [document.getElementById("gender-select"), document.getElementById("translator-gender-select")];
-      genderSelects.forEach(gs => {
-        if (gs && (detected === 'male' || detected === 'female')) gs.value = detected;
-      });
-      if (detected === 'male') {
-        window.OmAudioEngine.playbackPitch = 0.82;
-        if (pitchSlider) pitchSlider.value = 0.82;
-        if (pitchVal) pitchVal.innerText = "0.82x";
-      } else if (detected === 'female') {
-        window.OmAudioEngine.playbackPitch = 1.12;
-        if (pitchSlider) pitchSlider.value = 1.12;
-        if (pitchVal) pitchVal.innerText = "1.12x";
-      }
+      updateGenderUI(detected);
     });
   });
 
@@ -818,16 +847,14 @@ async function initTranslatorStudio() {
   if (sendToStudioBtn) {
     sendToStudioBtn.addEventListener("click", () => {
       if (!currentCompiledResult) return;
-      const studioInput = document.getElementById("studio-text-input");
+      const studioInput = document.getElementById("om-input-textarea");
       if (studioInput) {
         studioInput.value = currentCompiledResult.iast;
       }
       const studioTab = document.getElementById("tab-studio-btn");
       if (studioTab) {
         studioTab.click();
-        if (typeof updateStudioDisplay === "function") {
-          updateStudioDisplay();
-        }
+        updateStudioHUD();
       }
     });
   }

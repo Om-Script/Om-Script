@@ -19,7 +19,7 @@ class OmAudioEngine {
     this.playbackEngine = "buffered"; // "buffered" (default continuous flow) or "step" (discrete)
     this.onTokenChange = null;
     this.onPlaybackEnd = null;
-    this.onVoicesLoaded = null;
+    this._onVoicesLoaded = null;
     this.activeUtterance = null;
 
     // Detect Indic speech synthesis voices
@@ -27,6 +27,17 @@ class OmAudioEngine {
     this.selectedVoice = null;
     this.voiceGender = "auto"; // "male", "female", "auto"
     this.initVoices();
+  }
+
+  get onVoicesLoaded() {
+    return this._onVoicesLoaded;
+  }
+
+  set onVoicesLoaded(fn) {
+    this._onVoicesLoaded = fn;
+    if (typeof fn === 'function' && this.availableVoices && this.availableVoices.length > 0) {
+      fn(this.availableVoices, this.selectedVoice);
+    }
   }
 
   getAudioContext() {
@@ -43,18 +54,36 @@ class OmAudioEngine {
   initVoices() {
     if ('speechSynthesis' in window) {
       const load = () => {
-        this.availableVoices = window.speechSynthesis.getVoices();
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          this.availableVoices = voices;
+        }
         // Priority 1: sa-IN (Sanskrit), Priority 2: hi-IN (Hindi), Priority 3: any Indic
         this.selectedVoice = this.availableVoices.find(v => v.lang === 'sa-IN' || v.lang === 'sa') ||
                              this.availableVoices.find(v => v.lang === 'hi-IN' || v.lang.startsWith('hi')) ||
                              this.availableVoices.find(v => v.lang.includes('IN')) ||
                              this.availableVoices[0];
-        if (this.onVoicesLoaded) {
-          this.onVoicesLoaded(this.availableVoices, this.selectedVoice);
+        if (this._onVoicesLoaded) {
+          this._onVoicesLoaded(this.availableVoices, this.selectedVoice);
         }
       };
+
       load();
+      if (window.speechSynthesis.addEventListener) {
+        window.speechSynthesis.addEventListener('voiceschanged', load);
+      }
       window.speechSynthesis.onvoiceschanged = load;
+
+      // Immediate & delayed polling fallback for browsers where voices load asynchronously
+      let attempts = 0;
+      const poll = setInterval(() => {
+        attempts++;
+        const voices = window.speechSynthesis.getVoices();
+        if ((voices && voices.length > 0) || attempts > 15) {
+          clearInterval(poll);
+          load();
+        }
+      }, 150);
     }
   }
 
