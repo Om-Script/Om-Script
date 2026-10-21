@@ -652,6 +652,7 @@ function updateStudioHUD() {
           <span style="font-family:var(--font-mono);font-weight:700;">${t.raw}</span>
           <span class="role-badge ${roleClass}">${t.role}</span>
           <span style="color:var(--text-dim);">→ ${t.englishWord}</span>
+          ${t.classical ? `<span style="font-size:0.75rem; color:var(--accent-cyan); margin-left:6px;" title="Classical Sanskrit fused surface form">(classical: <em>${t.classical}</em>)</span>` : ''}
         </div>
       `;
     }).join('');

@@ -97,13 +97,17 @@ class OmBridge {
     };
 
     this.VERB_DICT = {
-      'gam·ti': { classical: 'gacchati', deva: 'गच्छति', telugu: 'గచ్ఛతి', en: 'goes', hi: 'जाता है' },
-      'pā·ti': { classical: 'pibati', deva: 'पिबति', telugu: 'పిబతి', en: 'drinks', hi: 'पीता है' },
-      'han·ti': { classical: 'hanti', deva: 'हन्ति', telugu: 'హన్తి', en: 'strikes', hi: 'मारता है' },
-      'bhā·ti': { classical: 'bhāti', deva: 'भाति', telugu: 'భాతి', en: 'shines', hi: 'चमकता है' },
-      'paśy·ti': { classical: 'paśyati', deva: 'पश्यति', telugu: 'పశ్యతి', en: 'sees', hi: 'देखता है' },
-      'rakṣ·ti': { classical: 'rakṣati', deva: 'रक्षति', telugu: 'రక్షతి', en: 'protects', hi: 'रक्षा करता है' },
-      'ā·dā·ti': { classical: 'ādāte', deva: 'आदत्ते', telugu: 'ఆదత్తే', en: 'takes up', hi: 'उठाता है' }
+      'gam·ti': { classical: 'gacchati', deva: 'गम्-ति', constructorDeva: 'गम्-ति', telugu: 'గమ్-తి', spoken: 'गम्-ति', en: 'goes', hi: 'जाता है' },
+      'gam·a·ti': { classical: 'gacchati', deva: 'गमति', constructorDeva: 'गमति', telugu: 'గమతి', spoken: 'गमति', en: 'goes', hi: 'जाता है' },
+      'pā·ti': { classical: 'pibati', deva: 'पा-ति', constructorDeva: 'पा-ति', telugu: 'పా-తి', spoken: 'पा-ति', en: 'drinks', hi: 'पीता है' },
+      'pā·a·ti': { classical: 'pibati', deva: 'पाति', constructorDeva: 'पाति', telugu: 'పాతి', spoken: 'पाति', en: 'drinks', hi: 'पीता है' },
+      'han·ti': { classical: 'hanti', deva: 'हन्-ति', constructorDeva: 'हन्-ति', telugu: 'హన్-తి', spoken: 'हन्-ति', en: 'strikes', hi: 'मारता है' },
+      'bhā·ti': { classical: 'bhāti', deva: 'भा-ति', constructorDeva: 'भा-ति', telugu: 'భా-తి', spoken: 'भा-ति', en: 'shines', hi: 'चमकता है' },
+      'paśy·ti': { classical: 'paśyati', deva: 'पश्य्-ति', constructorDeva: 'पश्य्-ति', telugu: 'పశ్య్-తి', spoken: 'पश्य्-ति', en: 'sees', hi: 'देखता है' },
+      'dṛś·ti': { classical: 'paśyati', deva: 'दृश्-ति', constructorDeva: 'दृश्-ति', telugu: 'దృశ్-తి', spoken: 'दृश्-ति', en: 'sees', hi: 'देखता है' },
+      'rakṣ·ti': { classical: 'rakṣati', deva: 'रक्ष्-ति', constructorDeva: 'रक्ष्-ति', telugu: 'రక్ష్-తి', spoken: 'रक्ष्-ति', en: 'protects', hi: 'रक्षा करता है' },
+      'rakṣ·a·ti': { classical: 'rakṣati', deva: 'रक्षति', constructorDeva: 'रक्षति', telugu: 'రక్షతి', spoken: 'रक्षति', en: 'protects', hi: 'रक्षा करता है' },
+      'ā·dā·ti': { classical: 'ādāte', deva: 'आ-दा-ति', constructorDeva: 'आ-दा-ति', telugu: 'ఆ-దా-తి', spoken: 'आ-दा-ति', en: 'takes up', hi: 'उठाता है' }
     };
   }
 
@@ -383,9 +387,11 @@ class OmBridge {
         // Check if verb
         if (this.VERB_DICT[raw]) {
           let v = this.VERB_DICT[raw];
-          item.deva = v.deva;
+          item.iast = raw; // Pure ॐ-Script constructor form: gam·ti
+          item.deva = v.constructorDeva || v.deva; // Pure constructor Devanāgarī: गम्-ति
           item.telugu = v.telugu;
-          item.iast = v.classical;
+          item.spoken = v.spoken || v.constructorDeva || v.deva; // Spoken pure constructor form (gam-ti)
+          item.classical = v.classical; // Preserved for comparative linguistic metadata
           item.role = "Verb [Active]";
           item.englishWord = v.en;
           item.hindiWord = v.hi;
@@ -394,11 +400,12 @@ class OmBridge {
           let lookupKey = parts.slice(0, -1).join("·") || stem;
           let entry = this.STEM_DICT[lookupKey] || this.STEM_DICT[stem] || { en: stem, hi: stem, gender: 'm' };
 
-          // Build Classical Sanskrit surface form
+          // Build Pure ॐ-Script Constructor forms
           let surfaceIast = raw.replace(/·/g, "");
-          item.iast = surfaceIast;
+          item.iast = raw;
           item.deva = this.iastToDevanagari(surfaceIast);
           item.telugu = this.iastToTelugu(surfaceIast);
+          item.spoken = this.iastToDevanagari(raw.replace(/·/g, "-"));
 
           // Role determination
           if (suffix === "aḥ" || suffix === "ḥ" || suffix === "ā") {
