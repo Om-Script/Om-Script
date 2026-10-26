@@ -7,13 +7,16 @@
   <meta name="description" content="State-of-the-art interactive Sanskrit Phonology Matrix and ॐ-Script Read-Aloud Speech Synthesizer with real-time Devanāgarī, Telugu, IAST, English, and Hindi synchrony.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0e17'/><text x='50%' y='68%' font-size='56' text-anchor='middle' fill='%23f59e0b' font-family='sans-serif' font-weight='bold'>ॐ</text></svg>">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="ॐ-SYNTH // The Sanskrit Acoustic Synthesizer">
-  <meta property="og:description" content="Interactive Pāṇinian Phonology Matrix and continuous ॐ-Script Read-Aloud Speech Synthesizer with real-time multi-script synchrony.">
-  <meta property="og:image" content="qr_om_synth_300dpi.png">
+  <meta property="og:title" content="ॐ-SYNTH // Sanskrit Phonology & Multi-Script Studio">
+  <meta property="og:description" content="Official Interactive Companion & Acoustic Synthesizer for ॐ-Script: Sanskrit Reborn by Timothy A. George. 358 Pages • 7x10 Amazon KDP Edition.">
+  <meta property="og:image" content="om_script_front_cover_web.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ॐ-Script: Sanskrit Reborn // Official Companion & Studio">
+  <meta name="twitter:description" content="Interactive Pāṇinian Phonology Matrix, 300 DPI Full Cover Wrap Spread, and verified publication errata registry.">
+  <meta name="twitter:image" content="om_script_front_cover_web.jpg">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#f59e0b">
-  <link rel="stylesheet" href="style.css?v=2.3.3">
+  <link rel="stylesheet" href="style.css?v=2.3.4">
 </head>
 
 <body>
@@ -51,6 +54,49 @@
         </a>
       </div>
     </header>
+
+    <!-- Studio Companion Book & Full Cover Wrap Banner -->
+    <aside class="companion-book-banner" id="companion-banner" aria-label="Official Book Companion">
+      <div class="banner-inner">
+        <div class="banner-visual-cluster">
+          <div class="banner-book-thumb" onclick="openCoverDesk('front')" title="Click to view 3D Front Cover in Companion Desk">
+            <img src="om_script_front_cover_web.jpg" alt="ॐ-Script: Sanskrit Reborn Front Cover" class="thumb-front-img">
+            <span class="thumb-badge">3D Cover</span>
+          </div>
+          <div class="banner-wrap-thumb" onclick="openCoverDesk('wrap')" title="Click to inspect 300 DPI Full Cover Wrap spread">
+            <img src="om_script_full_cover_wrap_web.jpg" alt="ॐ-Script Full Cover Wrap Print Spread" class="thumb-wrap-img">
+            <span class="thumb-badge wrap-badge">Full Wrap</span>
+          </div>
+        </div>
+
+        <div class="banner-text-content">
+          <div class="banner-pill-row">
+            <span class="banner-pill pulse"><span class="status-dot"></span> NEW RELEASE &bull; OCTOBER 2026</span>
+            <span class="banner-pill mono">7" &times; 10" Amazon KDP</span>
+            <span class="banner-pill mono">358 Pages</span>
+            <span class="banner-pill mono verified">&check; 0 Active Errata</span>
+          </div>
+          <h2 class="banner-heading">
+            Official Companion to <em>ॐ-Script: Sanskrit Reborn</em>
+          </h2>
+          <p class="banner-subtext">
+            The Blueprint for a Universal Second Language by <strong>Timothy A. George</strong>. Experience interactive vocal tract phonology, inspect calibrated 300 DPI full cover wrap jackets, and access verified component errata.
+          </p>
+        </div>
+
+        <div class="banner-cta-cluster">
+          <button class="banner-btn primary" onclick="openCoverDesk('wrap')">
+            <span>📜</span> Inspect Full Wrap (300 DPI)
+          </button>
+          <button class="banner-btn secondary" onclick="openCoverDesk('front')">
+            <span>📖</span> 3D Front Cover
+          </button>
+          <button class="banner-btn ghost" onclick="openCoverDesk('front')">
+            <span>📋</span> Errata Desk &rarr;
+          </button>
+        </div>
+      </div>
+    </aside>
 
     <!-- ===================================================================== -->
     <!-- MODE 1: PHONOLOGY MATRIX & VOCAL TRACT                                -->
@@ -597,7 +643,7 @@
         </div>
 
         <!-- 3D Cover & Full Wrap Suite -->
-        <div class="cover-suite-container">
+        <div class="cover-suite-container" id="cover-suite-anchor">
           <div class="cover-tabs" role="tablist">
             <button class="cover-tab-btn active" onclick="switchCoverView('front')">
               <span>📖</span> Front Cover (3D Edition)
@@ -609,21 +655,23 @@
 
           <!-- Front Cover Panel -->
           <div class="cover-view-panel active" id="cover-view-front">
-            <div class="cover-card-glow">
+            <div class="cover-card-glow" onclick="openLightbox('om_script_front_cover_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Front Cover (3D Edition)', '7.0&quot; × 10.0&quot; Reference Edition • Golden Baroque Architecture • 300 DPI Print Calibrated')" style="cursor: pointer;" title="Click to expand high-resolution cover">
               <img src="om_script_front_cover_web.jpg" alt="ॐ-Script: Sanskrit Reborn 3D Front Cover" class="cover-img" />
+              <div class="cover-overlay-hint"><span>🔍 Click to Expand High-Res</span></div>
             </div>
             <div class="cover-caption">
-              ॐ-Script: Sanskrit Reborn &bull; Front Cover &bull; 7-Day Free Course Included &bull; Golden Baroque Architecture
+              ॐ-Script: Sanskrit Reborn &bull; Front Cover &bull; 7-Day Free Course Included &bull; Golden Baroque Architecture &bull; <span style="color: var(--accent-saffron); cursor: pointer;" onclick="openLightbox('om_script_front_cover_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Front Cover (3D Edition)', '7.0&quot; × 10.0&quot; Reference Edition • Golden Baroque Architecture • 300 DPI Print Calibrated')">🔍 View Fullscreen</span>
             </div>
           </div>
 
           <!-- Full Wrap Panel -->
           <div class="cover-view-panel" id="cover-view-wrap">
-            <div class="wrap-card-glow">
+            <div class="wrap-card-glow" onclick="openLightbox('om_script_full_cover_wrap_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Full Cover Wrap Spread', '15.06&quot; × 10.25&quot; Full Spread • 358 Pages • Spine 0.806&quot; (242 px) • 300 DPI Print Calibrated')" style="cursor: pointer;" title="Click to inspect full 300 DPI wrap spread">
               <img src="om_script_full_cover_wrap_web.jpg" alt="ॐ-Script: Sanskrit Reborn Full Cover Wrap Spread" class="wrap-img" />
+              <div class="cover-overlay-hint"><span>🔍 Click to Inspect 300 DPI Spread</span></div>
             </div>
             <div class="cover-caption">
-              Amazon KDP 7" &times; 10" Full Wrap Spread &bull; Back Cover + Spine (0.806" / 242 px) + Front Cover &bull; 300 DPI Print Calibrated
+              Amazon KDP 7" &times; 10" Full Wrap Spread &bull; Back Cover + Spine (0.806" / 242 px) + Front Cover &bull; 300 DPI Print Calibrated &bull; <span style="color: var(--accent-saffron); cursor: pointer;" onclick="openLightbox('om_script_full_cover_wrap_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Full Cover Wrap Spread', '15.06&quot; × 10.25&quot; Full Spread • 358 Pages • Spine 0.806&quot; (242 px) • 300 DPI Print Calibrated')">🔍 View Fullscreen</span>
             </div>
           </div>
 
@@ -631,7 +679,8 @@
             <span class="spec-pill">7.0" &times; 10.0" Trim</span>
             <span class="spec-pill">358 Pages (White 50#)</span>
             <span class="spec-pill">0.806" Spine Width</span>
-            <span class="spec-pill">300 DPI Print Calibrated</span>
+            <span class="spec-pill">15.06" &times; 10.25" Spread</span>
+            <span class="spec-pill">300 DPI Calibrated</span>
             <a href="https://github.com/om-script/Om-Script/blob/main/ERRATA.md" target="_blank" rel="noopener noreferrer" class="spec-link">GitHub ERRATA.md &rarr;</a>
           </div>
         </div>
@@ -660,6 +709,95 @@
           <div class="stat-desc">First Edition print run verified &bull; Reader submission desk open</div>
         </div>
       </div>
+
+      <!-- ===================================================================== -->
+      <!-- DUAL-SERIES FULL COVER WRAP LIBRARY (BOOK 1 & BOOK 2)                 -->
+      <!-- ===================================================================== -->
+      <section class="section-card series-showcase-section">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title"><span>📚</span> The Sanskrit by Architecture Companion Library</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Calibrated 300 DPI full print wrap jackets and official companion desks for both volumes in the series.
+            </p>
+          </div>
+          <span class="badge-status">Two-Volume Architecture Suite</span>
+        </div>
+
+        <div class="series-dual-grid">
+          <!-- Volume 1 Card -->
+          <div class="series-volume-card">
+            <div class="volume-header-pill">VOLUME 1 &bull; FOUNDATIONS</div>
+            <div class="volume-title-wrap">
+              <h4 class="volume-title">Sanskrit by Architecture: Decoding the Rāmāyaṇa</h4>
+              <p class="volume-subtitle">The Structural and Pāṇinian Grammar Architecture Behind Classical Epic Sanskrit</p>
+            </div>
+
+            <!-- Book 1 Full Wrap Preview -->
+            <div class="volume-wrap-preview" onclick="openLightbox('book1_full_wrap_web.jpg', 'Book 1: Sanskrit by Architecture — Full Cover Wrap Spread', '14.73&quot; × 10.25&quot; Full Spread • 216 Pages • Spine 0.486&quot; (146 px) • 300 DPI Print Calibrated')" title="Click to inspect Book 1 Full Wrap">
+              <img src="book1_full_wrap_web.jpg" alt="Book 1 Full Cover Wrap Spread" class="volume-wrap-img">
+              <div class="wrap-hover-overlay">
+                <span>🔍 Inspect Full 300 DPI Wrap Spread</span>
+              </div>
+            </div>
+
+            <div class="volume-specs-list">
+              <div class="spec-row"><span>Trim & Spine:</span><strong>7.0" &times; 10.0" &bull; Spine 0.486" (12.3 mm)</strong></div>
+              <div class="spec-row"><span>Page Extent:</span><strong>216 Pages (White 50#)</strong></div>
+              <div class="spec-row"><span>Full Spread:</span><strong>14.73" &times; 10.25" Print Calibrated</strong></div>
+              <div class="spec-row"><span>Status:</span><span class="badge-status">Print Edition Published</span></div>
+            </div>
+
+            <div class="volume-actions">
+              <button class="btn-vol-primary" onclick="openLightbox('book1_full_wrap_web.jpg', 'Book 1: Sanskrit by Architecture — Full Cover Wrap Spread', '14.73&quot; × 10.25&quot; Full Spread • 216 Pages • Spine 0.486&quot; (146 px) • 300 DPI Print Calibrated')">
+                <span>📜</span> View Book 1 Wrap
+              </button>
+              <button class="btn-vol-secondary" onclick="openLightbox('book1_front_cover_web.jpg', 'Book 1: Sanskrit by Architecture — Front Cover', '7.0&quot; × 10.0&quot; Front Cover • Amazon KDP Reference Edition')">
+                <span>📖</span> Front Cover
+              </button>
+              <a href="https://om-script.github.io/sanskrit-by-architecture/" target="_blank" rel="noopener noreferrer" class="btn-vol-link">
+                <span>🌐</span> Companion Desk &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Volume 2 Card -->
+          <div class="series-volume-card featured-volume">
+            <div class="volume-header-pill highlight">VOLUME 2 &bull; NEW RELEASE &bull; ACTIVE COMPANION</div>
+            <div class="volume-title-wrap">
+              <h4 class="volume-title">ॐ-Script: Sanskrit Reborn</h4>
+              <p class="volume-subtitle">The Blueprint for a Universal Second Language — Architecture, Phonology, and AI Interlingua</p>
+            </div>
+
+            <!-- Book 2 Full Wrap Preview -->
+            <div class="volume-wrap-preview" onclick="openLightbox('om_script_full_cover_wrap_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Full Cover Wrap Spread', '15.06&quot; × 10.25&quot; Full Spread • 358 Pages • Spine 0.806&quot; (242 px) • 300 DPI Print Calibrated')" title="Click to inspect Book 2 Full Wrap">
+              <img src="om_script_full_cover_wrap_web.jpg" alt="Book 2 Full Cover Wrap Spread" class="volume-wrap-img">
+              <div class="wrap-hover-overlay">
+                <span>🔍 Inspect Full 300 DPI Wrap Spread</span>
+              </div>
+            </div>
+
+            <div class="volume-specs-list">
+              <div class="spec-row"><span>Trim & Spine:</span><strong>7.0" &times; 10.0" &bull; Spine 0.806" (20.5 mm)</strong></div>
+              <div class="spec-row"><span>Page Extent:</span><strong>358 Pages (White 50#)</strong></div>
+              <div class="spec-row"><span>Full Spread:</span><strong>15.06" &times; 10.25" Print Calibrated</strong></div>
+              <div class="spec-row"><span>Status:</span><span class="badge-status">Print Edition Published</span></div>
+            </div>
+
+            <div class="volume-actions">
+              <button class="btn-vol-primary" onclick="openLightbox('om_script_full_cover_wrap_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — Full Cover Wrap Spread', '15.06&quot; × 10.25&quot; Full Spread • 358 Pages • Spine 0.806&quot; (242 px) • 300 DPI Print Calibrated')">
+                <span>📜</span> View Book 2 Wrap
+              </button>
+              <button class="btn-vol-secondary" onclick="openLightbox('om_script_front_cover_web.jpg', 'Book 2: ॐ-Script: Sanskrit Reborn — 3D Front Cover', '7.0&quot; × 10.0&quot; Front Cover • Amazon KDP Reference Edition')">
+                <span>📖</span> 3D Front Cover
+              </button>
+              <button class="btn-vol-link" onclick="switchCoverView('wrap'); document.getElementById('cover-suite-anchor').scrollIntoView({behavior:'smooth'});">
+                <span>✨</span> Interactive Viewer &uarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Verified Errata & Component Audit Registry Card -->
       <section class="section-card">
@@ -1076,9 +1214,37 @@
           data-lang="en"
           data-loading="lazy"
           crossorigin="anonymous"
-          async>
+          async></script>
+
   <!-- Toast Notification Container -->
   <div id="toast" class="toast"></div>
+
+  <!-- High-Resolution Cover Wrap Lightbox Modal -->
+  <div id="cover-lightbox-modal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Cover Image Viewer">
+    <div class="lightbox-container">
+      <div class="lightbox-header">
+        <div class="lightbox-title-wrap">
+          <span class="lightbox-icon">📜</span>
+          <div>
+            <h3 id="lightbox-title" class="lightbox-title">Cover Image Viewer</h3>
+            <p id="lightbox-subtitle" class="lightbox-subtitle">300 DPI High-Resolution Publication Calibrated Spread</p>
+          </div>
+        </div>
+        <div class="lightbox-controls">
+          <a id="lightbox-download-btn" href="#" target="_blank" download class="lightbox-btn" title="Open full raw image in new tab">
+            <span>↗️</span> Open Raw
+          </a>
+          <button class="lightbox-btn" onclick="toggleLightboxZoom()" id="lightbox-zoom-btn" title="Toggle Zoom">
+            <span>🔍</span> Zoom
+          </button>
+          <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Lightbox">&times;</button>
+        </div>
+      </div>
+      <div class="lightbox-body" id="lightbox-body" onclick="handleLightboxBodyClick(event)">
+        <img id="lightbox-img" src="" alt="Full Resolution Cover Spread" class="lightbox-img">
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

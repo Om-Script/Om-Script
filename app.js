@@ -1246,3 +1246,78 @@ function switchCoverView(mode) {
     if (wrapPanel) wrapPanel.classList.add('active');
   }
 }
+
+// =========================================================================
+// 8. COVER LIGHTBOX & STUDIO BANNER CONTROLLERS
+// =========================================================================
+function openCoverDesk(view) {
+  const errataTab = document.getElementById('tab-errata-btn');
+  if (errataTab) {
+    errataTab.click();
+  }
+  if (view) {
+    switchCoverView(view);
+  }
+  setTimeout(() => {
+    const anchor = document.getElementById('cover-suite-anchor');
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 120);
+}
+
+function openLightbox(src, title, subtitle) {
+  const modal = document.getElementById('cover-lightbox-modal');
+  const img = document.getElementById('lightbox-img');
+  const titleEl = document.getElementById('lightbox-title');
+  const subtitleEl = document.getElementById('lightbox-subtitle');
+  const downloadBtn = document.getElementById('lightbox-download-btn');
+  
+  if (!modal || !img) return;
+
+  img.src = src;
+  img.classList.remove('zoomed');
+  if (titleEl) titleEl.textContent = title || "High-Resolution Cover Spread";
+  if (subtitleEl) subtitleEl.textContent = subtitle || "300 DPI Print Calibrated Amazon KDP Spread";
+  if (downloadBtn) downloadBtn.href = src;
+
+  const zoomBtn = document.getElementById('lightbox-zoom-btn');
+  if (zoomBtn) {
+    zoomBtn.innerHTML = '<span>🔍</span> Zoom';
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const modal = document.getElementById('cover-lightbox-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function toggleLightboxZoom() {
+  const img = document.getElementById('lightbox-img');
+  if (!img) return;
+  img.classList.toggle('zoomed');
+  const zoomBtn = document.getElementById('lightbox-zoom-btn');
+  if (zoomBtn) {
+    zoomBtn.innerHTML = img.classList.contains('zoomed') ? '<span>🔍</span> 100%' : '<span>🔍</span> Fit';
+  }
+}
+
+function handleLightboxBodyClick(e) {
+  if (e.target.id === 'lightbox-body') {
+    closeLightbox();
+  }
+}
+
+// Keyboard shortcuts for modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeLightbox();
+  }
+});
+
