@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initVocalTractSVG();
   initStudio();
   initTranslatorStudio();
+  initErrataModal();
 });
 
 // =========================================================================
@@ -1046,9 +1047,9 @@ function renderCompiledOmDisplay(result, script = 'iast') {
   let html = "";
 
   words.forEach(w => {
-    if (w === "ATHA" || w === "him" || w === "hūṃ" || w === "hūṃऽऽ" || w === "OM" ||
-        w === "अथ" || w === "हिम्" || w === "हूँ" || w === "हूँऽऽ" || w === "ॐ" ||
-        w === "అథ" || w === "హిమ్" || w === "హూం" || w === "ఓమ్") {
+    if (w === "ATHA" || w === "him" || w === "hūṃ" || w === "hūṃऽऽ" || w === "OM" || w === "SVĀHĀ" || w === "kham" ||
+        w === "अथ" || w === "हिम्" || w === "हूँ" || w === "हूँऽऽ" || w === "ॐ" || w === "स्वाहा" || w === "खम्" ||
+        w === "అథ" || w === "హిమ్" || w === "హూం" || w === "ఓమ్" || w === "స్వాహా" || w === "ఖం") {
       html += `<span class="track-breath">${w}</span> `;
     } else if (w === "॥" || w === "।") {
       html += `<span class="track-halt">${w}</span> `;
@@ -1094,4 +1095,46 @@ function renderReconstructedBridges(omSentence) {
 
   engBox.innerText = engWords.length > 0 ? "English: " + engWords.join(" ") : "English: (analyzing structural keys...)";
   hiBox.innerText = hiWords.length > 0 ? "Hindi: " + hiWords.join(" ") : "Hindi: (प्रतीक्षारत...)";
+}
+
+// =========================================================================
+// 6. OFFICIAL BOOK ERRATA & CHANGELOG MODAL
+// =========================================================================
+function initErrataModal() {
+  const modal = document.getElementById("errata-modal");
+  const openTriggers = document.querySelectorAll(".open-errata-trigger");
+  const closeBtn = document.getElementById("close-errata-btn");
+
+  if (!modal) return;
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  openTriggers.forEach(btn => {
+    btn.addEventListener("click", openModal);
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
+  }
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
 }
