@@ -1119,7 +1119,16 @@ function initErrataModal() {
   }
 
   openTriggers.forEach(btn => {
-    btn.addEventListener("click", openModal);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const errataTab = document.getElementById("tab-errata-btn");
+      if (errataTab) {
+        errataTab.click();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        openModal(e);
+      }
+    });
   });
 
   if (closeBtn) {
@@ -1137,4 +1146,103 @@ function initErrataModal() {
       closeModal();
     }
   });
+}
+
+// =========================================================================
+// 7. COMPANION DESK & ERRATA REGISTRY CONTROLLER
+// =========================================================================
+const GITHUB_REPO_ERRATA = "https://github.com/om-script/Om-Script";
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function copyText(txt) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(() => showToast("Command copied to clipboard!"));
+  }
+}
+
+let currentCategory = 'all';
+
+function filterTable() {
+  const searchInput = document.getElementById('searchInput');
+  if (!searchInput) return;
+  const q = searchInput.value.toLowerCase();
+  const rows = document.querySelectorAll('#errataTable tbody tr');
+  rows.forEach(r => {
+    const text = r.innerText.toLowerCase();
+    const rowCat = r.getAttribute('data-category');
+    const matchSearch = text.includes(q);
+    const matchCat = (currentCategory === 'all' || rowCat === currentCategory);
+    r.style.display = (matchSearch && matchCat) ? '' : 'none';
+  });
+}
+
+function setFilter(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  filterTable();
+}
+
+function getFormattedPayload() {
+  const ch = document.getElementById('chSelect')?.value || 'Chapter 1';
+  const page = document.getElementById('pageInput')?.value.trim() || 'General';
+  const cat = document.getElementById('catSelect')?.value || 'Typographical / Diacritic Error';
+  const printed = document.getElementById('printedText')?.value.trim() || '';
+  const fix = document.getElementById('suggestedCorrection')?.value.trim() || '';
+
+  const title = `[Errata] ${ch} - ${page}: ${cat}`;
+  const body = `### Errata Report: ${ch}\n\n` +
+    `- **Book:** ॐ-Script: Sanskrit Reborn (Book 2)\n` +
+    `- **Location / Page:** ${page}\n` +
+    `- **Category:** ${cat}\n\n` +
+    `#### Printed Text:\n> ${printed}\n\n` +
+    `#### Proposed Correction & Rationale:\n${fix}\n\n` +
+    `---\n*Reported via ॐ-Script Companion Desk*`;
+
+  return { title, body };
+}
+
+function submitToGitHub() {
+  const p = getFormattedPayload();
+  const printedInput = document.getElementById('printedText');
+  if (!printedInput || !printedInput.value.trim()) {
+    alert("Please quote the printed text in question before submitting.");
+    return;
+  }
+  const url = `${GITHUB_REPO_ERRATA}/issues/new?title=${encodeURIComponent(p.title)}&body=${encodeURIComponent(p.body)}&labels=errata`;
+  window.open(url, '_blank');
+}
+
+function copyMarkdown() {
+  const p = getFormattedPayload();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(p.body).then(() => {
+      showToast("Formatted Markdown copied to clipboard!");
+    });
+  }
+}
+
+function switchCoverView(mode) {
+  const buttons = document.querySelectorAll('.cover-tab-btn');
+  const frontPanel = document.getElementById('cover-view-front');
+  const wrapPanel = document.getElementById('cover-view-wrap');
+  
+  buttons.forEach(b => b.classList.remove('active'));
+
+  if (mode === 'front') {
+    if (buttons[0]) buttons[0].classList.add('active');
+    if (frontPanel) frontPanel.classList.add('active');
+    if (wrapPanel) wrapPanel.classList.remove('active');
+  } else {
+    if (buttons[1]) buttons[1].classList.add('active');
+    if (frontPanel) frontPanel.classList.remove('active');
+    if (wrapPanel) wrapPanel.classList.add('active');
+  }
 }

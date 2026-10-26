@@ -42,10 +42,10 @@
           <button class="tab-btn" data-target="translator-panel" id="tab-translator-btn">
             <span>⚡</span> ॐ-Script Architecture Studio
           </button>
+          <button class="tab-btn" data-target="errata-panel" id="tab-errata-btn">
+            <span>📖</span> Errata & Companion Desk
+          </button>
         </nav>
-        <button class="errata-header-link open-errata-trigger" title="View Official Book Errata & Verified Changelog">
-          <span>📖</span> Book Errata
-        </button>
         <a href="#community-section" class="community-header-link" title="Jump to Community Discussions & Reader Feedback">
           <span>💬</span> Discussions
         </a>
@@ -569,6 +569,319 @@
       </div>
     </main>
 
+    <!-- ===================================================================== -->
+    <!-- MODE 4: ERRATA & OFFICIAL COMPANION DESK                              -->
+    <!-- ===================================================================== -->
+    <main id="errata-panel" class="tab-panel">
+      
+      <!-- Publication Hero Header -->
+      <section class="hero">
+        <div class="hero-badge">
+          <span class="status-dot"></span> Official Publication Errata & Technical Registry
+        </div>
+        <h2 class="hero-title">ॐ-Script: Sanskrit Reborn</h2>
+        <p class="hero-subtitle">
+          The Blueprint for a Universal Second Language — Architecture, Phonology, and AI Interlingua.
+          Live errata, verified component audits, and technical addenda for the print edition.
+        </p>
+        <div class="hero-meta">
+          <span>Author: <strong>Timothy A. George</strong></span>
+          <span>&bull;</span>
+          <span>Trim: <strong>7.0" &times; 10.0" Amazon KDP</strong></span>
+          <span>&bull;</span>
+          <span>Length: <strong>358 Pages (White 50#)</strong></span>
+          <span>&bull;</span>
+          <span>Spine: <strong>0.806" (20.5 mm)</strong></span>
+          <span>&bull;</span>
+          <span>Master Build: <strong>v1.0 LTS (Synced)</strong></span>
+        </div>
+
+        <!-- 3D Cover & Full Wrap Suite -->
+        <div class="cover-suite-container">
+          <div class="cover-tabs" role="tablist">
+            <button class="cover-tab-btn active" onclick="switchCoverView('front')">
+              <span>📖</span> Front Cover (3D Edition)
+            </button>
+            <button class="cover-tab-btn" onclick="switchCoverView('wrap')">
+              <span>📜</span> Full Wrap Jacket (Print Spread)
+            </button>
+          </div>
+
+          <!-- Front Cover Panel -->
+          <div class="cover-view-panel active" id="cover-view-front">
+            <div class="cover-card-glow">
+              <img src="om_script_front_cover_web.jpg" alt="ॐ-Script: Sanskrit Reborn 3D Front Cover" class="cover-img" />
+            </div>
+            <div class="cover-caption">
+              ॐ-Script: Sanskrit Reborn &bull; Front Cover &bull; 7-Day Free Course Included &bull; Golden Baroque Architecture
+            </div>
+          </div>
+
+          <!-- Full Wrap Panel -->
+          <div class="cover-view-panel" id="cover-view-wrap">
+            <div class="wrap-card-glow">
+              <img src="om_script_full_cover_wrap_web.jpg" alt="ॐ-Script: Sanskrit Reborn Full Cover Wrap Spread" class="wrap-img" />
+            </div>
+            <div class="cover-caption">
+              Amazon KDP 7" &times; 10" Full Wrap Spread &bull; Back Cover + Spine (0.806" / 242 px) + Front Cover &bull; 300 DPI Print Calibrated
+            </div>
+          </div>
+
+          <div class="cover-specs-row">
+            <span class="spec-pill">7.0" &times; 10.0" Trim</span>
+            <span class="spec-pill">358 Pages (White 50#)</span>
+            <span class="spec-pill">0.806" Spine Width</span>
+            <span class="spec-pill">300 DPI Print Calibrated</span>
+            <a href="https://github.com/om-script/Om-Script/blob/main/ERRATA.md" target="_blank" rel="noopener noreferrer" class="spec-link">GitHub ERRATA.md &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Stats Bar -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Master Compilation</div>
+          <div class="stat-value">v1.0 (Synced)</div>
+          <div class="stat-desc">CompleteBook-Final.pdf verified with 0 errors (358 pages)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Canonical Dhātupāṭha</div>
+          <div class="stat-value">1,835 Roots</div>
+          <div class="stat-desc">All classical verbal roots + 22 spatial prefixes verified with &radic;</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Bhagavad Gītā Corpus</div>
+          <div class="stat-value">701 Verses</div>
+          <div class="stat-desc">All 18 Chapters verified in dual ॐ-Script Devanāgarī & IAST</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Errata Desk Status</div>
+          <div class="stat-value" style="color: var(--accent-emerald);">0 Active</div>
+          <div class="stat-desc">First Edition print run verified &bull; Reader submission desk open</div>
+        </div>
+      </div>
+
+      <!-- Verified Errata & Component Audit Registry Card -->
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title"><span>📋</span> Verified Component Audit & Errata Registry</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Filter and inspect confirmed verifications across all 13 chapters, 6 appendices, and companion tooling.
+            </p>
+          </div>
+          <span class="badge-status">Print Run 1 Active</span>
+        </div>
+
+        <!-- Search & Filter Toolbar -->
+        <div class="toolbar">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="searchInput" placeholder="Search components, roots, verses, or keywords..." onkeyup="filterTable()">
+          </div>
+          <div class="filter-pills">
+            <button class="filter-btn active" onclick="setFilter('all', this)">All Items</button>
+            <button class="filter-btn" onclick="setFilter('appendices', this)">Appendices</button>
+            <button class="filter-btn" onclick="setFilter('chapters', this)">Core Chapters</button>
+            <button class="filter-btn" onclick="setFilter('grammar', this)">Grammar & AST</button>
+            <button class="filter-btn" onclick="setFilter('layout', this)">Layout & Pacing</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="errata-table" id="errataTable">
+            <thead>
+              <tr>
+                <th style="width: 70px;">Item</th>
+                <th style="width: 170px;">Location</th>
+                <th style="width: 250px;">Printed State / Discovery</th>
+                <th>Master Revision & Verification</th>
+                <th style="width: 130px;">Classification</th>
+                <th style="width: 110px;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-category="appendices">
+                <td><strong style="color:var(--accent-saffron);">#001</strong></td>
+                <td><strong>Appendix A</strong><br><span class="table-sub">Lexicon (pp. 200–242)</span></td>
+                <td>111 verbal roots missing <code>&radic;</code> marker; raw LaTeX multicols macro dropped roots on page 200.</td>
+                <td>Restored <code>&radic;</code> to all 111 roots. Routed via <code>\starttwocolumn</code>, fully restoring all 43 two-column pages (1,835 roots + 22 prefixes).</td>
+                <td><span class="badge-tag badge-clarification">Lexicon</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="appendices">
+                <td><strong style="color:var(--accent-saffron);">#002</strong></td>
+                <td><strong>Appendix B</strong><br><span class="table-sub">100 Core Words (pp. 243–249)</span></td>
+                <td>Potential categorization ambiguity across the foundational vocabulary taxonomy.</td>
+                <td>Verified exact 100-word count across 7 functional categories (90 macro building blocks + 10 root verbs). Triple notation aligned.</td>
+                <td><span class="badge-tag badge-clarification">Lexicon</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="grammar">
+                <td><strong style="color:var(--accent-saffron);">#003</strong></td>
+                <td><strong>Appendix C</strong><br><span class="table-sub">Universal Interlingua (pp. 250–261)</span></td>
+                <td>Parser test strings contained HTML underline tags (<code>&lt;u&gt;OM&lt;/u&gt;</code>) failing regex matching on raw text.</td>
+                <td>Normalized tokenizer to strip HTML markup; verified cross-linguistic proofs across Greek (<em>John 1:1</em>), Hebrew (<em>Genesis 1:1, Psalm 23</em>), and Sanskrit.</td>
+                <td><span class="badge-tag badge-infrastructure">AI & AST</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="grammar">
+                <td><strong style="color:var(--accent-saffron);">#004</strong></td>
+                <td><strong>Appendix D</strong><br><span class="table-sub">AI Architecture (pp. 262–273)</span></td>
+                <td>7th syntactic role tag (<code>&middot;sya</code> Possessor) omitted from bullet definition list.</td>
+                <td>Restored: <code>* **The Possessor (&middot;sya):** The relational bond linking an owner, container, or modifier to what follows.</code></td>
+                <td><span class="badge-tag badge-infrastructure">AI & AST</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="appendices">
+                <td><strong style="color:var(--accent-saffron);">#005</strong></td>
+                <td><strong>Appendix E</strong><br><span class="table-sub">Bhagavad Gītā (pp. 274–347)</span></td>
+                <td>Full corpus sequence verification needed across dual Devanāgarī and transliteration.</td>
+                <td>Automated verse checksum verified all 18 Chapters and all 701 canonical verses present without sequence or structural gaps.</td>
+                <td><span class="badge-tag badge-clarification">Corpus</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="chapters">
+                <td><strong style="color:var(--accent-saffron);">#006</strong></td>
+                <td><strong>Appendix F</strong><br><span class="table-sub">Pranava Script (pp. 348–353)</span></td>
+                <td>Phonetic nomenclature typo on line 41 (<code>Tenis</code> voiceless plosive).</td>
+                <td>Corrected linguistic term to <code>Tenuis</code> (unvoiced, unaspirated stops k, c, ṭ, t, p). Verified acoustic coordinates.</td>
+                <td><span class="badge-tag badge-pacing">Phonology</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+              <tr data-category="layout">
+                <td><strong style="color:var(--accent-saffron);">#007</strong></td>
+                <td><strong>Front & Back Matter</strong><br><span class="table-sub">TOC, Preface, Resources</span></td>
+                <td>TOC pagination drift; missing cross-reference to Book 1 (<em>Sanskrit by Architecture: Decoding the Rāmāyaṇa</em>).</td>
+                <td>Synchronized TOC to single pages (Pages 5–6). Integrated companion volume bridges on Copyright (p. 2), Preface (p. 8), and Resources (p. 356).</td>
+                <td><span class="badge-tag badge-pacing">Pacing & Layout</span></td>
+                <td><span class="badge-status">v1.0 Master</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Interactive 1-Click Issue Generator Form Card -->
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title"><span>✍️</span> Submit an Errata or Typo Report</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Spotted a typographical error or edge case? Generate a pre-filled GitHub Issue or copy formatted markdown in one click.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="chSelect">Chapter or Division *</label>
+            <select id="chSelect">
+              <option value="Chapter 1: The Five Vocal Stations">Chapter 1: The Five Vocal Stations</option>
+              <option value="Chapter 2: The Meaning Track & The Breath Track">Chapter 2: The Meaning Track & The Breath Track</option>
+              <option value="Chapter 3: The Four Equations">Chapter 3: The Four Equations</option>
+              <option value="Chapter 4: The Directional Shift">Chapter 4: The Directional Shift (Spatial Prefixes)</option>
+              <option value="Chapter 5: The Chained Action">Chapter 5: The Chained Action (Absolutives)</option>
+              <option value="Chapter 6: The Two-Room House">Chapter 6: The Two-Room House (Relative-Correlative)</option>
+              <option value="Chapter 7: The Master Key">Chapter 7: The Master Key (Integration)</option>
+              <option value="Chapter 8: The Reading Blueprint">Chapter 8: The Reading Blueprint</option>
+              <option value="Chapter 9: The 7-Day Bootcamp">Chapter 9: The 7-Day Bootcamp</option>
+              <option value="Chapter 10: The Bhagavad Gītā in ॐ-Script">Chapter 10: The Bhagavad Gītā in ॐ-Script</option>
+              <option value="Chapter 11: The Upanishads & Sacred Verses">Chapter 11: The Upanishads & Sacred Verses</option>
+              <option value="Chapter 12: Epics & Classical Poetry">Chapter 12: Epics & Classical Poetry</option>
+              <option value="Chapter 13: Neuro-Symbolic AI & The Universal Interlingua">Chapter 13: Neuro-Symbolic AI & Interlingua</option>
+              <option value="Front Matter / TOC / Preface">Front Matter / TOC / Preface</option>
+              <option value="Appendix A: Classical Sanskrit Lexicon (1,835 Roots)">Appendix A: Classical Sanskrit Lexicon (1,835 Roots)</option>
+              <option value="Appendix B: The 100 Core Words">Appendix B: The 100 Core Words</option>
+              <option value="Appendix C: The Universal Interlingua Proof">Appendix C: The Universal Interlingua Proof</option>
+              <option value="Appendix D: AI Architecture & Syntactic Roles">Appendix D: AI Architecture & Syntactic Roles</option>
+              <option value="Appendix E: The Complete Bhagavad Gītā (701 Verses)">Appendix E: The Complete Bhagavad Gītā (701 Verses)</option>
+              <option value="Appendix F: The Pranava Script">Appendix F: The Pranava Script</option>
+              <option value="Back Matter / Resources / Author">Back Matter / Resources / Author</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pageInput">Page Number or Section Heading *</label>
+            <input type="text" id="pageInput" placeholder="e.g., Page 142, Rule 8, or Verse 2.47">
+          </div>
+
+          <div class="form-group">
+            <label for="catSelect">Issue Category *</label>
+            <select id="catSelect">
+              <option value="Typographical / Diacritic Error">Typographical / Diacritic Error</option>
+              <option value="Sandhi / Phonetic Derivation">Sandhi / Phonetic Derivation</option>
+              <option value="Pacing / Pedagogical Clarity">Pacing / Pedagogical Clarity</option>
+              <option value="Python / AST Code Issue">Python / AST Code Issue</option>
+              <option value="Other Suggestion">Other Suggestion</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label for="printedText">Printed Text (As it appears in your copy) *</label>
+          <textarea id="printedText" placeholder="Quote the exact printed phrase or code snippet from the book..."></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="suggestedCorrection">Suggested Correction & Technical Rationale</label>
+          <textarea id="suggestedCorrection" placeholder="Describe the recommended correction and your classical grammar or typographical rationale..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" onclick="submitToGitHub()">
+            <span>🐛</span> Open Pre-Filled GitHub Issue
+          </button>
+          <button class="btn-community-secondary" onclick="copyMarkdown()">
+            <span>📋</span> Copy Formatted Markdown
+          </button>
+          <a href="mailto:sanskrit-reborn@googlegroups.com?subject=%5BBook%20Errata%5D%20Report" class="btn-community-secondary">
+            <span>✉️</span> Email Editorial Team
+          </a>
+        </div>
+      </section>
+
+      <!-- Companion Toolchain & Execution Specs Card -->
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title"><span>⚙️</span> Companion Toolchain & Execution Specs</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Verified runtime environments for Chapter 13 AI architecture and Appendix C & D computational models.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px;">
+            <div style="font-weight: 700; color: var(--accent-cyan); font-size: 0.95rem; margin-bottom: 6px;">
+              ● Python 3 Sanskrit AI Stack
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+              Python 3.9 through 3.12 compatible. Implements deterministic Pāṇinian kāraka role extraction, Rule 8 carrier bridges, and cross-linguistic AST parsing.
+            </p>
+            <div class="code-snippet" style="cursor: pointer; width: 100%; display: block;" onclick="copyText('python code/universal_to_om.py')">
+              python code/universal_to_om.py
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px;">
+            <div style="font-weight: 700; color: var(--accent-saffron); font-size: 0.95rem; margin-bottom: 6px;">
+              ● XeLaTeX Publication Pipeline
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px;">
+              Automated multi-pass XeLaTeX engine with Bookman Old Style, Noto Sans Devanāgarī, and Noto Sans Telugu for 7" &times; 10" Amazon KDP print publication.
+            </p>
+            <div class="code-snippet" style="cursor: pointer; width: 100%; display: block;" onclick="copyText('python code/convert_to_kdp.py book2')">
+              python code/convert_to_kdp.py book2
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
     <!-- Community Discussions & Reader Feedback Section -->
     <section class="community-card" id="community-section">
       <div class="community-header">
@@ -764,7 +1077,8 @@
           data-loading="lazy"
           crossorigin="anonymous"
           async>
-  </script>
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast"></div>
 
 </body>
 </html>
