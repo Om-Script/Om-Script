@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ॐ-Script | UPEM Foundry & Visual Engine</title>
+<style>
+  :root { --bg: #090b10; --panel: #11151f; --border: #242c40; --gold: #e6c17a; --gold-dim: rgba(230, 193, 122, 0.15); --cyan: #67d4e4; --rose: #e87a90; --text: #e8ecf4; --muted: #8b95ab; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; padding: 24px; max-width: 1400px; margin: 0 auto; line-height: 1.5; }
+  h1 { color: var(--gold); margin: 0 0 5px 0; font-size: 1.7rem; font-weight: 600; }
+  p.subtitle { color: var(--muted); margin: 0 0 20px 0; font-size: 0.9rem; }
+  
+  .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 1000px) { .grid-layout { grid-template-columns: 1fr; } }
+  
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .panel-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 14px; }
+  .panel-title { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 0.95rem; }
+  
+  /* Input & Output */
+  textarea { width: 100%; height: 70px; background: #07090d; border: 1px solid var(--border); color: #fff; padding: 12px; font-family: monospace; font-size: 1.1rem; border-radius: 6px; outline: none; margin-bottom: 15px; }
+  textarea:focus { border-color: var(--gold); }
+  .varnagul-stage { background: #07090d; border: 1px solid var(--border); border-radius: 6px; padding: 20px; font-size: 2.2rem; text-align: center; word-spacing: 8px; min-height: 90px; margin-bottom: 15px;}
+  .v-root { color: var(--gold); font-weight: 600; }
+  .v-func-word, .v-tag { font-size: 75%; color: var(--cyan); }
+  .v-breath { font-size: 75%; color: var(--rose); margin: 0 6px; }
+
+  /* 27 Phoneme Edge Cases */
+  .hack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .hack-btn { background: #07090d; border: 1px solid var(--border); color: var(--muted); padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; }
+  .hack-btn:hover, .hack-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .hack-jamo { font-size: 1.4rem; font-weight: bold; margin-bottom: 4px; }
+
+  /* UPEM Foundry */
+  .upem-wrapper { background: #07090d; border: 1px solid var(--border); border-radius: 8px; width: 100%; aspect-ratio: 1/1; cursor: crosshair; position: relative; touch-action: none; }
+  svg#upemCanvas { width: 100%; height: 100%; display: block; }
+  .upem-grid-line { stroke: #242c40; stroke-width: 4; stroke-dasharray: 10, 10; }
+  .upem-label { fill: #4a5568; font-size: 28px; font-family: monospace; font-weight: bold; }
+  .upem-path { fill: none; stroke: var(--gold); stroke-width: 28; stroke-linecap: round; stroke-linejoin: round; }
+  
+  .tools { display: flex; gap: 10px; margin-top: 15px; }
+  button.action-btn { flex: 1; background: var(--panel); color: var(--text); border: 1px solid var(--border); padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.15s; }
+  button.action-btn.primary { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
+  button.action-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+</style>
+</head>
+<body>
+
+<h1>ॐ-Script | UPEM Vector Foundry</h1>
+<p class="subtitle">Draw custom geometric paths for edge-case diacritics to export to FontForge/Glyphs.</p>
+
+<div class="grid-layout">
+  <!-- LEFT COLUMN: Testing Engine & Targets -->
+  <div class="left-col">
+    <div class="panel" style="margin-bottom: 24px;">
+      <div class="panel-header"><span class="panel-title">1. Phoneme Vector Reference (Varṇagul 3.1)</span></div>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-top:0;">Edge cases historically requiring combining marks, now unified into native Hangul vectors.</p>
+      <div class="hack-grid">
+        <div class="hack-btn" onclick="loadHack('ś', 'ㅅ', 'Palatal Sibilant')"><div class="hack-jamo">ㅅ</div>ś (Palatal)</div>
+        <div class="hack-btn" onclick="loadHack('l', 'ㄹ', 'Dental Liquid')"><div class="hack-jamo">ㄹ</div>l (Liquid)</div>
+        <div class="hack-btn" onclick="loadHack('v', 'ㅘ', 'Labial Glide')"><div class="hack-jamo">ㅘ</div>v (Glide)</div>
+        <div class="hack-btn" onclick="loadHack('ṅ', 'ㅇ', 'Velar Nasal')"><div class="hack-jamo">ㅇ</div>ṅ (Velar)</div>
+        <div class="hack-btn" onclick="loadHack('ñ', 'ㄴ', 'Palatal Nasal')"><div class="hack-jamo">ㄴ</div>ñ (Palatal)</div>
+        <div class="hack-btn" onclick="loadHack('ā', 'ㅏ', 'Long Vowel')"><div class="hack-jamo">ㅏ</div>ā (Neutral)</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header"><span class="panel-title">2. Live Varṇagul Preview</span></div>
+      <textarea id="iastInput">ATHA śivaḥ vana·ṃ pra·gam·a·ti ||</textarea>
+      <div class="varnagul-stage" id="varnagulOutput"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: Interactive Drawing Foundry -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">3. 1000×1000 UPEM Drawing Canvas</span>
+      <span id="canvasTitle" style="color: var(--muted); font-size: 0.85rem;">Select a character</span>
+    </div>
+    
+    <div class="upem-wrapper">
+      <svg id="upemCanvas" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <!-- Guidelines -->
+        <line x1="0" y1="150" x2="1000" y2="150" class="upem-grid-line" />
+        <line x1="0" y1="700" x2="1000" y2="700" class="upem-grid-line" />
+        <line x1="750" y1="0" x2="750" y2="1000" class="upem-grid-line" />
+        
+        <!-- Zones -->
+        <text x="20" y="80" class="upem-label">ONSET (600u)</text>
+        <text x="770" y="80" class="upem-label">VOWEL (250u)</text>
+        <text x="20" y="850" class="upem-label" fill="#e87a90">CODA (150u)</text>
+        
+        <!-- Reference Shadow Layer (Shows base Hangul shape) -->
+        <g id="referenceLayer" stroke="rgba(255,255,255,0.05)" stroke-width="28" fill="none" stroke-linecap="round"></g>
+        
+        <!-- User Drawing Layer -->
+        <g id="drawLayer"></g>
+      </svg>
+    </div>
+
+    <div class="tools">
+      <button class="action-btn" onclick="clearCanvas()">Clear Canvas</button>
+      <button class="action-btn primary" onclick="exportPath()">Copy SVG Path Data</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- VARNAGUL COMPILER LOGIC (Simplified for Demo) ---
+const HANGUL_MAP = {
+  'ś': 'ㅅ', 'l': 'ㄹ', 'v': 'ㅘ', 'ṅ': 'ㅇ', 'ñ': 'ㄴ', 'a': 'ㅏ', 'ā': 'ㅏ',
+  'k':'ㄱ', 'g':'ㄲ', 'c':'ㅈ', 'j':'ㅉ', 't':'ㄷ', 'd':'ㄸ', 'n':'ㄴ', 'p':'ㅂ', 'b':'ㅃ', 'm':'ㅁ', 'r':'ㄹ', 's':'ㅅ', 'h':'ㅎ', 'i':'ㅣ','u':'ㅜ','e':'ㅔ','o':'ㅗ'
+};
+
+function compileStr() {
+  const txt = document.getElementById('iastInput').value;
+  let out = txt.replace(/ATHA/g, '<span class="v-breath">〔아타〕</span>').replace(/\|\|/g, '<span class="v-breath">॥</span>');
+  
+  let html = out.split(/\s+/).map(word => {
+    if (word.includes('<span')) return word;
+    let parts = word.split('·');
+    return parts.map((p, i) => {
+      let css = i===0 ? 'v-root' : 'v-tag';
+      let blocks = p.split('').map(char => HANGUL_MAP[char] || char).join('');
+      return `<span class="${css}">${blocks}</span>`;
+    }).join('');
+  }).join(' ');
+  
+  document.getElementById('varnagulOutput').innerHTML = html;
+}
+document.getElementById('iastInput').addEventListener('input', compileStr);
+compileStr();
+
+// --- VECTOR FOUNDRY DRAWING LOGIC ---
+const svg = document.getElementById('upemCanvas');
+const drawLayer = document.getElementById('drawLayer');
+let isDrawing = false;
+let currentPath = null;
+let pathData = "";
+let allPaths = []; // Store multiple strokes
+
+// Reference paths for the base characters before diacritics
+const REF_PATHS = {
+  'ś': 'M 400 200 L 200 600 M 400 200 L 600 600', // Base ㅅ
+  'l': 'M 200 200 h 300 v 200 h -300 v 200 h 300', // Base ㄹ
+  'v': 'M 200 200 v 400 h 300 v -400 M 200 400 h 300', // Base ㅂ
+  'ṅ': 'M 400 200 A 200 200 0 1 0 400 600 A 200 200 0 1 0 400 200', // Base ㅇ
+  'ñ': 'M 200 200 v 400 h 300', // Base ㄴ
+  'ā': 'M 750 300 v 300 M 750 450 h 150' // Base ㅏ
+};
+
+function loadHack(iast, jamo, name) {
+  document.getElementById('canvasTitle').innerText = `Editing: ${jamo} (${name})`;
+  clearCanvas();
+  // Load faint reference path
+  document.getElementById('referenceLayer').innerHTML = `<path d="${REF_PATHS[iast]}" />`;
+  // Auto-fill input with relevant test word
+  const testWords = {'ś':'śiva', 'l':'phalam', 'v':'vana', 'ṅ':'aṅga', 'ñ':'pañca', 'ā':'ātman'};
+  document.getElementById('iastInput').value = `ATHA ${testWords[iast]} ||`;
+  compileStr();
+}
+
+function getMousePos(evt) {
+  let CTM = svg.getScreenCTM();
+  let clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+  let clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+  return { x: (clientX - CTM.e) / CTM.a, y: (clientY - CTM.f) / CTM.d };
+}
+
+function startDraw(evt) {
+  evt.preventDefault();
+  isDrawing = true;
+  let pos = getMousePos(evt);
+  pathData = `M ${Math.round(pos.x)} ${Math.round(pos.y)}`;
+  
+  currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  currentPath.setAttribute("class", "upem-path");
+  currentPath.setAttribute("d", pathData);
+  drawLayer.appendChild(currentPath);
+}
+
+function draw(evt) {
+  if (!isDrawing) return;
+  evt.preventDefault();
+  let pos = getMousePos(evt);
+  pathData += ` L ${Math.round(pos.x)} ${Math.round(pos.y)}`;
+  currentPath.setAttribute("d", pathData);
+}
+
+function endDraw() {
+  if (isDrawing) {
+    isDrawing = false;
+    allPaths.push(pathData);
+  }
+}
+
+// Mouse Events
+svg.addEventListener('mousedown', startDraw);
+svg.addEventListener('mousemove', draw);
+window.addEventListener('mouseup', endDraw);
+
+// Touch Events (for tablets/Surface pens)
+svg.addEventListener('touchstart', startDraw, {passive: false});
+svg.addEventListener('touchmove', draw, {passive: false});
+window.addEventListener('touchend', endDraw);
+
+function clearCanvas() {
+  drawLayer.innerHTML = '';
+  allPaths = [];
+  pathData = '';
+}
+
+function exportPath() {
+  if (allPaths.length === 0) return alert("Nothing drawn yet!");
+  const fullSvgData = allPaths.join(' ');
+  navigator.clipboard.writeText(fullSvgData).then(() => {
+    alert("Vector Path Copied to Clipboard!\n\nYou can paste this directly into FontForge, Glyphs, or an SVG file.\n\nData:\n" + fullSvgData);
+  });
+}
+</script>
+
+</body>
+</html>

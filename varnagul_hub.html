@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varṇagul &amp; ॐ-Script Architecture Hub | Sovereign Indic Studio</title>
+  <meta name="description" content="Central Studio and Architectural Portal for Varṇagul 3.1 and Sovereign ॐ-Script: Interactive Bootcamps, 2D Anatomical Vector Engines, and Formal Specifications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --surface: #0e131d;
+      --surface-card: #121824;
+      --surface-hover: #172030;
+      --border: #1e283b;
+      --border-bright: #2d3c59;
+      --gold: #e6c17a;
+      --gold-glow: rgba(230, 193, 122, 0.2);
+      --cyan: #67d4e4;
+      --cyan-glow: rgba(103, 212, 228, 0.18);
+      --rose: #f43f5e;
+      --rose-glow: rgba(244, 63, 94, 0.2);
+      --green: #10b981;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-title: 'Cinzel', serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-kr: 'Noto Sans KR', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(230, 193, 122, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 90% 90%, rgba(103, 212, 228, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 10% 80%, rgba(244, 63, 94, 0.03) 0%, transparent 50%);
+    }
+
+    header {
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(14, 19, 29, 0.7);
+      backdrop-filter: blur(14px);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(230, 193, 122, 0.1);
+      border: 1px solid rgba(230, 193, 122, 0.3);
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 0 25px var(--gold-glow);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 760px;
+      margin: 0 auto 1.5rem;
+      font-weight: 300;
+    }
+
+    .header-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      font-family: var(--font-mono);
+    }
+
+    .nav-btn.primary {
+      background: var(--gold);
+      color: #07090e;
+      border: 1px solid var(--gold);
+      font-weight: 600;
+    }
+
+    .nav-btn.primary:hover {
+      background: #f3d492;
+      box-shadow: 0 0 15px var(--gold-glow);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.secondary {
+      background: var(--surface-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .nav-btn.secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* QUICK COMPILER HERO SANDBOX */
+    .hero-sandbox {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-sandbox::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--cyan), var(--rose));
+    }
+
+    .sandbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .sandbox-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .preset-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .sandbox-input {
+      width: 100%;
+      background: #040609;
+      border: 1px solid var(--border);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .sandbox-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 850px) {
+      .output-grid { grid-template-columns: 1fr; }
+    }
+
+    .output-card {
+      background: #040609;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .output-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .output-content {
+      font-size: 1.6rem;
+      font-family: var(--font-kr);
+      color: var(--text);
+      word-spacing: 0.4rem;
+      min-height: 2.8rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .out-root { color: var(--gold); font-weight: 700; }
+    .out-tag { color: var(--cyan); font-size: 85%; }
+    .out-breath { color: var(--rose); font-size: 80%; }
+    .out-vector { font-family: var(--font-mono); color: var(--cyan); font-size: 1.1rem; letter-spacing: 0.08em; }
+
+    /* STUDIO APPS GRID */
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    .section-count {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-bright);
+      background: var(--surface-card);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .app-card.featured {
+      border-color: rgba(230, 193, 122, 0.4);
+      background: linear-gradient(180deg, rgba(230, 193, 122, 0.04) 0%, rgba(14, 19, 29, 0.9) 100%);
+    }
+
+    .app-card.featured:hover {
+      border-color: var(--gold);
+      box-shadow: 0 15px 35px var(--gold-glow);
+    }
+
+    .app-badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      background: rgba(103, 212, 228, 0.1);
+      border: 1px solid rgba(103, 212, 228, 0.3);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+      align-self: flex-start;
+    }
+
+    .app-badge.gold {
+      background: rgba(230, 193, 122, 0.1);
+      border-color: rgba(230, 193, 122, 0.3);
+      color: var(--gold);
+    }
+
+    .app-badge.rose {
+      background: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: var(--rose);
+    }
+
+    .app-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .app-card:hover .app-title {
+      color: var(--gold);
+    }
+
+    .app-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 1.4rem;
+      line-height: 1.55;
+    }
+
+    .app-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .app-action {
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 600;
+    }
+
+    /* SPECIFICATIONS & DOCS LIST */
+    .docs-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .doc-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .doc-item:hover {
+      border-color: var(--cyan);
+      background: var(--surface-card);
+      transform: translateX(4px);
+    }
+
+    .doc-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .doc-name {
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .doc-item:hover .doc-name {
+      color: var(--cyan);
+    }
+
+    .doc-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .doc-arrow {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      transition: color 0.2s ease;
+    }
+
+    .doc-item:hover .doc-arrow {
+      color: var(--cyan);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      background: var(--surface);
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-pill">Sanskrit by Architecture • Indic AI Architecture</div>
+    <h1>Varṇagul &amp; ॐ-Script Architecture Hub</h1>
+    <p class="subtitle">The Unified Command Center for Pāṇinian Phonetic Physics, Korean Syllable Docking UI, and Sovereign 2D Circuit Diagrams.</p>
+    <div class="header-links">
+      <a href="Varnagul_Bootcamp_Web.html" class="nav-btn primary">Launch 8-Day Bootcamp Studio</a>
+      <a href="synthetic_om_script.html" class="nav-btn secondary">2D Circuit Studio</a>
+      <a href="index.html" class="nav-btn secondary">🎙️ ॐ-SYNTH Audio Synthesizer</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- LIVE HERO SANDBOX -->
+    <section class="hero-sandbox">
+      <div class="sandbox-header">
+        <span class="sandbox-title">⚡ Live Bijective Compiler Sandbox</span>
+        <div class="preset-chips">
+          <span style="font-size:0.75rem; color:var(--text-dim); align-self:center;">Presets:</span>
+          <button class="chip" onclick="setPreset('ATHA śūra·ḥ jagat·ṃ OM rakṣ·a·ti SVĀHĀ ||')">1. The Hero</button>
+          <button class="chip" onclick="setPreset('ATHA dhṛtarāṣṭra·ḥ hūṃ OM vac·a·tava·ti || dharma kṣetra·su ||')">2. Gītā 1.1</button>
+          <button class="chip" onclick="setPreset('ATHA aham gaṇaka·ṃ OM kṛ·a·mi SVĀHĀ ||')">3. Computer</button>
+        </div>
+      </div>
+      <input type="text" id="hubInput" class="sandbox-input" value="ATHA śūra·ḥ jagat·ṃ OM rakṣ·a·ti SVĀHĀ ||" spellcheck="false" placeholder="Type dotted IAST (e.g. ATHA śūra·ḥ jagat·ṃ OM rakṣ·a·ti SVĀHĀ ||)">
+      <div class="output-grid">
+        <div class="output-card">
+          <div class="output-label">
+            <span>Varṇagul 3.1 Digital UI</span>
+            <span style="color:var(--gold);">Typable Clean Hangul</span>
+          </div>
+          <div class="output-content" id="vOutput">슈라ঃ 자갇-ㅁ ॐ 랔스아디 〔솨하〕 ॥</div>
+        </div>
+        <div class="output-card">
+          <div class="output-label">
+            <span>Praṇava Vector Dynamics</span>
+            <span style="color:var(--cyan);">Acoustic Mouth Physics</span>
+          </div>
+          <div class="output-content out-vector" id="pOutput">╟ △/⇊⌒≈:·⊃ |•→□•|:• ⨀ ⌒≈→□⌒/→|↑ ╢ ‖</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPS GRID -->
+    <section>
+      <div class="section-heading">
+        <h2 class="section-title">Interactive Studios &amp; Engines</h2>
+        <span class="section-count">4 Web Applications</span>
+      </div>
+      <div class="apps-grid">
+
+        <!-- App 1: 8-Day Bootcamp -->
+        <a href="Varnagul_Bootcamp_Web.html" class="app-card featured">
+          <div>
+            <div class="app-badge gold">Primary Studio • 8 Days</div>
+            <h3 class="app-title">Varṇagul 8-Day Interactive Bootcamp</h3>
+            <p class="app-desc">Master Sanskrit typing in 8 structured modules. Features the Day 0 Acoustic Blueprint, live 3-Zone Syllable Docking Sandbox (testing kū = 규 vs śū = 슈), Master Rosetta Table, and interactive translation quizzes.</p>
+          </div>
+          <div class="app-meta">
+            <span>Varnagul_Bootcamp_Web.html</span>
+            <span class="app-action">Launch Studio →</span>
+          </div>
+        </a>
+
+        <!-- App 2: Synthetic Om Script Studio -->
+        <a href="synthetic_om_script.html" class="app-card">
+          <div>
+            <div class="app-badge cyan">Anatomical 2D Engine</div>
+            <h3 class="app-title">Sovereign Synthetic ॐ-Script Studio</h3>
+            <p class="app-desc">Render Sanskrit as sovereign 2D circuit diagrams with real-time SVG stroke animations. Maps Pāṇini’s 5 vocal stations (Velar, Palatal, Retroflex, Dental, Labial) directly into geometric vectors.</p>
+          </div>
+          <div class="app-meta">
+            <span>synthetic_om_script.html</span>
+            <span class="app-action">Open Circuit Studio →</span>
+          </div>
+        </a>
+
+        <!-- App 3: Master Trinity Engine -->
+        <a href="om_script_master.html" class="app-card">
+          <div>
+            <div class="app-badge rose">Trinity Architecture</div>
+            <h3 class="app-title">ॐ-Script Master Trinity Engine</h3>
+            <p class="app-desc">Side-by-side comparative inspection of all 3 architectural layers: Layer 1 (1D OM-Glyph Blueprint), Layer 2 (Varṇagul 3.1 UI), and Layer 3 (Sovereign 2D Vectors) with integrated AST compiler trace.</p>
+          </div>
+          <div class="app-meta">
+            <span>om_script_master.html</span>
+            <span class="app-action">Open Trinity Engine →</span>
+          </div>
+        </a>
+
+        <!-- App 4: UPEM Vector Foundry -->
+        <a href="Varnagul_Master_Engine.html" class="app-card">
+          <div>
+            <div class="app-badge">Vector CAD Tool</div>
+            <h3 class="app-title">Varṇagul Master Engine &amp; Vector Foundry</h3>
+            <p class="app-desc">Interactive 1000×1000 UPEM grid canvas for drawing, inspecting, and exporting custom glyph paths to FontForge and Glyphs. Includes complete phoneme grid and AST tokenizer.</p>
+          </div>
+          <div class="app-meta">
+            <span>Varnagul_Master_Engine.html</span>
+            <span class="app-action">Open Vector Foundry →</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- SPECIFICATIONS & DOCUMENTATION -->
+    <section>
+      <div class="section-heading">
+        <h2 class="section-title">Normative Specifications &amp; Manuals</h2>
+        <span class="section-count">Curriculum &amp; Norms</span>
+      </div>
+      <div class="docs-list">
+
+        <a href="Varnagul Bootcamp.md" class="doc-item">
+          <div class="doc-info">
+            <span class="doc-name">Varnagul Bootcamp.md</span>
+            <span class="doc-desc">The Canonical 8-Day Curriculum, Day 0 Blueprint, and Praṇava ⟷ Varṇagul Rosetta Stone</span>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
+
+        <a href="README.md" class="doc-item">
+          <div class="doc-info">
+            <span class="doc-name">README.md</span>
+            <span class="doc-desc">The Varṇagul Manifesto, Syllable Architecture, and High-Speed Indic AI Roadmap</span>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
+
+        <a href="Om-Script Varnagul-V2-Normative-Spec.md" class="doc-item">
+          <div class="doc-info">
+            <span class="doc-name">Om-Script Varnagul-V2-Normative-Spec.md</span>
+            <span class="doc-desc">Formal Architectural Grammar, Lexer Specifications, and Unicode Encodings</span>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
+
+        <a href="varnagul_compiler.py" class="doc-item">
+          <div class="doc-info">
+            <span class="doc-name">varnagul_compiler.py</span>
+            <span class="doc-desc">Python Canonical CLI Compiler with Clean Bijective Unicode Assembly</span>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Sanskrit by Architecture • Sovereign Indic AI • Varṇagul 3.1 &amp; ॐ-Script Master Suite
+  </footer>
+
+  <script>
+    const CHOSUNG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+    const JUNGSUNG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ᅫ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+    const JONGSUNG = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+    function composeHangul(c, v, j = '') {
+      let ci = CHOSUNG.indexOf(c);
+      let vi = JUNGSUNG.indexOf(v);
+      let ji = JONGSUNG.indexOf(j);
+      if (ci === -1) ci = 11;
+      if (vi === -1) vi = 0;
+      if (ji === -1) ji = 0;
+      return String.fromCharCode(0xAC00 + (ci * 21 + vi) * 28 + ji);
+    }
+
+    const V_CONSONANTS = {
+      'k': 'ㄱ', 'kh': 'ㅋ', 'g': 'ㄲ', 'gh': 'ㅋ', 'ṅ': 'ㅇ',
+      'c': 'ㅈ', 'ch': 'ㅊ', 'j': 'ㅉ', 'jh': 'ㅊ', 'ñ': 'ㄴ',
+      'ṭ': 'ㄷ', 'ṭh': 'ㅌ', 'ḍ': 'ㄸ', 'ḍh': 'ㅌ', 'ṇ': 'ㄴ',
+      't': 'ㄷ', 'th': 'ㅌ', 'd': 'ㄸ', 'dh': 'ㅌ', 'n': 'ㄴ',
+      'p': 'ㅂ', 'ph': 'ㅍ', 'b': 'ㅃ', 'bh': 'ㅍ', 'm': 'ㅁ',
+      'y': 'ㅇ', 'r': 'ㄹ', 'l': 'ㄹ', 'v': 'ㅂ',
+      'ś': 'ㅅ', 'ṣ': 'ㅅ', 's': 'ㅅ', 'h': 'ㅎ'
+    };
+
+    const V_VOWELS = {
+      'a': 'ㅏ', 'ā': 'ㅏ', 'i': 'ㅣ', 'ī': 'ㅐ', 'u': 'ㅜ', 'ū': 'ㅠ',
+      'ṛ': 'ㅡ', 'ṝ': 'ㅢ', 'e': 'ㅔ', 'ai': 'ㅖ', 'o': 'ㅗ', 'au': 'ㅛ'
+    };
+
+    const P_VECTORS = {
+      'k': '□', 'kh': "□'", 'g': '□•', 'gh': "□•'", 'ṅ': '□~',
+      'c': '△', 'ch': "△'", 'j': '△•', 'jh': "△•'", 'ñ': '△~',
+      'ṭ': '⌒', 'ṭh': "⌒'", 'ḍ': '⌒•', 'ḍh': "⌒•'", 'ṇ': '⌒~',
+      't': '|', 'th': "|'", 'd': '|•', 'dh': "|•'", 'n': '|~',
+      'p': '○', 'ph': "○'", 'b': '○•', 'bh': "○•'", 'm': '○~',
+      'y': '△≈', 'r': '⌒≈', 'l': '|≈', 'v': '○≈',
+      'ś': '△/', 'ṣ': '⌒/', 's': '|/', 'h': '□/',
+      'a': '→', 'ā': '↠', 'i': '↑', 'ī': '⇈', 'u': '↓', 'ū': '⇊',
+      'ṛ': '↺', 'ṝ': '⇋', 'e': '↗', 'ai': '⇗', 'o': '↘', 'au': '⇘'
+    };
+
+    function compileWord(word) {
+      if (word === 'ATHA') return { v: '<span class="out-breath">〔아타〕</span>', p: '╟' };
+      if (word === 'OM') return { v: '<span class="out-breath">ॐ</span>', p: '⨀' };
+      if (word === 'SVĀHĀ') return { v: '<span class="out-breath">〔솨하〕</span>', p: '╢' };
+      if (word === '||') return { v: '<span class="out-breath">॥</span>', p: '‖' };
+      if (word === 'hīṃ' || word === 'hūṃ') return { v: `<span class="out-breath">₍${word}₎</span>`, p: '𝄾' };
+
+      const parts = word.split('·');
+      let vRes = '', pRes = '';
+
+      parts.forEach((part, pIdx) => {
+        if (part === 'ḥ') {
+          vRes += '<span class="out-tag">ঃ</span>';
+          pRes += '·⊃';
+          return;
+        }
+        if (part === 'ṃ') {
+          vRes += '<span class="out-tag">-ㅁ</span>';
+          pRes += '·•';
+          return;
+        }
+
+        // Tokenize phonemes
+        let i = 0;
+        let pVecs = [];
+        let curCho = 'ㅇ', curJung = null, curJong = '';
+
+        while (i < part.length) {
+          let matched = false;
+          // Try 2-char consonants first
+          for (let len of [2, 1]) {
+            let sub = part.substr(i, len);
+            if (V_CONSONANTS[sub]) {
+              if (curJung) {
+                // Flush previous block
+                vRes += composeHangul(curCho, curJung, curJong);
+                curCho = 'ㅇ'; curJung = null; curJong = '';
+              }
+              curCho = V_CONSONANTS[sub];
+              pVecs.push(P_VECTORS[sub] || sub);
+              i += len;
+              matched = true;
+              break;
+            } else if (V_VOWELS[sub]) {
+              curJung = V_VOWELS[sub];
+              pVecs.push(P_VECTORS[sub] || sub);
+              i += len;
+              matched = true;
+              break;
+            }
+          }
+          if (!matched) { i++; }
+        }
+
+        if (curJung) {
+          vRes += `<span class="${pIdx === 0 ? 'out-root' : 'out-tag'}">${composeHangul(curCho, curJung, curJong)}</span>`;
+        } else if (curCho !== 'ㅇ') {
+          // Dead stop with carrier
+          vRes += `<span class="${pIdx === 0 ? 'out-root' : 'out-tag'}">${composeHangul(curCho, 'ㅡ', '')}</span>`;
+        }
+        pRes += pVecs.join('');
+      });
+
+      return { v: vRes, p: pRes };
+    }
+
+    function runHubCompiler() {
+      const val = document.getElementById('hubInput').value.trim();
+      if (!val) {
+        document.getElementById('vOutput').innerHTML = '';
+        document.getElementById('pOutput').innerText = '';
+        return;
+      }
+      const words = val.split(/\s+/);
+      const vWords = [], pWords = [];
+      for (const w of words) {
+        const res = compileWord(w);
+        vWords.push(res.v);
+        pWords.push(res.p);
+      }
+      document.getElementById('vOutput').innerHTML = vWords.join(' ');
+      document.getElementById('pOutput').innerText = pWords.join(' ');
+    }
+
+    function setPreset(txt) {
+      document.getElementById('hubInput').value = txt;
+      runHubCompiler();
+    }
+
+    document.getElementById('hubInput').addEventListener('input', runHubCompiler);
+    runHubCompiler();
+  </script>
+</body>
+</html>

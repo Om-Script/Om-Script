@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varṇagul 3.1 | The 8-Day Interactive Script Bootcamp & Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #090b10;
+  --surface: #11151f;
+  --surface-alt: #161b28;
+  --surface-hover: #1c2333;
+  --border: #242c40;
+  --border-focus: #3b4664;
+  --gold: #e6c17a;
+  --gold-glow: rgba(230, 193, 122, 0.2);
+  --cyan: #67d4e4;
+  --cyan-glow: rgba(103, 212, 228, 0.18);
+  --rose: #e87a90;
+  --rose-glow: rgba(232, 122, 144, 0.2);
+  --green: #6be09b;
+  --green-glow: rgba(107, 224, 155, 0.2);
+  --text: #e8ecf4;
+  --text-muted: #8b95ab;
+  --font-main: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-kr: 'Noto Sans KR', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  padding: 24px;
+}
+
+.app-container {
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.brand h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand h1 span.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--gold-glow);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+.brand p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+.btn {
+  background: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn-primary {
+  background: var(--gold);
+  color: #090b10;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #f0ce8a;
+  color: #090b10;
+}
+
+/* Tabs */
+.day-tabs {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1024px) {
+  .day-tabs { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 600px) {
+  .day-tabs { grid-template-columns: repeat(2, 1fr); }
+}
+
+.tab-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px 10px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.tab-btn:hover {
+  border-color: var(--border-focus);
+  color: var(--text);
+  background: var(--surface-alt);
+}
+.tab-btn.active {
+  background: var(--surface-alt);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 15px var(--gold-glow);
+}
+.tab-btn .day-num {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+.tab-btn .day-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Grid Layout */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+}
+@media (max-width: 992px) {
+  .main-grid { grid-template-columns: 1fr; }
+}
+
+/* Content Panel */
+.content-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.section-title {
+  font-size: 1.25rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.section-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.lesson-text {
+  font-size: 0.95rem;
+  color: #cfd6e6;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* 3-Zone Docking Visualizer */
+.docking-diagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 18px 0;
+}
+.dock-zone {
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+.dock-zone.zone-1 { border-color: rgba(230, 193, 122, 0.4); background: rgba(230, 193, 122, 0.04); }
+.dock-zone.zone-2 { border-color: rgba(103, 212, 228, 0.4); background: rgba(103, 212, 228, 0.04); }
+.dock-zone.zone-3 { border-color: rgba(232, 122, 144, 0.4); background: rgba(232, 122, 144, 0.04); }
+.zone-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.zone-1 .zone-tag { color: var(--gold); }
+.zone-2 .zone-tag { color: var(--cyan); }
+.zone-3 .zone-tag { color: var(--rose); }
+.zone-big { font-family: var(--font-kr); font-size: 1.8rem; font-weight: 700; }
+.zone-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+/* Interactive Docking Sandbox */
+.dock-interactive {
+  background: #0d121c;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dock-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.picker-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 90px;
+}
+.picker-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-kr);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.picker-btn:hover, .picker-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(230, 193, 122, 0.1);
+}
+.dock-result-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-alt);
+  border-left: 4px solid var(--cyan);
+  padding: 12px 18px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 6px;
+}
+.dock-result-block {
+  font-family: var(--font-kr);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-shadow: 0 0 15px var(--cyan-glow);
+}
+.dock-result-info {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Tables */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px 0;
+  font-size: 0.9rem;
+}
+.spec-table th, .spec-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.spec-table th {
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.spec-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+.varnagul-glyph {
+  font-family: var(--font-kr);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cyan);
+}
+.pra-vector {
+  font-family: var(--font-mono);
+  color: var(--rose);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.iast-tag {
+  font-family: var(--font-mono);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Worked Sentence Display */
+.sentence-box {
+  background: var(--surface-alt);
+  border-left: 4px solid var(--gold);
+  padding: 18px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+.sentence-row {
+  display: flex;
+  margin-bottom: 8px;
+  align-items: baseline;
+  gap: 12px;
+}
+.sentence-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 80px;
+}
+.sentence-val {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.sentence-val.iast {
+  font-family: var(--font-mono);
+  color: var(--gold);
+}
+.sentence-val.varnagul {
+  font-family: var(--font-kr);
+  font-size: 1.25rem;
+  color: var(--cyan);
+}
+.sentence-val.trans {
+  color: #cfd6e6;
+  font-style: italic;
+}
+
+/* Exercises */
+.exercise-group {
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+.exercise-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.exercise-prompt {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.exercise-input-row {
+  display: flex;
+  gap: 10px;
+}
+.exercise-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  outline: none;
+}
+.exercise-input:focus {
+  border-color: var(--cyan);
+}
+.feedback-badge {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: none;
+}
+.feedback-badge.pass {
+  display: block;
+  color: var(--green);
+}
+.feedback-badge.fail {
+  display: block;
+  color: var(--rose);
+}
+
+/* Tool Panel (Right Column) */
+.tool-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sandbox-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.sandbox-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  outline: none;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+.sandbox-input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+.sandbox-output {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 80px;
+  font-family: var(--font-kr);
+  font-size: 1.35rem;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Virtual Keyboard */
+.keyboard-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.kb-category {
+  margin-bottom: 12px;
+}
+.kb-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.kb-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.key-btn {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-kr);
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 40px;
+  height: 38px;
+  padding: 0 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.15s ease;
+}
+.key-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateY(-1px);
+}
+.key-btn .key-sub {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  line-height: 1;
+}
+.key-btn.gold {
+  border-color: rgba(230, 193, 122, 0.4);
+  color: var(--gold);
+}
+.key-btn.rose {
+  border-color: rgba(232, 122, 144, 0.4);
+  color: var(--rose);
+}
+.key-btn.cyan {
+  border-color: rgba(103, 212, 228, 0.4);
+  color: var(--cyan);
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <div class="brand">
+      <h1>Varṇagul 3.1 <span class="badge">Mode 2 Studio</span></h1>
+      <p>The 8-Day Interactive Script Bootcamp & Articulatory Typing Engine</p>
+    </div>
+    <div class="nav-actions">
+      <button class="btn" onclick="insertSample('ATHA nara·ḥ hūṃ phala·ṃ hūṃ OM khād·a·ti SVĀHĀ ॥')">Load Sample</button>
+      <button class="btn btn-primary" onclick="window.print()">Export Reference</button>
+    </div>
+  </header>
+
+  <!-- 8-Day Tabs (Day 0 to Day 7) -->
+  <div class="day-tabs">
+    <div class="tab-btn active" onclick="switchDay(0)">
+      <span class="day-num">Day 0</span>
+      <span class="day-title">Blueprint</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(1)">
+      <span class="day-num">Day 1</span>
+      <span class="day-title">Action Core</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(2)">
+      <span class="day-num">Day 2</span>
+      <span class="day-title">Modifiers</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(3)">
+      <span class="day-num">Day 3</span>
+      <span class="day-title">Time Engine</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(4)">
+      <span class="day-num">Day 4</span>
+      <span class="day-title">7 Roles</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(5)">
+      <span class="day-num">Day 5</span>
+      <span class="day-title">Bīja Tempos</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(6)">
+      <span class="day-num">Day 6</span>
+      <span class="day-title">7 Converters</span>
+    </div>
+    <div class="tab-btn" onclick="switchDay(7)">
+      <span class="day-num">Day 7</span>
+      <span class="day-title">Epic Trial</span>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="main-grid">
+    <!-- Left: Day Content -->
+    <div class="lesson-panel" id="lessonContainer">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Right: Interactive Sandbox & Keyboard -->
+    <div class="tool-panel">
+      <!-- Live Sandbox -->
+      <div class="sandbox-card">
+        <div class="section-title" style="font-size: 1.05rem;">Live Compiler Sandbox</div>
+        <div class="section-subtitle">Type IAST (with middle dots) or use the keyboard</div>
+        <textarea id="liveInput" class="sandbox-input" rows="3" placeholder="e.g. ATHA nara·ḥ phala·ṃ OM khād·a·ti ॥" oninput="runLiveCompiler()"></textarea>
+        <div class="section-subtitle" style="margin-bottom: 6px;">Varṇagul 3.1 Output</div>
+        <div id="liveOutput" class="sandbox-output">〔아타〕 나라ঃ 파람 ॐ 카다티 ॥</div>
+      </div>
+
+      <!-- Virtual Keyboard -->
+      <div class="keyboard-card">
+        <div class="section-title" style="font-size: 1.05rem;">Pāṇinian Articulatory Keyboard</div>
+
+        <!-- 5 Varga Rows -->
+        <div class="kb-category">
+          <div class="kb-title">1. Kaṇṭhya (Velar)</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㄱ')">ㄱ<span class="key-sub">k</span></button>
+            <button class="key-btn" onclick="typeChar('ㅋ')">ㅋ<span class="key-sub">kh</span></button>
+            <button class="key-btn" onclick="typeChar('ㄲ')">ㄲ<span class="key-sub">g</span></button>
+            <button class="key-btn" onclick="typeChar('ㅋ̇')">ㅋ̇<span class="key-sub">gh</span></button>
+            <button class="key-btn" onclick="typeChar('ㅇ')">ㅇ<span class="key-sub">ṅ</span></button>
+          </div>
+        </div>
+
+        <div class="kb-category">
+          <div class="kb-title">2. Tālavya (Palatal)</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㅈ')">ㅈ<span class="key-sub">c</span></button>
+            <button class="key-btn" onclick="typeChar('ㅊ')">ㅊ<span class="key-sub">ch</span></button>
+            <button class="key-btn" onclick="typeChar('ㅉ')">ㅉ<span class="key-sub">j</span></button>
+            <button class="key-btn" onclick="typeChar('ㅊ̇')">ㅊ̇<span class="key-sub">jh</span></button>
+            <button class="key-btn" onclick="typeChar('ㄴ̃')">ㄴ̃<span class="key-sub">ñ</span></button>
+          </div>
+        </div>
+
+        <div class="kb-category">
+          <div class="kb-title">3. Mūrdhanya (Retroflex)</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㄷ̣')">ㄷ̣<span class="key-sub">ṭ</span></button>
+            <button class="key-btn" onclick="typeChar('ㅌ̣')">ㅌ̣<span class="key-sub">ṭh</span></button>
+            <button class="key-btn" onclick="typeChar('ㄸ̣')">ㄸ̣<span class="key-sub">ḍ</span></button>
+            <button class="key-btn" onclick="typeChar('ㅌ̣̇')">ㅌ̣̇<span class="key-sub">ḍh</span></button>
+            <button class="key-btn" onclick="typeChar('ㄴ̣')">ㄴ̣<span class="key-sub">ṇ</span></button>
+          </div>
+        </div>
+
+        <div class="kb-category">
+          <div class="kb-title">4. Dantya (Dental)</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㄷ')">ㄷ<span class="key-sub">t</span></button>
+            <button class="key-btn" onclick="typeChar('ㅌ')">ㅌ<span class="key-sub">th</span></button>
+            <button class="key-btn" onclick="typeChar('ㄸ')">ㄸ<span class="key-sub">d</span></button>
+            <button class="key-btn" onclick="typeChar('ㅌ̇')">ㅌ̇<span class="key-sub">dh</span></button>
+            <button class="key-btn" onclick="typeChar('ㄴ')">ㄴ<span class="key-sub">n</span></button>
+          </div>
+        </div>
+
+        <div class="kb-category">
+          <div class="kb-title">5. Oṣṭhya (Labial)</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㅂ')">ㅂ<span class="key-sub">p</span></button>
+            <button class="key-btn" onclick="typeChar('ㅍ')">ㅍ<span class="key-sub">ph</span></button>
+            <button class="key-btn" onclick="typeChar('ㅃ')">ㅃ<span class="key-sub">b</span></button>
+            <button class="key-btn" onclick="typeChar('ㅍ̇')">ㅍ̇<span class="key-sub">bh</span></button>
+            <button class="key-btn" onclick="typeChar('ㅁ')">ㅁ<span class="key-sub">m</span></button>
+          </div>
+        </div>
+
+        <!-- Semivowels & Sibilants -->
+        <div class="kb-category">
+          <div class="kb-title">Semivowels & Sibilants</div>
+          <div class="kb-row">
+            <button class="key-btn" onclick="typeChar('ㄹ')">ㄹ<span class="key-sub">r/l</span></button>
+            <button class="key-btn" onclick="typeChar('ㅘ')">ㅘ<span class="key-sub">v</span></button>
+            <button class="key-btn" onclick="typeChar('ㅅ')">ㅅ<span class="key-sub">s/ś</span></button>
+            <button class="key-btn" onclick="typeChar('ㅆ')">ㅆ<span class="key-sub">ṣ</span></button>
+            <button class="key-btn" onclick="typeChar('ㅎ')">ㅎ<span class="key-sub">h</span></button>
+          </div>
+        </div>
+
+        <!-- Role Tags & 7 Converters -->
+        <div class="kb-category">
+          <div class="kb-title">7 Role Tags & 7 Converters</div>
+          <div class="kb-row">
+            <button class="key-btn cyan" onclick="typeChar('ঃ')">ঃ<span class="key-sub">·ḥ</span></button>
+            <button class="key-btn cyan" onclick="typeChar('ㅁ')">ㅁ<span class="key-sub">·ṃ</span></button>
+            <button class="key-btn cyan" onclick="typeChar('비ঃ')">비ঃ<span class="key-sub">·bhiḥ</span></button>
+            <button class="key-btn cyan" onclick="typeChar('뱜')">뱜<span class="key-sub">·bhyam</span></button>
+            <button class="key-btn cyan" onclick="typeChar('타ঃ')">타ঃ<span class="key-sub">·taḥ</span></button>
+            <button class="key-btn cyan" onclick="typeChar('샤')">샤<span class="key-sub">·sya</span></button>
+            <button class="key-btn cyan" onclick="typeChar('수')">수<span class="key-sub">·su</span></button>
+            <button class="key-btn gold" onclick="typeChar('트리')">트리<span class="key-sub">·tṛ</span></button>
+            <button class="key-btn gold" onclick="typeChar('나')">나<span class="key-sub">·na</span></button>
+            <button class="key-btn gold" onclick="typeChar('타')">타<span class="key-sub">·ta</span></button>
+            <button class="key-btn gold" onclick="typeChar('가')">가<span class="key-sub">·ka</span></button>
+            <button class="key-btn gold" onclick="typeChar('돠')">돠<span class="key-sub">·tva</span></button>
+            <button class="key-btn gold" onclick="typeChar('터')">터<span class="key-sub">·tā</span></button>
+            <button class="key-btn gold" onclick="typeChar('인')">인<span class="key-sub">·in</span></button>
+          </div>
+        </div>
+
+        <!-- Bījas -->
+        <div class="kb-category">
+          <div class="kb-title">Bīja Commands & Resonators</div>
+          <div class="kb-row">
+            <button class="key-btn rose" onclick="typeChar('〔아타〕')">〔아타〕<span class="key-sub">ATHA</span></button>
+            <button class="key-btn rose" onclick="typeChar('ॐ')">ॐ<span class="key-sub">OM</span></button>
+            <button class="key-btn rose" onclick="typeChar('【솨하】')">【솨하】<span class="key-sub">SVĀHĀ</span></button>
+            <button class="key-btn rose" onclick="typeChar('햄')">햄<span class="key-sub">hīṃ</span></button>
+            <button class="key-btn rose" onclick="typeChar('훔')">훔<span class="key-sub">hūṃ</span></button>
+            <button class="key-btn" onclick="typeChar('॥')">॥<span class="key-sub">pause</span></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================================
+// LESSON DATABASE (DAYS 0 TO 7)
+// ============================================================================
+const DAYS_DATA = {
+  0: {
+    isBlueprint: true,
+    title: "The Acoustic Blueprint & Syllabic Docking Architecture",
+    subtitle: "Pāṇini Stations, Praṇava Vectors, and 3-Zone Hangul Syllables",
+    text: `Before memorizing vocabulary, understand how Varṇagul 2D blocks assemble. Varṇagul operates in two complementary registers:
+    <br><br>
+    <strong>1. Everyday Mode (27-Set):</strong> Standard mobile keyboard typing with <em>zero combining diacritics</em>. Retroflexes collapse to dentals (ㄷ/ㄴ), voiced aspirates collapse to aspirated stops (ㅋ/ㅊ/ㅌ/ㅍ), and a/ā share ㅏ.
+    <br>
+    <strong>2. Lossless Extended Mode (50-Set):</strong> Systematic Unicode diacritics (ㄷ̣, ㅋ̇) preserving exact Pāṇinian phonology for scholarly decompilation.
+    <br><br>
+    <strong>The 3-Zone Frame:</strong> Zone 1 Onset (Mouth Station) + Zone 2 Vowel Rail (Breath Flow) + Zone 3 Coda Floor (Batchim).`,
+    dockingDemo: true,
+    rosettaTable: [
+      { varga: "Velar (Kaṇṭha)", iast: "k / kh / g / gh / ṅ", pra: "□ / □' / □• / □•' / □~", every: "ㄱ / ㅋ / ㄲ / ㅋ / ㅇ", loss: "ㄱ / ㅋ / ㄲ / ㅋ̇ / ㅇ", note: "Deep throat cavity" },
+      { varga: "Palatal (Tālu)", iast: "c / ch / j / jh / ñ", pra: "△ / △' / △• / △•' / △~", every: "ㅈ / ㅊ / ㅉ / ㅊ / ㄴ", loss: "ㅈ / ㅊ / ㅉ / ㅊ̇ / ㄴ̃", note: "Tongue arch on palate" },
+      { varga: "Retroflex (Mūrdhā)", iast: "ṭ / ṭh / ḍ / ḍh / ṇ", pra: "⌒ / ⌒' / ⌒• / ⌒•' / ⌒~", every: "ㄷ / ㅌ / ㄸ / ㅌ / ㄴ", loss: "ㄷ̣ / ㅌ̣ / ㄸ̣ / ㅌ̣̇ / ㄴ̣", note: "Curled tongue at roof dome" },
+      { varga: "Dental (Danta)", iast: "t / th / d / dh / n", pra: "| / |' / |• / |•' / |~", every: "ㄷ / ㅌ / ㄸ / ㅌ / ㄴ", loss: "ㄷ / ㅌ / ㄸ / ㅌ̇ / ㄴ", note: "Tongue barrier on teeth" },
+      { varga: "Labial (Oṣṭha)", iast: "p / ph / b / bh / m", pra: "○ / ○' / ○• / ○•' / ○~", every: "ㅂ / ㅍ / ㅃ / ㅍ / ㅁ", loss: "ㅂ / ㅍ / ㅃ / ㅍ̇ / ㅁ", note: "Forward lip seal" },
+      { varga: "Semivowels & Sibilant", iast: "y / r / l / v / ś", pra: "Flow (≈) & Friction (/)", every: "ㅑ.. / ㄹ / ㄹ / ㅘ.. / 슈..", loss: "ㅑ-glide / ㄹ / ㄹ / ㅘ / 슈", note: "Clean Hangul without broken U+0326" }
+    ],
+    worked: {
+      iast: "k + ū = kū  |  ś + ū = śū  |  ś + ū + r + a = śūra",
+      kr: "ㄱ + ㅠ = 규  |  ㅅ + ㅠ = 슈  |  슈 + 라 = 슈라",
+      trans: "Zero apostrophes, zero Virāma hacks. Clean 2D architectural blocks."
+    },
+    exercises: [
+      {
+        prompt: "1. What is the Varṇagul block for k + ū (ㄱ + ㅠ)?",
+        ans: "규"
+      },
+      {
+        prompt: "2. What is the Varṇagul block for ś + ū (ㅅ + ㅠ)?",
+        ans: "슈"
+      },
+      {
+        prompt: "3. What is the Varṇagul block for k + a + m (ㄱ + ㅏ + ㅁ)?",
+        ans: "감"
+      }
+    ]
+  },
+  1: {
+    title: "The Architecture of Action",
+    subtitle: "Immutable Roots, Subject/Object Roles, and the Present Verb",
+    text: "Classical Sanskrit forces students to memorize complex conjugation tables before speaking a single sentence. In ॐ-Script, the root is an immutable data block that never mutates. Today, you build and chant complete three-word sentences.",
+    table: [
+      { iast: "nara", kr: "나라", mean: "Man (Noun Stem)" },
+      { iast: "aśva", kr: "아솨", mean: "Horse (Noun Stem)" },
+      { iast: "phala", kr: "파라", mean: "Fruit (Noun Stem)" },
+      { iast: "√khād", kr: "카다", mean: "To eat (Action Root)" },
+      { iast: "√dṛś", kr: "드르스", mean: "To see (Action Root)" }
+    ],
+    worked: {
+      iast: "ATHA nara·ḥ hūṃ phala·ṃ hūṃ OM khād·a·ti SVĀHĀ ॥",
+      kr: "〔아타〕 나라ঃ 훔 파람 훔 ॐ 카다티 【솨하】 ॥",
+      trans: "The man eats the fruit."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in IAST: The horse (aśva·ḥ) sees (dṛś·a·ti) the man (nara·ṃ).",
+        ans: "aśva·ḥ nara·ṃ dṛś·a·ti"
+      },
+      {
+        prompt: "2. Write in Varṇagul: The man (nara·ḥ) sees the fruit (phala·ṃ).",
+        ans: "나라ঃ 파람 드르샤티"
+      }
+    ]
+  },
+  2: {
+    title: "Expanding the World",
+    subtitle: "Bare Modifiers, the High-Frequency Bridge (hīṃ), and Spatial Prefixes",
+    text: "In ॐ-Script, adjectives take no declension endings. They sit bare to the left of the noun and pass their meaning forward. Use the high-frequency bridge hīṃ to rapidly string multiple descriptors together.",
+    table: [
+      { iast: "śūra", kr: "슈라", mean: "Brave (Modifier)" },
+      { iast: "viśāla", kr: "위샬라", mean: "Vast / Giant (Modifier)" },
+      { iast: "kṛṣṇa", kr: "크르스나", mean: "Dark / Black (Modifier)" },
+      { iast: "pra-", kr: "프라", mean: "Forward / Intense (Prefix)" },
+      { iast: "ud-", kr: "웉", mean: "Upward (Prefix)" }
+    ],
+    worked: {
+      iast: "śūra hīṃ viśāla hīṃ aśva·ḥ hūṃऽऽ",
+      kr: "슈라 햄 위샬라 햄 아솨ঃ 훔–",
+      trans: "The brave, giant horse..."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in IAST: The brave horse looks up (ud dṛś·a·ti) at the vast dark mountain (giri·ṃ).",
+        ans: "śūra aśva·ḥ viśāla kṛṣṇa giri·ṃ ud dṛś·a·ti"
+      },
+      {
+        prompt: "2. Write in Varṇagul: The vast horse eats the small (alpa) fruit.",
+        ans: "위샬라 아솨ঃ 알파 파람 카다티"
+      }
+    ]
+  },
+  3: {
+    title: "Time and the Verb Engine",
+    subtitle: "The 4 Time States without Root Mutation",
+    text: "In classical tongues, moving through time shatters the spelling of the root. In ॐ-Script, the root is locked. Time is handled by a modular tag inserted between the root and the terminator.",
+    table: [
+      { iast: "gam·a·ti", kr: "감아티", mean: "goes (Present)" },
+      { iast: "gam·a·tava·ti", kr: "감아타와티", mean: "went (Past)" },
+      { iast: "gam·a·sya·ti", kr: "감아샤티", mean: "will go (Future)" },
+      { iast: "gam·a·tavya·ti", kr: "감아타뱌티", mean: "must go (Imperative)" }
+    ],
+    worked: {
+      iast: "ATHA krūra rāja·ḥ vi naś·a·sya·ti SVĀHĀ ॥",
+      kr: "〔아타〕 크루라 라자ঃ 위 나샤샤티 【솨하】 ॥",
+      trans: "The cruel king will destroy."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in IAST: The cruel king will destroy the mountain.",
+        ans: "krūra rāja·ḥ giri·ṃ vi naś·a·sya·ti"
+      },
+      {
+        prompt: "2. Write in Varṇagul: The man went (gam·a·tava·ti).",
+        ans: "나라ঃ 감아타와티"
+      }
+    ]
+  },
+  4: {
+    title: "The Peripheral Roles (The 7 Cases)",
+    subtitle: "Tool, Receiver, Origin, Possessor, and Environment",
+    text: "Beyond Subject and Object, five universal role tags handle all spatial, causal, and relational functions. They snap cleanly onto any noun stem.",
+    table: [
+      { iast: "·bhiḥ", kr: "비ঃ", mean: "Tool (with / by means of)" },
+      { iast: "·bhyam", kr: "뱜", mean: "Receiver (for / to)" },
+      { iast: "·taḥ", kr: "타ঃ", mean: "Origin (from / out of)" },
+      { iast: "·sya", kr: "샤", mean: "Possessor (of / belonging to)" },
+      { iast: "·su", kr: "수", mean: "Environment (in / on / at)" }
+    ],
+    worked: {
+      iast: "ATHA giri·taḥ hūṃ vana·su hūṃ krūra rāja·ḥ śara·bhiḥ pra har·a·tava·ti ॥",
+      kr: "〔아타〕 기리타ঃ 훔 와나수 훔 크루라 라자ঃ 사라비ঃ 프라 하라타와티 ॥",
+      trans: "From the mountain, in the forest, the cruel king struck with arrows."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in IAST: In the forest (vana·su), the man (nara·ḥ) sees the horse (aśva·ṃ).",
+        ans: "vana·su nara·ḥ aśva·ṃ dṛś·a·ti"
+      },
+      {
+        prompt: "2. Write in Varṇagul: The king gives (dā·a·ti) the fruit to the sage (muni·bhyam).",
+        ans: "라자ঃ 파람 무니뱜 다아티"
+      }
+    ]
+  },
+  5: {
+    title: "The Bīja Acoustic Protocol",
+    subtitle: "Acoustic Cadence and Tempo Palette",
+    text: "Without Sandhi mutations, the Bīja protocol gives speakers dynamic tempo control. Staccato 16th-notes string modifiers, 8th-notes ground concepts, and half-note fermatas build tension before the verb.",
+    table: [
+      { iast: "him / hum", kr: "힘 / 훔", mean: "16th-note rapid staccato bridge" },
+      { iast: "hīṃ / hūṃ", kr: "햄 / 훔", mean: "8th-note standard grounding" },
+      { iast: "hūṃऽऽ", kr: "훔–", mean: "Quarter-note clause closure" },
+      { iast: "hūṃ३", kr: "훔≡", mean: "Half-note pre-verbal fermata" }
+    ],
+    worked: {
+      iast: "krūra him rāja·ḥ hūṃऽऽ viśāla hum senā·ṃ hūṃ३ OM vi naś·a·tava·ti ॥",
+      kr: "크루라 힘 라자ঃ 훔– 위샬라 훔 세남 훔≡ ॐ 위 나샤타와티 ॥",
+      trans: "The cruel king utterly destroyed the vast army."
+    },
+    exercises: [
+      {
+        prompt: "1. Which tempo marks maximum tension immediately before the verb threshold?",
+        ans: "hūṃ३"
+      }
+    ]
+  },
+  6: {
+    title: "The Seven Universal Stem Converters",
+    subtitle: "Tier 1 Root Converters and Tier 2 Stem Converters",
+    text: "Instead of memorizing hundreds of thousands of words, ॐ-Script generates nouns dynamically using 7 Universal Stem Converters across two tiers, expanding the generative lexicon to over 500,000 words.",
+    table: [
+      { iast: "·tṛ", kr: "트리", mean: "Tier 1: Actor / Doer (rakṣatṛ = protector)" },
+      { iast: "·na", kr: "나", mean: "Tier 1: Act / System (rakṣana = defense)" },
+      { iast: "·ta", kr: "타", mean: "Tier 1: Artifact / Result (rakṣata = protected)" },
+      { iast: "·ka", kr: "가", mean: "Tier 2: Diminutive (aśvaka = pony)" },
+      { iast: "·tva", kr: "돠", mean: "Tier 2: Abstract State (śubhatva = goodness)" },
+      { iast: "·tā", kr: "터", mean: "Tier 2: Abstract Quality (mahātā = greatness)" },
+      { iast: "·in", kr: "인", mean: "Tier 2: Possessor (guṇain = virtuous person)" }
+    ],
+    worked: {
+      iast: "ATHA śūra yudh·a·tṛ·ḥ hūṃऽऽ viśāla rakṣ·a·na·ṃ hūṃ३ OM pari dṛś·a·tava·ti ॥",
+      kr: "〔아타〕 슈라 유다트리ঃ 훔– 위샬라 랔아남 훔≡ ॐ 파리 드르샤타와티 ॥",
+      trans: "The brave fighter fully observed the vast fortress."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in Varṇagul: The protector (rakṣ·a·tṛ·ḥ) sees (dṛś·a·ti) the reading (paṭh·a·na·ṃ).",
+        ans: "랔아트리ঃ 파타남 드르샤티"
+      },
+      {
+        prompt: "2. Write in Varṇagul: The little horse (aśva·ka·ḥ) sees goodness (śubha·tva·ṃ).",
+        ans: "아솨가ঃ 수파돰 드르샤티"
+      }
+    ]
+  },
+  7: {
+    title: "Full Narrative Execution (The Final Trial)",
+    subtitle: "Vālmīki-Level Three-Sentence Epic Battle Narrative",
+    text: "Today you execute a complete three-sentence epic narrative using every module in the architecture: peripheral tags, time modules, Bīja breathing, and stem converters.",
+    table: [
+      { iast: "kṛṣṇa giri·taḥ", kr: "크르스나 기리타ঃ", mean: "From the dark mountain (Origin)" },
+      { iast: "śūra strī yudh·a·tṛ·ḥ", kr: "슈라 스트래 유다트리ঃ", mean: "The brave female fighter (Subject)" },
+      { iast: "viśāla rakṣ·a·na·ṃ", kr: "위샬라 랔아남", mean: "The vast fortress (Object)" },
+      { iast: "śīghra śara·bhiḥ", kr: "시그라 사라비ঃ", mean: "With a swift arrow (Tool)" }
+    ],
+    worked: {
+      iast: "ATHA śīghra śara·bhiḥ hūṃऽऽ kāṣṭha dvāra·ṃ hūṃ३ OM vi naś·a·tava·ti SVĀHĀ ॥",
+      kr: "〔아타〕 시그라 사라비ঃ 훔– 카스타 드와람 훔≡ ॐ 위 나샤타와티 【솨하】 ॥",
+      trans: "With a swift arrow, she utterly destroyed the wooden gate."
+    },
+    exercises: [
+      {
+        prompt: "1. Write in Varṇagul: The tyrant (krūra śās·a·tṛ·ḥ) will fall (ava pat·a·sya·ti).",
+        ans: "크루라 샤사트리ঃ 아와 파타샤티"
+      }
+    ]
+  }
+};
+
+let currentDay = 0;
+
+function switchDay(dayNum) {
+  currentDay = dayNum;
+  document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === dayNum);
+  });
+  renderLesson();
+}
+
+// Interactive Docking Sandbox Variables
+let selCho = 'ㄱ';
+let selJung = 'ㅠ';
+let selJong = '';
+
+const CHOSUNG_LIST = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const JUNGSUNG_LIST = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ᅫ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+const JONGSUNG_LIST = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+function computeHangul(c, v, j) {
+  let cIdx = CHOSUNG_LIST.indexOf(c);
+  let vIdx = JUNGSUNG_LIST.indexOf(v);
+  let jIdx = JONGSUNG_LIST.indexOf(j);
+  if (cIdx === -1) cIdx = 11;
+  if (vIdx === -1) vIdx = 17;
+  if (jIdx === -1) jIdx = 0;
+  return String.fromCharCode(0xAC00 + (cIdx * 21 + vIdx) * 28 + jIdx);
+}
+
+function updateDockInteractive() {
+  const blk = computeHangul(selCho, selJung, selJong);
+  const outEl = document.getElementById('dockResultBlock');
+  const infoEl = document.getElementById('dockResultInfo');
+  if (outEl) outEl.innerText = blk;
+  if (infoEl) {
+    let choName = selCho === 'ㄱ' ? 'k (Velar)' : selCho === 'ㅅ' ? 's / ś (Sibilant)' : selCho === 'ㄷ' ? 't (Dental)' : selCho === 'ㅂ' ? 'p (Labial)' : 'Silent Carrier';
+    let jungName = selJung === 'ㅠ' ? 'ū (Long Vowel)' : selJung === 'ㅜ' ? 'u (Short Vowel)' : selJung === 'ㅏ' ? 'a (Neutral)' : selJung === 'ㅓ' ? 'ā (Long Neutral)' : 'Vowel Rail';
+    let jongName = selJong === 'ㅁ' ? ' + ·ṃ (Object Coda)' : selJong === 'ㄷ' ? ' + t (Dead Stop)' : '';
+    infoEl.innerHTML = `<strong>${choName}</strong> + <strong>${jungName}</strong>${jongName}<br><span style="color:var(--cyan)">Clean 2D Composed Block</span>`;
+  }
+}
+
+function setDockCho(c, btn) {
+  selCho = c;
+  document.querySelectorAll('#choRow .picker-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateDockInteractive();
+}
+
+function setDockJung(v, btn) {
+  selJung = v;
+  document.querySelectorAll('#jungRow .picker-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateDockInteractive();
+}
+
+function setDockJong(j, btn) {
+  selJong = j;
+  document.querySelectorAll('#jongRow .picker-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateDockInteractive();
+}
+
+function renderLesson() {
+  const d = DAYS_DATA[currentDay];
+  
+  if (d.isBlueprint) {
+    // Render Day 0 (Acoustic Blueprint)
+    let rosettaRows = d.rosettaTable.map(r => `
+      <tr>
+        <td class="iast-tag">${r.varga}</td>
+        <td><code>${r.iast}</code></td>
+        <td class="pra-vector">${r.pra}</td>
+        <td class="varnagul-glyph" style="color:var(--gold); font-size:1.05rem;">${r.every}</td>
+        <td class="varnagul-glyph" style="color:var(--cyan); font-size:1.05rem;">${r.loss}</td>
+        <td style="font-size:0.8rem; color:var(--text-muted);">${r.note}</td>
+      </tr>
+    `).join('');
+
+    let exercisesHtml = d.exercises.map((ex, idx) => `
+      <div class="exercise-item">
+        <div class="exercise-prompt">${ex.prompt}</div>
+        <div class="exercise-input-row">
+          <input type="text" class="exercise-input" id="exInput_${idx}" placeholder="Type Hangul block (e.g. 규, 슈)...">
+          <button class="btn btn-primary" onclick="checkEx(${idx}, '${ex.ans}')">Check</button>
+        </div>
+        <div class="feedback-badge" id="exFb_${idx}"></div>
+      </div>
+    `).join('');
+
+    document.getElementById('lessonContainer').innerHTML = `
+      <div class="content-card">
+        <div class="section-title">Day 0: ${d.title}</div>
+        <div class="section-subtitle">${d.subtitle}</div>
+        <div class="lesson-text">${d.text}</div>
+
+        <!-- 3-Zone Architecture Diagram -->
+        <div class="docking-diagram">
+          <div class="dock-zone zone-1">
+            <div class="zone-tag">Zone 1: Onset</div>
+            <div class="zone-big" style="color:var(--gold);">ㄱ / ㅅ / ㄷ</div>
+            <div class="zone-desc">Place of Sound<br>(Throat, Dome, Teeth)</div>
+          </div>
+          <div class="dock-zone zone-2">
+            <div class="zone-tag">Zone 2: Vowel Rail</div>
+            <div class="zone-big" style="color:var(--cyan);">ㅏ / ㅠ / ㅜ</div>
+            <div class="zone-desc">Breath Flow Vector<br>(Horizontal / Vertical)</div>
+          </div>
+          <div class="dock-zone zone-3">
+            <div class="zone-tag">Zone 3: Coda Floor</div>
+            <div class="zone-big" style="color:var(--rose);">-ㅁ / -ㄷ / -ㅇ</div>
+            <div class="zone-desc">Batchim Floor<br>(Object Tag / Stop)</div>
+          </div>
+        </div>
+
+        <!-- Live Syllable Docking Sandbox -->
+        <div class="section-subtitle" style="margin-top:20px;">Interactive Syllable Docking Visualizer</div>
+        <div class="dock-interactive">
+          <div class="dock-picker-row" id="choRow">
+            <span class="picker-label">1. Onset:</span>
+            <button class="picker-btn active" onclick="setDockCho('ㄱ', this)">ㄱ (k)</button>
+            <button class="picker-btn" onclick="setDockCho('ㅅ', this)">ㅅ (s/ś)</button>
+            <button class="picker-btn" onclick="setDockCho('ㄷ', this)">ㄷ (t)</button>
+            <button class="picker-btn" onclick="setDockCho('ㅂ', this)">ㅂ (p)</button>
+            <button class="picker-btn" onclick="setDockCho('ㅇ', this)">ㅇ (silent/vowel)</button>
+          </div>
+          <div class="dock-picker-row" id="jungRow">
+            <span class="picker-label">2. Vowel:</span>
+            <button class="picker-btn active" onclick="setDockJung('ㅠ', this)">ㅠ (ū)</button>
+            <button class="picker-btn" onclick="setDockJung('ㅜ', this)">ㅜ (u)</button>
+            <button class="picker-btn" onclick="setDockJung('ㅏ', this)">ㅏ (a)</button>
+            <button class="picker-btn" onclick="setDockJung('ㅓ', this)">ㅓ (ā)</button>
+            <button class="picker-btn" onclick="setDockJung('ㅣ', this)">ㅣ (i)</button>
+            <button class="picker-btn" onclick="setDockJung('ㅡ', this)">ㅡ (ṛ)</button>
+          </div>
+          <div class="dock-picker-row" id="jongRow">
+            <span class="picker-label">3. Coda Floor:</span>
+            <button class="picker-btn active" onclick="setDockJong('', this)">None</button>
+            <button class="picker-btn" onclick="setDockJong('ㅁ', this)">-ㅁ (·ṃ object)</button>
+            <button class="picker-btn" onclick="setDockJong('ㄷ', this)">-ㄷ (stop)</button>
+          </div>
+          <div class="dock-result-box">
+            <div class="dock-result-block" id="dockResultBlock">규</div>
+            <div class="dock-result-info" id="dockResultInfo">
+              <strong>k (Velar)</strong> + <strong>ū (Long Vowel)</strong><br>
+              <span style="color:var(--cyan)">Notice: kū = 규, whereas śū = 슈</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Rosetta Stone Table -->
+        <div class="section-subtitle" style="margin-top:24px;">The Praṇava ⟷ Varṇagul Dual-Register Matrix</div>
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Vocal Station</th>
+              <th>IAST Sound</th>
+              <th>Praṇava Vector</th>
+              <th>Everyday (27-Set)</th>
+              <th>Lossless (50-Set)</th>
+              <th>Acoustic Physics</th>
+            </tr>
+          </thead>
+          <tbody>${rosettaRows}</tbody>
+        </table>
+
+        <!-- Worked Explainer -->
+        <div class="sentence-box">
+          <div class="sentence-row">
+            <span class="sentence-label">Principle</span>
+            <span class="sentence-val iast">${d.worked.iast}</span>
+          </div>
+          <div class="sentence-row">
+            <span class="sentence-label">Assembly</span>
+            <span class="sentence-val varnagul">${d.worked.kr}</span>
+          </div>
+          <div class="sentence-row">
+            <span class="sentence-label">Takeaway</span>
+            <span class="sentence-val trans">${d.worked.trans}</span>
+          </div>
+        </div>
+
+        <div class="exercise-group">
+          <div class="section-title" style="font-size: 1.05rem;">Day 0 Quick Validation</div>
+          ${exercisesHtml}
+        </div>
+      </div>
+    `;
+    updateDockInteractive();
+    return;
+  }
+
+  // Render Days 1 to 7
+  let tableRows = d.table.map(r => `
+    <tr>
+      <td class="iast-tag">${r.iast}</td>
+      <td class="varnagul-glyph">${r.kr}</td>
+      <td>${r.mean}</td>
+    </tr>
+  `).join('');
+
+  let exercisesHtml = d.exercises.map((ex, idx) => `
+    <div class="exercise-item">
+      <div class="exercise-prompt">${ex.prompt}</div>
+      <div class="exercise-input-row">
+        <input type="text" class="exercise-input" id="exInput_${idx}" placeholder="Type answer...">
+        <button class="btn btn-primary" onclick="checkEx(${idx}, '${ex.ans}')">Check</button>
+      </div>
+      <div class="feedback-badge" id="exFb_${idx}"></div>
+    </div>
+  `).join('');
+
+  document.getElementById('lessonContainer').innerHTML = `
+    <div class="content-card">
+      <div class="section-title">Day ${currentDay}: ${d.title}</div>
+      <div class="section-subtitle">${d.subtitle}</div>
+      <div class="lesson-text">${d.text}</div>
+
+      <div class="section-subtitle">Core Vocabulary & Morphemes</div>
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Canonical IAST</th>
+            <th>Varṇagul 3.1</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+
+      <div class="section-subtitle">Worked Sentence & Chanting Execution</div>
+      <div class="sentence-box">
+        <div class="sentence-row">
+          <span class="sentence-label">IAST</span>
+          <span class="sentence-val iast">${d.worked.iast}</span>
+        </div>
+        <div class="sentence-row">
+          <span class="sentence-label">Varṇagul</span>
+          <span class="sentence-val varnagul">${d.worked.kr}</span>
+        </div>
+        <div class="sentence-row">
+          <span class="sentence-label">Meaning</span>
+          <span class="sentence-val trans">${d.worked.trans}</span>
+        </div>
+      </div>
+
+      <div class="exercise-group">
+        <div class="section-title" style="font-size: 1.05rem;">Day ${currentDay} Exercises</div>
+        ${exercisesHtml}
+      </div>
+    </div>
+  `;
+}
+
+function checkEx(idx, expected) {
+  const inputEl = document.getElementById(`exInput_${idx}`);
+  const fbEl = document.getElementById(`exFb_${idx}`);
+  const val = inputEl.value.trim();
+
+  // Normalization
+  const cleanVal = val.replace(/[·\s\-_]/g, '');
+  const cleanExp = expected.replace(/[·\s\-_]/g, '');
+
+  if (cleanVal === cleanExp || val === expected) {
+    fbEl.className = "feedback-badge pass";
+    fbEl.innerText = "✓ Perfect Match!";
+  } else {
+    fbEl.className = "feedback-badge fail";
+    fbEl.innerText = `Expected: ${expected}`;
+  }
+}
+
+// Typing into active input
+let activeInputId = 'liveInput';
+document.addEventListener('focusin', (e) => {
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+    activeInputId = e.target.id;
+  }
+});
+
+function typeChar(char) {
+  const target = document.getElementById(activeInputId) || document.getElementById('liveInput');
+  const start = target.selectionStart || target.value.length;
+  const end = target.selectionEnd || target.value.length;
+  target.value = target.value.substring(0, start) + char + target.value.substring(end);
+  target.selectionStart = target.selectionEnd = start + char.length;
+  target.focus();
+  if (target.id === 'liveInput') runLiveCompiler();
+}
+
+function insertSample(text) {
+  const el = document.getElementById('liveInput');
+  el.value = text;
+  runLiveCompiler();
+}
+
+// Client-side Varṇagul 3.1 Transliteration Compiler for the live box
+function runLiveCompiler() {
+  const txt = document.getElementById('liveInput').value;
+  let out = txt
+    .replace(/ATHA/g, '〔아타〕')
+    .replace(/OM/g, 'ॐ')
+    .replace(/SVĀHĀ/g, '【솨하】')
+    .replace(/hīṃ/g, '₍햄°₎')
+    .replace(/hūṃऽऽ/g, '₍흄–₎')
+    .replace(/hūṃ३/g, '₍흄≡₎')
+    .replace(/hūṃ/g, '₍흄°₎')
+    .replace(/·ḥ/g, 'ঃ')
+    .replace(/·ṃ/g, 'ㅁ')
+    .replace(/·bhiḥ/g, '비ঃ')
+    .replace(/·bhyam/g, '뱜')
+    .replace(/·taḥ/g, '타ঃ')
+    .replace(/·sya/g, '샤')
+    .replace(/·su/g, '수')
+    .replace(/·tṛ/g, '트리')
+    .replace(/·na/g, '나')
+    .replace(/·ta/g, '타')
+    .replace(/·ka/g, '가')
+    .replace(/·tva/g, '돠')
+    .replace(/·tā/g, '터')
+    .replace(/·in/g, '인')
+    .replace(/·tava·ti/g, '타와티')
+    .replace(/·sya·ti/g, '샤티')
+    .replace(/·tavya·ti/g, '타뱌티')
+    .replace(/·a·ti/g, '아티')
+    .replace(/·ti/g, '티')
+    .replace(/śūra/g, '슈라')
+    .replace(/kū/g, '규')
+    .replace(/śū/g, '슈')
+    .replace(/nara/g, '나라')
+    .replace(/aśva/g, '아솨')
+    .replace(/phala/g, '파라')
+    .replace(/khād/g, '카다')
+    .replace(/dṛś/g, '드르샤')
+    .replace(/viśāla/g, '위샬라')
+    .replace(/kṛṣṇa/g, '크르스나')
+    .replace(/giri/g, '기리')
+    .replace(/vana/g, '와나')
+    .replace(/rāja/g, '라자')
+    .replace(/śara/g, '사라')
+    .replace(/yodha/g, '요다')
+    .replace(/yudh/g, '유다')
+    .replace(/rakṣ/g, '랔스')
+    .replace(/śubha/g, '수파')
+    .replace(/mahā/g, '마하')
+    .replace(/guṇa/g, '구나')
+    .replace(/pra/g, '프라')
+    .replace(/ud/g, '웉')
+    .replace(/vi/g, '위')
+    .replace(/·/g, '');
+
+  document.getElementById('liveOutput').innerText = out || '—';
+}
+
+// Initialize on Day 0
+renderLesson();
+runLiveCompiler();
+</script>
+
+</body>
+</html>

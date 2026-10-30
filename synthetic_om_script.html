@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Synthetic ॐ-Script Studio | Anatomical Vector Glyphs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: #0d121c;
+      --bg-surface: #131b2a;
+      --border-dim: #1e293b;
+      --border-bright: #334155;
+      
+      --gold-primary: #e6c17a;
+      --gold-glow: rgba(230, 193, 122, 0.25);
+      
+      --cyan-capsule: #67d4e4;
+      --cyan-glow: rgba(103, 212, 228, 0.25);
+      
+      --rose-breath: #f43f5e;
+      --rose-glow: rgba(244, 63, 94, 0.25);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(230, 193, 122, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(103, 212, 228, 0.03) 0%, transparent 50%);
+    }
+
+    /* HEADER */
+    header {
+      padding: 2.2rem 2rem 1.4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-dim);
+      background: rgba(13, 18, 28, 0.7);
+      backdrop-filter: blur(12px);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(230, 193, 122, 0.1);
+      border: 1px solid rgba(230, 193, 122, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold-primary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(230, 193, 122, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #fff 20%, var(--gold-primary) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* CONTROL PANEL */
+    .control-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .input-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .input-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .input-box {
+      width: 100%;
+      background: var(--bg-dark);
+      border: 1.5px solid var(--border-dim);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-box:focus {
+      border-color: var(--cyan-capsule);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    /* PRESETS ROW */
+    .presets-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      align-items: center;
+    }
+
+    .presets-label {
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 0.4rem;
+    }
+
+    .preset-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-btn:hover {
+      background: var(--border-bright);
+      color: var(--text-main);
+      border-color: var(--gold-primary);
+    }
+
+    /* CANVAS VIEWER */
+    .viewer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .viewer-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-dim);
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .legend-chips {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.76rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+    }
+
+    .chip-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .action-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      color: var(--text-main);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      border-color: var(--cyan-capsule);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, rgba(230, 193, 122, 0.2), rgba(230, 193, 122, 0.08));
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+    }
+
+    .action-btn.primary:hover {
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* SVG CANVAS VIEWPORT */
+    .canvas-viewport {
+      width: 100%;
+      min-height: 240px;
+      background: #090c12;
+      border: 1px solid var(--border-dim);
+      border-radius: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    .canvas-viewport::-webkit-scrollbar {
+      height: 8px;
+    }
+    .canvas-viewport::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    .canvas-viewport::-webkit-scrollbar-thumb {
+      background: var(--border-bright);
+      border-radius: 4px;
+    }
+
+    /* HUD METRICS */
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .hud-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 12px;
+      padding: 1.2rem;
+    }
+
+    .hud-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.6rem;
+    }
+
+    .hud-value {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ANATOMICAL GUIDE TABLE */
+    .spec-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 14px;
+      padding: 1.8rem;
+    }
+
+    .spec-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      color: var(--gold-primary);
+      margin-bottom: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.8rem 1rem;
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border-dim);
+      color: var(--text-muted);
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.015);
+      color: var(--text-main);
+    }
+
+    .code-tag {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan-capsule);
+      background: rgba(103, 212, 228, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-subtle);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* SVG GLYPH ANIMATIONS */
+    .animated-path {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: drawGlyph 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes drawGlyph {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge-pill">
+      <span>⚙ Pāṇinian Vector Architecture</span>
+    </div>
+    <h1>Sovereign <span>Synthetic ॐ-Script</span></h1>
+    <p class="subtitle">
+      Pure Anatomical Geometry for Indic AI: 100% Square Content Roots, 75% Docked Right-Rail Function Capsules, and Decoupled Acoustic Breath Sigils.
+    </p>
+  </header>
+
+  <main>
+    <!-- INPUT & PRESETS -->
+    <section class="control-card">
+      <div class="input-label-row">
+        <label for="omInput" class="input-label">Canonical ॐ-Script Input</label>
+        <span id="charCount" class="input-label" style="color: var(--text-subtle);">0 tokens</span>
+      </div>
+      <input 
+        type="text" 
+        id="omInput" 
+        class="input-box" 
+        value="ATHA prajña rakṣ·a·tṛ·ḥ hīṃ sat·ṃ OM dṛś·a·ti ॥" 
+        spellcheck="false"
+        placeholder="Enter ॐ-Script e.g.: ATHA nara·ḥ vana·ṃ OM gama·ti ॥"
+      />
+
+      <div class="presets-container">
+        <span class="presets-label">Presets:</span>
+        <button class="preset-btn" onclick="loadPreset('ATHA prajña rakṣ·a·tṛ·ḥ hīṃ sat·ṃ OM dṛś·a·ti ॥')">The Sovereign Shield</button>
+        <button class="preset-btn" onclick="loadPreset('ATHA dhṛtarāṣṭra·ḥ vac·a·tava·ti ॥')">Gītā 1.1 First Clause</button>
+        <button class="preset-btn" onclick="loadPreset('ATHA nara·ḥ hūṃ vana·ṃ OM gama·ti ॥')">The Forest Journey</button>
+        <button class="preset-btn" onclick="loadPreset('ATHA śiṣya·ḥ ā·gam·a·ti ॥')">Prefix-Action Dock</button>
+        <button class="preset-btn" onclick="loadPreset('ATHA rāja·ḥ giri·taḥ vana·su śara·bhiḥ mṛga·ṃ OM han·a·ti ॥')">5-Case Grand Tapestry</button>
+      </div>
+    </section>
+
+    <!-- LIVE VECTOR CANVAS -->
+    <section class="viewer-card">
+      <div class="viewer-toolbar">
+        <div class="legend-chips">
+          <div class="legend-chip">
+            <span class="chip-dot" style="border: 1.5px solid #e8ecf4; background: #121620;"></span>
+            <span>100% Root Frame</span>
+          </div>
+          <div class="legend-chip">
+            <span class="chip-dot" style="background: var(--gold-primary);"></span>
+            <span>Anatomical Sthānas</span>
+          </div>
+          <div class="legend-chip">
+            <span class="chip-dot" style="border: 1px solid var(--cyan-capsule); background: rgba(103, 212, 228, 0.2);"></span>
+            <span>75% Docked Capsules</span>
+          </div>
+          <div class="legend-chip">
+            <span class="chip-dot" style="background: var(--rose-breath);"></span>
+            <span>Breath Track Sigils</span>
+          </div>
+          <div class="legend-chip">
+            <span class="chip-dot" style="border-radius: 50%; border: 1.5px solid var(--gold-primary);"></span>
+            <span>Action Lock (OM)</span>
+          </div>
+        </div>
+
+        <div class="action-group">
+          <button class="action-btn" onclick="triggerAnimate()">⚡ Animate Strokes</button>
+          <button class="action-btn" onclick="copySvg()">📋 Copy SVG</button>
+          <button class="action-btn primary" onclick="downloadSvg()">💾 Download SVG</button>
+        </div>
+      </div>
+
+      <div class="canvas-viewport" id="viewport">
+        <!-- Dynamic SVG is injected here -->
+        <div id="svgContainer"></div>
+      </div>
+    </section>
+
+    <!-- HUD METRICS -->
+    <section class="hud-grid">
+      <div class="hud-box">
+        <div class="hud-title">Decoded Morphological Spine</div>
+        <div class="hud-value" id="hudMorphemes">—</div>
+      </div>
+      <div class="hud-box">
+        <div class="hud-title">Docked Role & Tense Capsules</div>
+        <div class="hud-value" id="hudCapsules">—</div>
+      </div>
+      <div class="hud-box">
+        <div class="hud-title">Anatomical Consonant Stations</div>
+        <div class="hud-value" id="hudSthanas">—</div>
+      </div>
+    </section>
+
+    <!-- GEOMETRIC PHONETICS SPECIFICATION -->
+    <section class="spec-card">
+      <h3>The Pāṇinian Anatomical Geometry Matrix</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Station (Sthāna)</th>
+            <th>Vocal Tract Location</th>
+            <th>Consonant Archetypes</th>
+            <th>Geometric Primitive</th>
+            <th>Vector Syntax</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: var(--text-main);">Oṣṭhya (Labial)</strong></td>
+            <td>Lips (Frontal seal)</td>
+            <td><span class="code-tag">p, ph, b, bh, m, v</span></td>
+            <td><strong>Closed Square / Box □</strong></td>
+            <td><code>M 16 30 L 36 30 L 36 55 L 16 55 Z</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--text-main);">Tālavya (Palatal)</strong></td>
+            <td>Hard Palate (Arch)</td>
+            <td><span class="code-tag">c, ch, j, jh, ñ, y, ś</span></td>
+            <td><strong>Upward Wedge / Triangle △</strong></td>
+            <td><code>M 16 55 L 26 30 L 36 55 Z</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--text-main);">Mūrdhanya (Retroflex)</strong></td>
+            <td>Roof of Mouth (Curled Tongue)</td>
+            <td><span class="code-tag">ṭ, ṭh, ḍ, ḍh, ṇ, r, ṣ</span></td>
+            <td><strong>Liquid Resonant Arc Ɔ</strong></td>
+            <td><code>M 20 28 Q 38 28 38 43 Q 38 58 20 58</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--text-main);">Dantya (Dental)</strong></td>
+            <td>Teeth Barrier</td>
+            <td><span class="code-tag">t, th, d, dh, n, l, s</span></td>
+            <td><strong>T-Bar / Teeth Comb ┬</strong></td>
+            <td><code>M 16 38 L 38 38 M 27 38 L 27 58</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--text-main);">Kaṇṭhya (Velar/Throat)</strong></td>
+            <td>Soft Palate & Throat</td>
+            <td><span class="code-tag">k, kh, g, gh, ṅ, h</span></td>
+            <td><strong>Stepped Corner ⌐</strong></td>
+            <td><code>M 18 30 L 36 30 L 36 55</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--text-main);">Svara (Vowel Rail)</strong></td>
+            <td>Continuous Breath Flow</td>
+            <td><span class="code-tag">a, ā, i, ī, u, ū, ṛ, e, o</span></td>
+            <td><strong>Horizontal Binding Axis —</strong></td>
+            <td><code>line x1="36" y1="42.5" x2="50" y2="42.5"</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    Sanskrit by Architecture • Sovereign Indic AI • ॐ-Script Architecture Studio
+  </footer>
+
+  <script>
+    // Pāṇinian Station Sets
+    const STHANA_LABIAL = new Set(["p", "b", "v", "m"]);
+    const STHANA_PALATAL = new Set(["c", "j", "ñ", "y", "ś"]);
+    const STHANA_RETROFLEX = new Set(["ṭ", "ḍ", "ṇ", "r", "ṣ"]);
+    const STHANA_DENTAL = new Set(["t", "d", "n", "l", "s"]);
+    const STHANA_VELAR = new Set(["k", "g", "h"]);
+
+    const BREATH_SIGILS = {
+      "atha": "ATHA",
+      "athan": "ATHA",
+      "hīṃ": "hīṃ",
+      "him": "him",
+      "hūṃ": "hūṃ",
+      "svāhā": "॥",
+      "॥": "॥",
+      "।": "।",
+      "om": "OM",
+      "aum": "OM"
+    };
+
+    const KNOWN_PFX = new Set(["pra", "ā", "sam", "vi", "upa", "apa", "anu", "adhi", "ni", "nir", "prati", "ud", "pari"]);
+
+    function cleanIAST(word) {
+      return word.trim().toLowerCase()
+        .replace(/sh/g, 'ś')
+        .replace(/ch/g, 'c')
+        .replace(/ri/g, 'ṛ');
+    }
+
+    function getAnatomicalPaths(rootText, isAnimated = false) {
+      const cleaned = cleanIAST(rootText);
+      const consonants = [];
+      for (const ch of cleaned) {
+        if (STHANA_LABIAL.has(ch) || STHANA_PALATAL.has(ch) || STHANA_RETROFLEX.has(ch) || STHANA_DENTAL.has(ch) || STHANA_VELAR.has(ch)) {
+          consonants.push(ch);
+        }
+      }
+
+      const animClass = isAnimated ? "glyph-path animated-path" : "glyph-path";
+      const paths = [];
+
+      if (consonants.length === 0) {
+        paths.push(`<line x1="18" y1="42.5" x2="67" y2="42.5" class="${animClass}" />`);
+        paths.push(`<circle cx="42.5" cy="42.5" r="4" fill="#e6c17a" />`);
+        return paths;
+      }
+
+      // 1. First consonant
+      const c1 = consonants[0];
+      if (STHANA_LABIAL.has(c1)) {
+        paths.push(`<path d="M 16 30 L 36 30 L 36 55 L 16 55 Z" class="${animClass}" />`);
+      } else if (STHANA_PALATAL.has(c1)) {
+        paths.push(`<path d="M 16 55 L 26 30 L 36 55 Z" class="${animClass}" />`);
+      } else if (STHANA_RETROFLEX.has(c1)) {
+        paths.push(`<path d="M 20 28 Q 38 28 38 43 Q 38 58 20 58" class="${animClass}" />`);
+      } else if (STHANA_DENTAL.has(c1)) {
+        paths.push(`<path d="M 16 38 L 38 38 M 27 38 L 27 58" class="${animClass}" />`);
+      } else {
+        paths.push(`<path d="M 18 30 L 36 30 L 36 55" class="${animClass}" />`);
+      }
+
+      // Binding Rail
+      paths.push(`<line x1="36" y1="42.5" x2="50" y2="42.5" class="${animClass}" />`);
+
+      // 2. Second consonant
+      if (consonants.length > 1) {
+        const c2 = consonants[1];
+        if (STHANA_PALATAL.has(c2)) {
+          paths.push(`<path d="M 52 55 L 64 30 L 76 55 Z" class="${animClass}" />`);
+        } else if (STHANA_VELAR.has(c2)) {
+          paths.push(`<path d="M 54 32 L 72 32 L 72 58" class="${animClass}" />`);
+        } else if (STHANA_RETROFLEX.has(c2)) {
+          paths.push(`<path d="M 54 28 Q 72 28 72 43 Q 72 58 54 58" class="${animClass}" />`);
+        } else if (STHANA_DENTAL.has(c2)) {
+          paths.push(`<path d="M 52 38 L 74 38 M 63 38 L 63 58" class="${animClass}" />`);
+        } else {
+          paths.push(`<path d="M 54 30 L 74 30 L 74 55 L 54 55 Z" class="${animClass}" />`);
+        }
+      } else {
+        paths.push(`<line x1="50" y1="42.5" x2="68" y2="42.5" class="${animClass}" />`);
+        paths.push(`<circle cx="68" cy="42.5" r="2.5" fill="#e6c17a" />`);
+      }
+
+      return paths;
+    }
+
+    function parseOmWord(token) {
+      const clean = token.trim();
+      const lower = clean.toLowerCase();
+
+      if (BREATH_SIGILS[lower] || clean === "॥" || clean === "।") {
+        const sigil = BREATH_SIGILS[lower] || clean;
+        return {
+          type: sigil !== "OM" ? "breath" : "exec",
+          sigil: sigil,
+          raw: clean
+        };
+      }
+
+      const parts = clean.split(/[·]/).filter(p => p.trim());
+      const prefixes = [];
+      const suffixes = [];
+      let root = "";
+
+      let idx = 0;
+      while (idx < parts.length && KNOWN_PFX.has(parts[idx].toLowerCase())) {
+        prefixes.push(parts[idx] + "·");
+        idx++;
+      }
+
+      if (idx < parts.length) {
+        root = parts[idx];
+        idx++;
+      }
+
+      while (idx < parts.length) {
+        suffixes.push("·" + parts[idx]);
+        idx++;
+      }
+
+      if (!root && prefixes.length > 0) {
+        root = prefixes.pop().replace("·", "");
+      }
+      if (!root) {
+        root = clean;
+      }
+
+      return {
+        type: "content",
+        prefixes,
+        root,
+        suffixes,
+        raw: clean
+      };
+    }
+
+    function renderSentence(omText, isAnimated = false) {
+      const tokens = omText.trim().split(/\s+/).filter(t => t);
+      const parsed = tokens.map(parseOmWord);
+
+      let currentX = 25;
+      const baseY = 35;
+      const elements = [];
+
+      let totalRoots = 0;
+      let totalCapsules = 0;
+      const activeSthanas = new Set();
+
+      parsed.forEach(item => {
+        if (item.type === "breath") {
+          const sig = item.sigil;
+          if (sig === "ATHA" || sig === "॥" || sig === "।") {
+            elements.push(`
+              <g transform="translate(${currentX}, ${baseY + 15})">
+                <line x1="10" y1="0" x2="10" y2="75" class="breath-sigil" />
+                <line x1="3" y1="18" x2="17" y2="18" class="breath-sigil" />
+                <line x1="3" y1="57" x2="17" y2="57" class="breath-sigil" />
+                <text x="10" y="94" class="label">${sig}</text>
+              </g>
+            `);
+            currentX += 38;
+          } else {
+            elements.push(`
+              <g transform="translate(${currentX}, ${baseY + 25})">
+                <circle cx="10" cy="12" r="3.5" fill="#e87a90" />
+                <circle cx="10" cy="28" r="3.5" fill="#e87a90" />
+                <text x="10" y="62" class="label">${sig}</text>
+              </g>
+            `);
+            currentX += 35;
+          }
+        } else if (item.type === "exec") {
+          elements.push(`
+            <g transform="translate(${currentX}, ${baseY + 24})">
+              <circle cx="15" cy="15" r="14" class="exec-sigil" />
+              <circle cx="15" cy="15" r="4" fill="#e6c17a" />
+              <text x="15" y="48" class="label">OM</text>
+            </g>
+          `);
+          currentX += 46;
+        } else {
+          totalRoots++;
+          const root = item.root;
+          const prefixes = item.prefixes;
+          const suffixes = item.suffixes;
+
+          // Register sthanas
+          for (const ch of cleanIAST(root)) {
+            if (STHANA_LABIAL.has(ch)) activeSthanas.add("Oṣṭhya (Labial)");
+            if (STHANA_PALATAL.has(ch)) activeSthanas.add("Tālavya (Palatal)");
+            if (STHANA_RETROFLEX.has(ch)) activeSthanas.add("Mūrdhanya (Retroflex)");
+            if (STHANA_DENTAL.has(ch)) activeSthanas.add("Dantya (Dental)");
+            if (STHANA_VELAR.has(ch)) activeSthanas.add("Kaṇṭhya (Velar)");
+          }
+
+          // Prefixes
+          if (prefixes.length > 0) {
+            let pfxY = baseY + 2;
+            prefixes.forEach(pfx => {
+              totalCapsules++;
+              elements.push(`
+                <g transform="translate(${currentX}, ${pfxY})">
+                  <rect x="0" y="0" width="38" height="20" class="capsule-frame" />
+                  <text x="19" y="13" class="sub-label">${pfx}</text>
+                </g>
+              `);
+              pfxY += 24;
+            });
+            currentX += 42;
+          }
+
+          // Root Block
+          const paths = getAnatomicalPaths(root, isAnimated).join("\n");
+          elements.push(`
+            <g transform="translate(${currentX}, ${baseY})">
+              <rect x="0" y="0" width="85" height="85" class="root-frame" />
+              ${paths}
+              <text x="42.5" y="104" class="label">${item.raw}</text>
+            </g>
+          `);
+
+          // Suffix Capsules
+          if (suffixes.length > 0) {
+            totalCapsules += suffixes.length;
+            const num = suffixes.length;
+            const capH = Math.min(22, Math.floor((85 - (num - 1) * 4) / num));
+            const step = capH + 4;
+            const startY = baseY + Math.max(2, Math.floor((85 - (num * step - 4)) / 2));
+
+            suffixes.forEach((sfx, i) => {
+              elements.push(`
+                <g transform="translate(${currentX + 90}, ${startY + i * step})">
+                  <rect x="0" y="0" width="45" height="${capH}" class="capsule-frame" />
+                  <text x="22.5" y="${Math.floor(capH * 0.65)}" class="sub-label">${sfx}</text>
+                </g>
+              `);
+            });
+            currentX += 145;
+          } else {
+            currentX += 98;
+          }
+        }
+      });
+
+      const totalWidth = Math.max(currentX + 30, 800);
+      const totalHeight = 175;
+
+      const svgCode = `
+        <svg id="omSvg" width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .root-frame { fill: #101522; stroke: #e8ecf4; stroke-width: 2.2; rx: 4px; }
+            .capsule-frame { fill: rgba(103, 212, 228, 0.08); stroke: #67d4e4; stroke-width: 1.5; rx: 3px; }
+            .glyph-path { fill: none; stroke: #e6c17a; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+            .breath-sigil { fill: none; stroke: #e87a90; stroke-width: 2.5; stroke-linecap: round; }
+            .exec-sigil { fill: none; stroke: #e6c17a; stroke-width: 2.5; }
+            .label { fill: #8b95ab; font-size: 11px; font-family: 'JetBrains Mono', monospace; text-anchor: middle; }
+            .sub-label { fill: #67d4e4; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; text-anchor: middle; font-weight: bold; }
+          </style>
+          ${elements.join("\n")}
+        </svg>
+      `;
+
+      document.getElementById("svgContainer").innerHTML = svgCode;
+
+      // Update HUD
+      document.getElementById("charCount").innerText = `${tokens.length} tokens (${totalRoots} roots, ${totalCapsules} capsules)`;
+      document.getElementById("hudMorphemes").innerText = `${totalRoots} Root Carriers • ${parsed.filter(p => p.type === 'breath' || p.type === 'exec').length} Sigils`;
+      document.getElementById("hudCapsules").innerText = totalCapsules > 0 
+        ? `${totalCapsules} Docked Modules (${parsed.flatMap(p => p.suffixes || []).join(", ") || 'none'})` 
+        : "None (Bare Stems)";
+      document.getElementById("hudSthanas").innerText = activeSthanas.size > 0 
+        ? Array.from(activeSthanas).join(" • ") 
+        : "Vowel Axis";
+    }
+
+    const inputEl = document.getElementById("omInput");
+    inputEl.addEventListener("input", () => renderSentence(inputEl.value));
+
+    function loadPreset(text) {
+      inputEl.value = text;
+      renderSentence(text);
+    }
+
+    function triggerAnimate() {
+      renderSentence(inputEl.value, true);
+    }
+
+    function copySvg() {
+      const svg = document.getElementById("omSvg");
+      if (!svg) return;
+      navigator.clipboard.writeText(svg.outerHTML).then(() => {
+        alert("SVG code copied to clipboard!");
+      });
+    }
+
+    function downloadSvg() {
+      const svg = document.getElementById("omSvg");
+      if (!svg) return;
+      const blob = new Blob([svg.outerHTML], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "sovereign_synthetic_om_script.svg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initial render
+    renderSentence(inputEl.value);
+  </script>
+</body>
+</html>
