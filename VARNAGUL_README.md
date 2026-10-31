@@ -108,8 +108,7 @@ While **Canonical IAST (Mode 1)** provides the machine-parseable, dot-separated 
 Varnagul Script/
 ├── README.md                          # This Design Manifesto, Architecture & Operational Guide
 ├── Varnagul Bootcamp.md               # Upgraded 7-Day Curriculum (Varṇagul 3.1 & 7 Converters)
-├── Varnagul_Bootcamp_Web.html         # Interactive Web Bootcamp with Live Keyboard & Exercises
-├── Varnagul_Master_Engine.html        # Master Engine with 1000x1000 UPEM Anatomical Inspector
+├── Varnagul_Master_Engine.html        # (Offline / Enterprise Spec under USPTO Patent Filing)
 ├── Varnagul_Foundry.html              # Interactive Font Foundry & Vector Canvas
 ├── Om-Script Varnagul-V2-Normative-Spec.md  # Definitive Technical Specification (v3.1)
 ├── Om-Script Varnagul-V1-Archived.md        # Historical Version 1.0 Specification (Archival)
@@ -128,10 +127,10 @@ Double-click or open in any web browser:
   - Practice typing using the on-screen **Pāṇinian Articulatory Virtual Keyboard** (organized by Velar, Palatal, Retroflex, Dental, Labial stations).
   - Solve exercises with real-time feedback and validation.
   - Experiment in the **Live Compiler Sandbox**.
-- **`Varnagul_Master_Engine.html`**:
-  - Live UPEM (Units Per Em) Anatomical Inspector showing Onset Zone, Vowel Rail, and Coda Floor.
 - **`Varnagul_Foundry.html`**:
   - Vector canvas glyph foundry tool for designing custom architectural chisel strokes.
+- **`Varnagul_Master_Engine.html`**:
+  - *(Held in private enterprise repository pending formal USPTO patent filing).*
 
 ### B. Python Compiler Engine
 Run the compiler from the terminal:

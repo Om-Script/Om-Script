@@ -1,0 +1,98 @@
+# ==============================================================================
+# INTELLECTUAL PROPERTY & LEGAL SHIELD
+# Protects all patent drafts, claims, prior art audits, and legal specifications
+# ==============================================================================
+*patent*
+*Patent*
+*PATENT*
+*legal*
+*Legal*
+*LEGAL*
+*prior_art*
+*PRIOR_ART*
+*Prior_Art*
+*IP_AUDIT*
+*ip_audit*
+IP_DECLARATION*
+*.patent
+*.claims
+
+# ==============================================================================
+# PROPRIETARY ENTERPRISE ENGINES (OFFLINE FOR USPTO FILING)
+# ==============================================================================
+synthetic_om_script.html
+Varnagul_Master_Engine.html
+*synthetic_om_script*
+*Varnagul_Master_Engine*
+
+# ==============================================================================
+# AI MODELS, TRAINING DATASETS & FINE-TUNING PIPELINES
+# ==============================================================================
+IndianAI/
+*IndianAI*
+Varnagul Script/
+*.jsonl
+*.db
+*.sqlite
+*.sqlite3
+spark_core*
+*sft*
+*alpaca*
+gita_700_parsed*
+atomic_tokens.json
+multimodal_tokens.json
+sanskrit_offline.db
+modern_offline.db
+export_ai_dataset.py
+export_jax_dataset.py
+finetune_slm.py
+train_spark_core.py
+benchmark_hallucination.py
+om_pipeline_v2.py
+translation_bridge.py
+classical_to_om.py
+english_to_om.py
+
+# ==============================================================================
+# PUBLICATION SOURCE MANUSCRIPTS & PRINT-READY PDF BUILDS
+# ==============================================================================
+Book.pdf
+Book2.pdf
+Book1.pdf
+OmScript.pdf
+CompleteBook*
+Book.tex
+Book2.tex
+Book1.tex
+*.log
+*.aux
+*.out
+*.toc
+code/final_drafts/
+
+# ==============================================================================
+# CREDENTIALS, SECRETS & ENVIRONMENT VARIABLES
+# ==============================================================================
+.env*
+*.env
+*secret*
+*SECRET*
+*token*
+*TOKEN*
+*credential*
+*CREDENTIAL*
+*.pem
+*.key
+id_rsa*
+*.pfx
+
+# ==============================================================================
+# PYTHON & SYSTEM ARTIFACTS
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
