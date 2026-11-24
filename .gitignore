@@ -30,6 +30,9 @@ Varnagul_Master_Engine.html
 # ==============================================================================
 IndianAI/
 *IndianAI*
+Sovereign_Stack_Engine/
+*Sovereign_Stack*
+*sovereign_stack*
 Varnagul Script/
 *.jsonl
 *.db

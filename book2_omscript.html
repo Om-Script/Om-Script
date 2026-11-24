@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 2: Sanskrit Zero / ॐ-Script // The Universal Second Language</title>
+<meta name="description" content="Official Interactive Companion for Book 2: Sanskrit Zero / ॐ-Script. Experience the Two-Track Cognitive Interlingua, 7-Tag Spatial Physics Workbench, Rule 8 Sandhi-Free Engine, and World Classics in ॐ-Script.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0e17'/><text x='50%' y='68%' font-size='56' text-anchor='middle' fill='%23f59e0b' font-family='sans-serif' font-weight='bold'>ॐ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #07090e;
+  --surface: #0e131d;
+  --surface-alt: #141b29;
+  --surface-hover: #1b2437;
+  --border: #1f293d;
+  --border-focus: #3b4d70;
+  
+  --gold: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.25);
+  --cyan: #67d4e4;
+  --cyan-glow: rgba(103, 212, 228, 0.22);
+  --rose: #e87a90;
+  --rose-glow: rgba(232, 122, 144, 0.22);
+  --green: #6be09b;
+  --green-glow: rgba(107, 224, 155, 0.22);
+  --purple: #b388ff;
+  
+  --text: #e8ecf4;
+  --text-muted: #8a96ae;
+  --text-dim: #5c687e;
+  
+  --font-main: 'Inter', -apple-system, sans-serif;
+  --font-heading: 'Cinzel', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-skt: 'Noto Sans', 'Nirmala UI', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+/* ==========================================================================
+   GLOBAL TRILOGY NAVIGATION BAR
+   ========================================================================== */
+.trilogy-ribbon {
+  background: #040609;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+.trilogy-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.trilogy-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  color: var(--gold);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.trilogy-symbol {
+  width: 28px;
+  height: 28px;
+  background: var(--surface-alt);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  color: var(--gold);
+}
+.trilogy-books {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.trilogy-tab {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.trilogy-tab span.book-sub {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.trilogy-tab:hover {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+.trilogy-tab.active {
+  background: var(--surface-alt);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.trilogy-tab.active span.book-sub {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   APP CONTAINER & HERO
+   ========================================================================== */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, rgba(14, 19, 29, 0.95) 0%, rgba(25, 20, 10, 0.6) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--gold);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--gold);
+}
+.hero-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 850px;
+  margin-bottom: 16px;
+}
+.hero-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.spec-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+}
+.hero-cover-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.book-cover-img {
+  width: 110px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--gold);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.book-cover-img:hover {
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   NAVIGATION SECTIONS
+   ========================================================================== */
+.section-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+@media (max-width: 900px) {
+  .section-nav { grid-template-columns: repeat(2, 1fr); }
+  .hero-banner { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .section-nav { grid-template-columns: 1fr; }
+}
+
+.nav-card-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.nav-card-btn:hover {
+  background: var(--surface-alt);
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+.nav-card-btn.active {
+  background: var(--surface-alt);
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.nav-card-btn.active::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+.nav-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.nav-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.nav-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   TAB PANELS
+   ========================================================================== */
+.tab-panel {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+.tab-panel.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.content-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.content-card h2 {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+}
+.content-card p {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* Grid Stages */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+@media (max-width: 800px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+.stage-box {
+  background: #040609;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+}
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+/* Two Track Visualizer */
+.track-envelope {
+  background: #040609;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.track-badge {
+  width: 140px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+.badge-meaning { background: rgba(103, 212, 228, 0.15); color: var(--cyan); border: 1px solid rgba(103, 212, 228, 0.4); }
+.badge-breath { background: rgba(232, 122, 144, 0.15); color: var(--rose); border: 1px solid rgba(232, 122, 144, 0.4); }
+.track-flow {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  flex: 1;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+/* Sentence Workbench */
+.workbench-box {
+  background: #040609;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.register-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.reg-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.reg-btn:hover {
+  background: var(--surface-hover);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+.active-sentence-hud {
+  background: #020305;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.sentence-tokens {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--gold);
+  text-align: center;
+  word-spacing: 12px;
+  margin-bottom: 12px;
+}
+.sentence-meaning {
+  text-align: center;
+  color: var(--cyan);
+  font-size: 0.95rem;
+}
+
+/* World Classics Desk */
+.classics-picker {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.picker-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.picker-btn:hover {
+  color: var(--text);
+  border-color: var(--border-focus);
+}
+.picker-btn.active {
+  background: var(--surface-alt);
+  color: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+.classic-display-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 800px) {
+  .classic-display-grid { grid-template-columns: 1fr; }
+}
+.classic-col {
+  background: #040609;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.classic-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.classic-text-en {
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+.classic-text-om {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold);
+  line-height: 1.8;
+  word-spacing: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TRILOGY RIBBON -->
+<nav class="trilogy-ribbon">
+  <div class="trilogy-inner">
+    <div class="trilogy-brand">
+      <div class="trilogy-symbol">ॐ</div>
+      <span>THE SOVEREIGN INDIC TRILOGY</span>
+    </div>
+    <div class="trilogy-books">
+      <a href="index.html" class="trilogy-tab">
+        <span>BOOK 1: RĀMĀYAṆA</span>
+        <span class="book-sub">Classical Sanskrit</span>
+      </a>
+      <a href="book2_omscript.html" class="trilogy-tab active">
+        <span>BOOK 2: ॐ-SCRIPT</span>
+        <span class="book-sub">Universal Interlingua</span>
+      </a>
+      <a href="book3_unleashed.html" class="trilogy-tab">
+        <span>BOOK 3: THE SOVEREIGN STACK</span>
+        <span class="book-sub">The 3 Bootcamps & Rosetta</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO BANNER -->
+  <header class="hero-banner">
+    <div>
+      <div class="hero-tag">⚡ BOOK 2 COMPANION &bull; SANSKRIT ZERO</div>
+      <h1 class="hero-title">Sanskrit Zero: <em>ॐ-Script</em></h1>
+      <p class="hero-subtitle">
+        The Blueprint for a Universal Second Language by <strong>Timothy A. George</strong>. An engineered cognitive operating system featuring the Two-Track Architecture, Rule 8 Sandhi-Free Grammar, and 7-Tag Spatial Physics.
+      </p>
+      <div class="hero-badges">
+        <span class="spec-chip">Trim: 7.0" &times; 10.0" KDP</span>
+        <span class="spec-chip">358 Pages • Spine 0.806"</span>
+        <span class="spec-chip">Immutable Root Lexicon</span>
+        <span class="spec-chip">Rule 8: Sandhi Banned</span>
+      </div>
+    </div>
+    <div class="hero-cover-wrap">
+      <img src="om_script_front_cover_web.jpg" alt="Book 2 3D Front Cover" class="book-cover-img" onclick="window.open('om_script_full_cover_wrap_web.jpg')">
+    </div>
+  </header>
+
+  <!-- 4 PRIMARY TABS -->
+  <nav class="section-nav" aria-label="Book 2 Sections">
+    <div class="nav-card-btn active" id="btn-tab-manifesto" onclick="switchTab('manifesto')">
+      <div class="nav-pill">Cognitive Philosophy</div>
+      <div class="nav-card-title">The Two-Track Architecture</div>
+      <div class="nav-card-desc">Meaning Track vs Breath Track. How invariant registers eliminate natural language drift.</div>
+    </div>
+
+    <div class="nav-card-btn" id="btn-tab-rule8" onclick="switchTab('rule8')">
+      <div class="nav-pill">Linguistic Invariant</div>
+      <div class="nav-card-title">Rule 8: Sandhi is Outlawed</div>
+      <div class="nav-card-desc">Why phonological collision was banned to guarantee deterministic machine parsing.</div>
+    </div>
+
+    <div class="nav-card-btn" id="btn-tab-workbench" onclick="switchTab('workbench')">
+      <div class="nav-pill">Interactive Lab</div>
+      <div class="nav-card-title">7-Tag Spatial Workbench</div>
+      <div class="nav-card-desc">Click to assemble Kāraka registers and compile sentence envelopes in real time.</div>
+    </div>
+
+    <div class="nav-card-btn" id="btn-tab-classics" onclick="switchTab('classics')">
+      <div class="nav-pill">Comparative Literature</div>
+      <div class="nav-card-title">World Classics in ॐ-Script</div>
+      <div class="nav-card-desc">Genesis, Gospel of John, Psalm 23, and Revelation mapped to deterministic registers.</div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       TAB 1: MANIFESTO & TWO-TRACK ARCHITECTURE
+       ======================================================================== -->
+  <section id="panel-manifesto" class="tab-panel active">
+    <div class="content-card">
+      <h2>The Two-Track Cognitive Interlingua</h2>
+      <p>
+        Every natural language in human history suffers from the same fatal flaw: <strong>breath corrupts meaning</strong>. In English, French, and classical Sanskrit, words fuse together phonetically, destroying morphemic boundaries and leading to ambiguous interpretations.
+      </p>
+      <p>
+        <strong>ॐ-Script decouples human speech into two completely independent, parallel tracks:</strong>
+      </p>
+
+      <div class="track-envelope">
+        <div class="track-row">
+          <div class="track-badge badge-meaning">Track 1: Meaning</div>
+          <div class="track-flow">
+            [rāma·ḥ] &nbsp;&bull;&nbsp; [dharma·ṃ] &nbsp;&bull;&nbsp; [rakṣ·a·ti]
+          </div>
+        </div>
+        <div class="track-row">
+          <div class="track-badge badge-breath">Track 2: Breath</div>
+          <div class="track-flow">
+            ATHA &nbsp;&bull;&nbsp; him &nbsp;&bull;&nbsp; OM ⇗ &nbsp;&bull;&nbsp; SVĀHĀ ∎
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="stage-box">
+          <div class="stage-header"><span>Track 1</span><span>The Cognitive Layer</span></div>
+          <p>
+            Maintains absolute semantic parity. Nouns are bound to 8 immutable Kāraka clitics (<code>·ḥ</code>, <code>·ṃ</code>, <code>·bhiḥ</code>). Verb roots never mutate. The computer parses Track 1 without ambiguity.
+          </p>
+        </div>
+        <div class="stage-box">
+          <div class="stage-header"><span>Track 2</span><span>The Acoustic Respiratory Layer</span></div>
+          <p>
+            Governs human breath, vocal cadence, and oratorical pacing. Markers like <code>ATHA</code> (inhale/start), <code>OM</code> (focus threshold), and <code>SVĀHĀ</code> (complete exhale/closure) ensure natural rhythmic speech.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 2: RULE 8 — SANDHI IS OUTLAWED
+       ======================================================================== -->
+  <section id="panel-rule8" class="tab-panel">
+    <div class="content-card">
+      <h2>Rule 8: Sandhi is Outlawed (Aṣṭasūtrī Invariant)</h2>
+      <p>
+        In Classical Sanskrit, when words meet, their boundary vowels and consonants mutate through hundreds of phonetic Sandhi rules. A student or computer must perform complex backtracking to de-sandhi the sentence:
+      </p>
+
+      <div class="grid-2">
+        <div class="stage-box">
+          <div class="stage-header"><span>Classical Sanskrit</span><span>Phonetic Collision</span></div>
+          <div style="font-family:var(--font-skt); font-size:1.4rem; color:var(--rose); padding:16px 0;">
+            तथागतोऽब्रवीद्राजन्
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            <em>tathāgato'bravīdrājan</em> — 3 separate words fused into a single mutated stream. The subject and verb boundaries are obscured.
+          </p>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-header"><span>ॐ-Script Mode 1</span><span>Zero Sandhi Mutation</span></div>
+          <div style="font-family:var(--font-mono); font-size:1.25rem; color:var(--green); padding:16px 0;">
+            ATHA tathāgata·ḥ vac·a·ti rājā·he SVĀHĀ ||
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Every morpheme remains 100% discrete. Token-level parsing is O(1) instantaneous with zero hallucination.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 3: 7-TAG SPATIAL WORKBENCH
+       ======================================================================== -->
+  <section id="panel-workbench" class="tab-panel">
+    <div class="workbench-box">
+      <div class="stage-header"><span>Interactive Workbench</span><span>Dynamic Sentence Builder</span></div>
+      <p style="color:var(--text-muted); font-size:0.9rem;">
+        Click registers below to dynamically add Kāraka arguments into the sentence envelope. Notice how role clarity is preserved regardless of ordering:
+      </p>
+
+      <div class="register-buttons">
+        <button class="reg-btn" onclick="addArgument('rāma', '·ḥ', 'Rāma (Subject)')">+ R1: rāma·ḥ (Subject)</button>
+        <button class="reg-btn" onclick="addArgument('dharma', '·ṃ', 'Righteousness (Object)')">+ R2: dharma·ṃ (Object)</button>
+        <button class="reg-btn" onclick="addArgument('khaḍga', '·bhiḥ', 'By Sword (Tool)')">+ R3: khaḍga·bhiḥ (Tool)</button>
+        <button class="reg-btn" onclick="addArgument('mitra', '·bhyam', 'For Friend (Recipient)')">+ R4: mitra·bhyam (Recipient)</button>
+        <button class="reg-btn" onclick="addArgument('vana', '·taḥ', 'From Forest (Origin)')">+ R5: vana·taḥ (Origin)</button>
+        <button class="reg-btn" onclick="addArgument('rājā', '·sya', 'Of King (Possessor)')">+ R6: rājā·sya (Scope)</button>
+        <button class="reg-btn" onclick="addArgument('yuddha', '·su', 'In Battle (Locus)')">+ R7: yuddha·su (Locus)</button>
+        <button class="reg-btn" style="border-color:var(--rose); color:var(--rose);" onclick="clearWorkbench()">Clear Envelope</button>
+      </div>
+
+      <div class="active-sentence-hud">
+        <div class="sentence-tokens" id="activeSentence">ॐ- rāma·ḥ dharma·ṃ ⇗ rakṣ —SVĀHĀ— ∎</div>
+        <div class="sentence-meaning" id="activeMeaning">Meaning: "Rāma (Subject) protects righteousness (Object)."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 4: WORLD CLASSICS IN ॐ-SCRIPT
+       ======================================================================== -->
+  <section id="panel-classics" class="tab-panel">
+    <div class="content-card">
+      <h2>Universal World Literature in ॐ-Script</h2>
+      <p>
+        In Chapter 13 of Book 2, the exact same 7-tag spatial physics engine is deployed to translate foundational world scriptures without loss of theological or grammatical precision:
+      </p>
+
+      <div class="classics-picker">
+        <button class="picker-btn active" onclick="switchClassic('genesis', this)">Genesis 1:1</button>
+        <button class="picker-btn" onclick="switchClassic('john', this)">Gospel of John 1:1</button>
+        <button class="picker-btn" onclick="switchClassic('psalm', this)">Psalm 23:1</button>
+        <button class="picker-btn" onclick="switchClassic('prayer', this)">The Lord's Prayer</button>
+        <button class="picker-btn" onclick="switchClassic('revelation', this)">Revelation 19:11</button>
+      </div>
+
+      <div class="classic-display-grid">
+        <div class="classic-col">
+          <div class="classic-label">English KJV Text</div>
+          <div class="classic-text-en" id="classicEn">
+            "In the beginning God created the heaven and the earth."
+          </div>
+        </div>
+        <div class="classic-col">
+          <div class="classic-label">ॐ-Script Deterministic Representation</div>
+          <div class="classic-text-om" id="classicOm">
+            ATHA ādi·su īśvara·ḥ dyu·ṃ ca pṛthivī·ṃ ca OM sṛj·a·at SVĀHĀ ||
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// Tab Switching
+function switchTab(tabId) {
+  document.querySelectorAll('.nav-card-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+  const btn = document.getElementById('btn-tab-' + tabId);
+  const panel = document.getElementById('panel-' + tabId);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+}
+
+// Workbench Logic
+let currentArgs = [
+  { word: 'rāma', clitic: '·ḥ', gloss: 'Rāma (Subject)' },
+  { word: 'dharma', clitic: '·ṃ', gloss: 'Righteousness (Object)' }
+];
+
+function addArgument(word, clitic, gloss) {
+  currentArgs.push({ word, clitic, gloss });
+  updateWorkbench();
+}
+
+function clearWorkbench() {
+  currentArgs = [];
+  updateWorkbench();
+}
+
+function updateWorkbench() {
+  const argsText = currentArgs.map(a => a.word + a.clitic).join(' ');
+  const sentence = `ॐ- ${argsText ? argsText + ' ' : ''}⇗ rakṣ —SVĀHĀ— ∎`;
+  const glosses = currentArgs.map(a => a.gloss).join(', ');
+
+  document.getElementById('activeSentence').textContent = sentence;
+  document.getElementById('activeMeaning').textContent = 
+    glosses ? `Active Registers: ${glosses} &rarr; Action: Protects.` : `[Empty Argument Buffer] &rarr; Action: Protects.`;
+}
+
+// Classics Data
+const CLASSICS = {
+  genesis: {
+    en: "In the beginning God created the heaven and the earth.",
+    om: "ATHA ādi·su īśvara·ḥ dyu·ṃ ca pṛthivī·ṃ ca OM sṛj·a·at SVĀHĀ ||"
+  },
+  john: {
+    en: "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    om: "ATHA ādi·su śabda·ḥ as·a·at : śabda·ḥ īśvara·su as·a·at : śabda·ḥ īśvara·ḥ eva as·a·at SVĀHĀ ||"
+  },
+  psalm: {
+    en: "The Lord is my shepherd; I shall not want.",
+    om: "ATHA prabhu·ḥ mama pāla·ḥ as·a·ti : aham a-abhāva·ṃ OM gam·a·mi SVĀHĀ ||"
+  },
+  prayer: {
+    en: "Our Father which art in heaven, Hallowed be thy name. Thy kingdom come.",
+    om: "ATHA asmāka·sya pitā·he dyu·su : tava nāma·ṃ pūj·ya as·a·tu : tava rājya·ṃ OM ā-gam·a·tu SVĀHĀ ||"
+  },
+  revelation: {
+    en: "And I saw heaven opened, and behold a white horse; and he that sat upon him was called Faithful and True.",
+    om: "ATHA aham vivṛta dyu·ṃ OM paśy·a·mi : dhavala aśva·ḥ ca tat-stha·ḥ satya-vāk OM ucy·a·te SVĀHĀ ||"
+  }
+};
+
+function switchClassic(key, btn) {
+  if (btn) {
+    btn.parentElement.querySelectorAll('.picker-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const item = CLASSICS[key];
+  if (item) {
+    document.getElementById('classicEn').textContent = item.en;
+    document.getElementById('classicOm').textContent = item.om;
+  }
+}
+</script>
+
+
+  <footer class="app-footer" style="margin-top:60px; padding:36px 20px; border-top:1px solid var(--border, #333); text-align:center; font-size:0.85rem; color:var(--text-muted, #aaa); background:var(--surface, #111);">
+    <div style="max-width:960px; margin:0 auto; line-height:1.75;">
+      <p style="color:var(--gold, #d4af37); font-weight:700; font-size:1.05rem; letter-spacing:0.06em; margin-bottom:8px;">
+        ॐ-SCRIPT: SANSKRIT REBORN &bull; OFFICIAL COMPANION STUDIO
+      </p>
+
+      <div class="footer-legal" style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.12); font-size:0.8rem; line-height:1.6; color:var(--text-dim, #999); text-align:center;">
+        <p style="margin-bottom:4px;">
+          Copyright &copy; 2026 <strong>Timothy A. George</strong>. All rights reserved. Published by <strong>IndianAI Sovereign Publishing</strong>.
+        </p>
+        <p style="margin-bottom:4px;">
+          Normative specifications, biomechanical articulatory models, typographic engines, and compiler architectures are legally protected under 
+          <strong>Provisional Patent Reference: <code>Docket #OM-SCRIPT-2026-PAT</code></strong> &bull; IPC: <code>G06F 40/20</code>, <code>G06N 3/00</code>.
+        </p>
+        <p style="font-size:0.75rem; color:var(--text-dim, #888);">
+          Academic research, self-study, and non-commercial evaluation are permitted under the <em>IndianAI Sovereign Evaluation License</em>.<br>
+          Commercial deployment, automated compilation pipelines, and LLM training integration require explicit institutional licensure.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>

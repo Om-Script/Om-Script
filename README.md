@@ -1,153 +1,125 @@
-# ॐ-SYNTH (Om-Synth)
-### The Sanskrit Acoustic Synthesizer & Multi-Script Phonology Studio
+# SANSKRIT REBORN: Decoding the Rāmāyaṇa
 
-[![Live Web Studio](https://img.shields.io/badge/Live%20Studio-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://om-script.github.io/Om-Script/)
-[![Pāṇinian Architecture](https://img.shields.io/badge/Phonetics-Pāṇinian%205--Sthānas-amber?style=for-the-badge)]()
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Vanilla%20JS)-blue?style=for-the-badge)]()
-[![License: Custom](https://img.shields.io/badge/License-Custom%20(Non--Commercial)-red?style=for-the-badge)](LICENSE)
+*A Unverical Language for the Modern World* 
 
-**ॐ-SYNTH** is an interactive, browser-based phonology matrix and real-time speech synthesis engine engineered specifically for **ॐ-Script** and Pāṇinian Sanskrit acoustics.
+ *
 
-It bridges ancient vocal-tract physiology with modern Web Audio DSP, multi-script transliteration, and the **Rule 8 (Sandhi-Free) Acoustic Protocol** established in *Sanskrit by Architecture*.
+## Introduction: An Operating System for the Human Mind
 
----
+A language is not merely a method of communication; it is the operating system upon which the human mind runs. It dictates how we categorize reality, how we perceive time, and how efficiently our brains process data.
 
-### 🌐 Instant Access
-- **Live Web Application:** [https://om-script.github.io/Om-Script/](https://om-script.github.io/Om-Script/)
-- **Official Repository:** [https://github.com/om-script/Om-Script](https://github.com/om-script/Om-Script)
+For thousands of years, Sanskrit has been revered as the most computationally perfect language in human history. Over two millennia ago, the grammarian Pāṇini composed the *Aṣṭādhyāyī*—a 3,959-rule algorithmic framework designed to procedurally generate the entire language from a finite set of roots. It was an ancient precursor to modern computer science.
 
-<div align="center">
-  <br>
-  <img src="qr_om_synth_300dpi.png" width="220" alt="Scan QR Code to open ॐ-SYNTH on Mobile or Browser" />
-  <p><em>Scan with your smartphone to launch the studio instantly on iOS or Android</em></p>
-  <br>
-</div>
+Yet, over centuries of physical speech, words began to crash into one another. To make chanting smoother, ancient speakers allowed the boundary letters of adjacent words to mutate and fuse together—a phonetic phenomenon called *Sandhi*. The functional machine code was buried under thousands of exceptions.
 
----
+**The Cognitive Burden: The Mind as a Hard Drive**  
+Today, a student of Classical Sanskrit is not taught how to run the code; they are taught to memorize the pre-rendered outputs. To speak a single noun, a student must cross-reference a 24-cell matrix. To move a single verb through time, they must navigate the *Lakāras*—ten different 9-cell grids, resulting in 90 unique phonetic mutations for every single action.
 
-## 🌟 Key Features
+When a language relies on this level of rigid, pre-compiled memorization, it forces the human brain to act as a **Hard Drive**. You do not *build* the thought; you search a massive mental database, hoping to retrieve the correct, pre-conjugated file.
 
-### Mode 1: The Pāṇinian Vocal Tract Matrix (The 5 Sthānas)
-* **Anatomical Phonology Grid:** Organized strictly across the 5 vocal stations (*sthāna*: Kaṇṭhya → Tālavya → Mūrdhanya → Dantya → Oṣṭhya) plus compound throat-palatal and throat-lip stations.
-* **Dynamic Script Toggle:** Easily toggle **Telugu (South Indic)** on/off with a single click. When turned off, **Devanāgarī** and **IAST** are prominently enlarged for focused Sanskrit and Modern Hindi vocabulary study.
-* **Studio Audio Library:** 76 high-fidelity studio phoneme and vocabulary recordings bundled locally in `sounds/` for zero-latency playback.
-* **DSP Auto-Silence Trimmer:** Real-time Web Audio API PCM amplitude gating strips encoder dead air down to exact vocal onset (<12ms latency).
-* **Selected Phoneme Inspector HUD:**
-  * Active glyphs in Devanāgarī, Telugu, and Roman IAST.
-  * Sthāna classification, effort (*prayatna*), and color-coded anatomical cues.
-  * Authentic Sanskrit example word with instant audio playback.
-  * **Modern Hindi Cognate & English Meaning** showing direct linguistic evolution (e.g., क: *कमल / Lotus*, प: *फल / Fruit*, ह: *हाथ / Hand*).
-* **Interactive Anatomical Vocal Tract SVG:** Clicking any phoneme highlights the tongue and resonance position on the anatomical cross-section.
+**The ॐ-Script Architecture: The Mind as a CPU**  
+*ॐ-Script* is a complete architectural reboot. It strips away the millennia of phonetic debris, outright bans the destructive collisions of *Sandhi*, and restores the language to a purely generative, computational state.
 
-### Mode 2: ॐ-Script Read-Aloud Studio (Karaoke Synthesizer)
-* **Continuous ॐ-Script Speech Engine:** Parses any ॐ-Script sentence and recites it with natural, rhythmic cadence.
-* **Dual Audio Flow Modes:**
-  * **Buffered Stream (Continuous):** Pre-buffers and stitches morphemes for ultra-smooth recitation with sub-millisecond karaoke alignment.
-  * **Step-by-Step Pacing:** Discrete word-by-word analysis with adjustable pause intervals.
-* **Procedural Web Audio Breath Oscillators & Tibetan Bowls:**
-  * `him`: 150ms respiratory breath intake / rhythmic reset.
-  * `hūṃ`: 108Hz harmonic chest drone / clause boundary resonator.
-  * `OM`: 432Hz / 136.1Hz Tibetan singing bowl physical modeling drone.
-  * `॥`: 528Hz singing-bowl bell resolution.
-* **Synchronous Multi-Script Karaoke HUD:** Highlights the active word in real time across 5 parallel visual ribbons:
-  1. **ॐ-Script Blueprint** (Morpheme segmentation)
-  2. **Devanāgarī Script** (Classical Sanskrit surface form)
-  3. **Telugu Script** (South Indic unstacked form without *vattulu*)
-  4. **Roman IAST** (Phonetic alignment)
-  5. **Syntactic Kāraka Spine** (Subject [1.1], Object [2.1], Instrument [3.1], Verb chips)
-  6. **Fluent English Bridge** (SVO natural sentence)
-  7. **Modern Hindi Synthesis** (SOV natural sentence)
-* **Pre-Loaded Canonical Presets:** Instant testing of sentences from Chapters 1 through 7 of *Sanskrit by Architecture*.
+By freezing the vocabulary into immutable data blocks and replacing the classical grids with snap-on modular tags, ॐ-Script shifts the human brain from a Hard Drive to a **CPU** (Central Processing Unit). You no longer memorize matter; you execute logic. The matrices collapse entirely:
 
-### Mode 3: ⚡ ॐ-Script Architecture Studio (Offline Translator & Compiler Workbench)
-* **Zero-LLM Offline Translation Pipeline:** Directly converts English natural language and Classical Sanskrit (IAST or Devanāgarī) into canonical Two-Track ॐ-Script in the browser with zero external API calls or server fees.
-* **9,444+ Root Offline Lexicon (`om_lexicon.json`):** Pure static 520 KB dictionary combining lemmas from the Digital Corpus of Sanskrit (DCS) and IndoWordNet with core pronoun overrides (`mad`, `tad`, `yuṣmad`) and classical normalizers.
-* **Pāṇinian Kāraka SVO → SOV Chunker:** Automatically reorders English Subject-Verb-Object clauses into classical Sanskrit *Kartā → Karaṇa → Karma → Kriyā* sequences.
-* **Interactive AST Workbench (Chip Board):**
-  * Displays every parsed token as an interactive visual card showing original word, Part-of-Speech, and Sanskrit root.
-  * **Root Stem Editor:** Edit Sanskrit root stems in real-time.
-  * **Universal Role Tag Dropdown (20 Tags):** Live override of grammatical functions (`·ḥ`, `·ṃ`, `·ena`, `·bhiḥ`, `·ya`, `·bhyam`, `·āt`, `·taḥ`, `·sya`, `·e`, `·su`, verb tenses, and kinetic opcodes `·ant`, `·ta`, `·tvā`, `·tum`).
-* **Two-Track Breath Envelope Weaver (Rule 8):** Auto-injects acoustic mortar (`ATHA` boot carrier, `him` staccato modifier link, `hūṃऽऽ` subject anchor, `hūṃ` clause bridge, and `OM ... ॥` tonic verb lock).
-* **Multi-Script Switchers:** Instant one-click toggle between **IAST**, **Devanāgarī**, and **Telugu** scripts.
-* **Live Web Audio Chanting:** Voice synthesis with 136.1 Hz singing bowl drones and real-time card glowing synchronization.
-* **English & Hindi Reverse Verification Bridges:** Dual back-translation panels proving semantic fidelity in real time.
+*   **The 85.5-MB Lexicon** is reduced to a 252-KB modular array containing the complete classical standard library of pure roots (*Dhātus*).
+*   **The Noun Grids** are replaced by 7 universal Role Tags (`-ḥ`, `-ṃ`, `-su`, etc.).
+*   **The Verb Grids** are replaced by 3 absolute Time Modules (`-tava-`, `-sya-`, `-tavya-`) that slide into a single, $O(1)$ assembly line.
 
----
+This book is a manual for that cognitive shift. You are about to boot an ancient, functional blueprint for the human mind.
 
-## ⚡ Quick Demo: The Rule 8 Acoustic Protocol
+ *
 
-In ॐ-Script, classical sandhi (phonetic fusion) is banned to keep root data mathematically uncorrupted. Continuous speech flow is maintained through rhythmic breath carriers:
+## Part I: Architecture (The Functional Blueprint)
 
-```text
-Input:    him nar·aḥ hūṃ van·am OM gam·ti ॥
-IAST:     narah vanam gacchati
-Deva:     नरः वनम् गच्छति
-Telugu:   నరః వనమ్ గచ్ఛతి
-English:  "The man goes to the forest."
-Hindi:    "मनुष्य वन जाता है।"
-```
+**Chapter 1: The Generative Lexicon**  
+In ॐ-Script, you do not memorize nouns; you generate them at runtime. You memorize only the raw kinetic energy of the universe—the immutable *Dhātus* (roots). To freeze that energy into physical matter, you pass the root through one of three universal Stem Converters.
 
----
+Let us take the root **rakṣ** (to protect):
 
-## 🚀 How to Run
+1. The Actor (-tṛ): rakṣ + a + tṛ ➔ rakṣatṛ (The protector)
+2. The Act (-na): rakṣ + a + na ➔ rakṣana (The defense system)
+3. The Artifact (-ta): rakṣ + a + ta ➔ rakṣata (The protected artifact)
 
-### 1. Instant Web & Mobile Access
-Visit: **[https://om-script.github.io/Om-Script/](https://om-script.github.io/Om-Script/)**  
-Works out of the box in all modern browsers (Chrome, Edge, Safari, Firefox) on desktop and mobile.
+By crossing the classical root lexicon with the 7 universal converters and the 20 *Upasargas* (spatial prefixes like `pra-` or `vi-`), you procedurally generate over 500,000 highly specific nouns and abstract concepts with zero additional memorization.
 
-### 2. Standalone Native Desktop App (Zero-Config)
-To run locally on Windows/macOS/Linux without opening a browser tab:
-```bash
-python desktop_app.py
-```
-*Launches as a dedicated borderless desktop application via Microsoft Edge Native App Mode or PyWebView.*
+**Chapter 2: The Aṣṭasūtrī (The Eight Core Rules)**  
+ॐ-Script replaces Pāṇini’s 3,959 classical rules with eight immutable laws of execution across three domains:
 
-### 3. Local Web Server (Offline Mode)
-```bash
-python serve.py
-```
-Then visit `http://localhost:8080/index.html`.
+*   **Domain I: Morphology.** (1) Words are dynamically assembled arrays. (2) Prefixes are non-destructive. (3) The `-a-` neutral buffer prevents consonant collisions. (4) All tags and modules must begin with a consonant.
+*   **Domain II: Syntax.** (5) Dictionary roots are absolutely immutable. (6) Bare modifiers bind by spatial proximity. (7) Tagged nouns possess absolute structural independence and can float anywhere in the array.
+*   **Domain III: Acoustics.** (8) Physical *Sandhi* (word collision) is strictly banned; audio flow is managed exclusively by the Bīja Protocol.
 
-### 4. Install as a Desktop PWA
-Open the URL in Microsoft Edge or Google Chrome, and click the **"Install ॐ-SYNTH"** icon in the URL bar to pin it to your Windows Taskbar/Start Menu as an offline progressive web app.
+**Chapter 3: Lexical Arrays (The Collapse of the Verb Matrix)**  
+To move the root *√gam* (to go) through the classical Present tense, a student must memorize a mutating 9-cell grid (*gacchati, gacchasi, gacchāmi*, etc.). ॐ-Script deletes this grid entirely, replacing it with a single, linear assembly line: `[Root] + [-a- Buffer] + [Time Module] + [Person Terminator]`.
 
----
+| Root (Data) | Buffer | Time Module | Terminator | Computed Output |
+| --- | --- | --- | --- | --- |
+| **√gam** | a | sya | ti | **gamasyati** (He will go) |
+| **√gam** | a | sya | si | **gamasyasi** (You will go) |
+| **√gam** | a | sya | mi | **gamasyami** (I will go) |
 
-## 📁 Repository Structure
+This architecture repairs historical bugs. Classically, the future suffix is taught as `-syati`. But attaching `-syati` to the 1st Person (`-mi`) creates a fatal double-terminator (*\-syatimi*). By amputating the pure Time Module (`-sya-`) from the Execution Trigger (`-ti`), the arrays resolve flawlessly across all persons.
 
-```text
-Om-synth/
-├── .nojekyll                 # Bypasses Jekyll on GitHub Pages for raw asset delivery
-├── index.html                # Semantic HTML5 three-mode application shell
-├── style.css                 # Vanilla CSS design system with glassmorphism & dark theme
-├── app.js                    # Multi-mode controller, DOM binding, and studio manager
-├── om-compiler.js            # Pāṇinian Kāraka SVO → SOV chunker & Two-Track breath weaver
-├── om-bridge.js              # Multi-script matrix (IAST ↔ Deva ↔ Telugu) & reverse bridges
-├── om-audio.js               # Web Audio API engine, 136.1Hz Tibetan drone, & speech streamer
-├── om_lexicon.json           # 520 KB offline lexicon (9,444+ words, pronoun overrides & normalizers)
-├── phonology-data.js         # Pāṇinian phonological dataset, Hindi cognates & meanings
-├── desktop_app.py            # Zero-dependency borderless desktop app launcher
-├── serve.py                  # Local multi-threaded UTF-8 HTTP development daemon
-├── manifest.json             # Progressive Web App (PWA) manifest
-├── qr_om_synth_300dpi.png    # 300 DPI print-ready QR code for physical book editions
-├── LICENSE                   # Custom non-commercial educational license
-└── sounds/                   # 76 studio phoneme and vocabulary MP3 recordings
-```
+ *
+
+## Part II: Acoustics (The Signal Chain)
+
+**Chapter 4: The Bīja Protocol (System Commands)**  
+Because *Sandhi* is banned, heavy vocabulary blocks are isolated. To prevent robotic speech, the human respiratory system acts as a continuous electrical carrier wave managed by Tier 1 Macro Commands—ancient *Bījas* devoid of grammatical meaning.
+
+*   **ATHA (Initialize):** A physical inhalation that boots the system, clearing the working memory of the listener.
+*   **OM (Threshold):** A resonant hum placed immediately before the verb. It acts as a memory lock, suspending the breath and signaling that the variables are locked for kinetic execution.
+*   **SVĀHĀ (Flush):** A sharp exhale at the end of the execution bracket (rendered visually as `॥`), physically depleting the lungs and flushing the cognitive buffers.
+
+**Chapter 5: Tempo Envelopes (The Micro Bridges)**  
+To bridge the heavy data blocks, the protocol deploys Tier 2 Micro Bridges—the syllables him and hūṃ. They function as musical tempo envelopes:
+
+*   **16th Note (him / hum):** A staccato transient used to rapidly bind bare-stem adjectives together via proximity.
+*   **8th Note (hīṃ / hūṃ):** The standard cadence; the baseline rhythmic pulse between nouns.
+*   **Quarter Note (hūṃऽऽ):** A sustain used to mark the completion of a major structural clause (like a Subject or Object).
+*   **Half Note (hūṃ३):** A fermata placed right before the OM threshold, maximizing dramatic tension.
+
+**Chapter 6: Visual & Kinetic Syntax (Executable Sheet Music)**  
+ॐ-Script physically decouples the structural data from the acoustic breath on the page, splitting the language into a dual-track system:
+
+*   **Track 1 (The Data):** The heavy dictionary roots and tags are rendered in **Bold** (or written heavily with a striking top-line). They are the anchors.
+*   **Track 2 (The Breath):** The macro commands and tempo envelopes are rendered in standard text and underlined (or written swiftly with no top-line). They float lightly on the floor.
+
+*(Devanagari execution: अथ **क्रूर** हिम् **राजः** हूँऽऽ **विशाल** हुम् **कृष्ण** हिम् **सेनां** हूँ३ ॐ **विनशतवति** ॥)*
+
+ *
+
+## Part III: Translation (Decoding the Rāmāyaṇa)
+
+**Chapter 7: The Python Sandbox (Building the Compiler)**  
+Because the language relies on absolute modular tags rather than AI-driven context, it can be parsed by a simple state machine.
+
+*   **Rule 6 (Proximity):** The parser scoops untagged words into a `modifier_buffer`.
+*   **Rule 7 (Independence):** When it hits a tag like `-ḥ` (Subject) or `-ṃ` (Object), it flushes the buffer, binds the adjectives, and locks the entity into a memory slot.
+*   **Execution:** When it hits `-ti`, it triggers the verb, combining the slots.
+
+**Chapter 8: The Inquiry of Vālmīki (Executing Verse 1)**  
+We translate the opening of the epic: Vālmīki asking Nārada a question.
+
+> ATHA **tapasvi** him **vālmīkiḥ** hūṃऽऽ **muni** hum **puṅgava** him **nāradaṃ** hūṃ३ OM **pari\_prachatavati** ॥
+
+The parser inhales on ATHA. It scoops up **tapasvi** and binds it to **vālmīki** via the `-ḥ` Subject tag. It holds the quarter-note hūṃऽऽ, then scoops up **muni** and **puṅgava**, binding them to **nārada** via the `-ṃ` Object tag. OM locks the threshold. The verb **pari\_prachatavati** (`pari` + `√prach` + `a` + `tava` + `ti`) drops, and the verse resolves flawlessly.
+
+**Chapter 9: The Daṇḍaka Forest (Executing Recursive Pointers)**  
+Verse 2 introduces the `-su` (Environment) tag and the `-sya` (Possessor) pointer as Rāma destroys the demon army in the forest.
+
+> ATHA **daṇḍaka** him **vanasu** hūṃऽऽ **kṛṣṇa** him **rākṣasasya** hūṃ **viśāla** hum **senāṃ** hūṃ३ OM **śūra** him **rāmaḥ** hūṃऽऽ **vi\_naśatavati** ॥
+
+The parser locks **daṇḍaka vana** into the Environment slot (`-su`). It scoops up **kṛṣṇa rākṣasa** but hits the `-sya` tag, creating an active pointer: *“This demon owns the next entity.”* It continues, gathering **viśāla senāṃ** (the massive army). The pointer dynamically resolves, assigning ownership of the army to the demon. **śūra rāmaḥ** locks as the Subject, and the verb **vi\_naśatavati** executes the destruction. The ancient poetry runs perfectly as modern software.
 
 ---
 
-## ⚖️ License
+## Interactive Audio Companion: ॐ-SYNTH & Architecture Studio
 
-Copyright &copy; 2026 Timothy A. George. All Rights Reserved.
+To explore the Pāṇinian phonological matrix, observe anatomical vocal-tract tongue placement, compile natural language into ॐ-Script, and listen to continuous ॐ-Script recitations with procedural Tibetan singing bowl carrier waves:
 
-Free for personal, non-commercial, educational, and research study as an interactive companion to *Sanskrit Reborn*. Commercial sale, redistribution, or derivative monetization is strictly prohibited under the terms of the included [`LICENSE`](LICENSE) file.
-
----
-
-## 📜 Academic Reference & Citation
-
-This companion application implements the formal linguistic specification and acoustic protocol defined in:
-
-> **George, Timothy A. (2026).**  
-> *Sanskrit Reborn: The Blueprint for a Universal Second Language — Sanskrit by Architecture.*  
-> First Edition.
+* 🌐 **Live Web Application:** [https://om-script.github.io/Om-Script/](https://om-script.github.io/Om-Script/)
+* ⚡ **Architecture Studio:** Direct client-side offline translation (English & Classical Sanskrit → ॐ-Script) with 9,444+ root lexicon and interactive Kāraka chip workbench.
+* 📦 **Dedicated Repository:** [https://github.com/om-script/Om-Script](https://github.com/om-script/Om-Script)
+* 💻 **Offline Desktop App:** Run `python desktop_app.py` in the [`Om-synth/`](Om-synth/) directory for a native, zero-latency desktop experience.

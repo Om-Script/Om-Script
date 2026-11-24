@@ -17,9 +17,118 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#f59e0b">
   <link rel="stylesheet" href="style.css?v=2.3.4">
+  <style>
+    /* Global Trilogy Ribbon */
+    .trilogy-ribbon {
+      background: #040609;
+      border-bottom: 1px solid #1f293d;
+      padding: 10px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
+    .trilogy-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .trilogy-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cinzel', serif;
+      color: #f59e0b;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .trilogy-symbol {
+      width: 28px;
+      height: 28px;
+      background: #141b29;
+      border: 1px solid #f59e0b;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      color: #f59e0b;
+    }
+    .trilogy-books {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .trilogy-tab {
+      display: flex;
+      flex-direction: column;
+      padding: 6px 14px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: #8a96ae;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .trilogy-tab span.book-sub {
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: #5c687e;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .trilogy-tab:hover {
+      background: #0e131d;
+      border-color: #1f293d;
+      color: #e8ecf4;
+    }
+    .trilogy-tab.active {
+      background: #141b29;
+      border-color: #f59e0b;
+      color: #f59e0b;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+    .trilogy-tab.active span.book-sub {
+      color: #f59e0b;
+      font-weight: 600;
+    }
+
+  </style>
 </head>
 
 <body>
+
+  <!-- GLOBAL TRILOGY NAVIGATION RIBBON -->
+  <nav class="trilogy-ribbon">
+    <div class="trilogy-inner">
+      <div class="trilogy-brand">
+        <div class="trilogy-symbol">ॐ</div>
+        <span>THE SOVEREIGN INDIC TRILOGY</span>
+      </div>
+      <div class="trilogy-books">
+        <a href="index.html" class="trilogy-tab active">
+          <span>BOOK 1: RĀMĀYAṆA</span>
+          <span class="book-sub">Classical Sanskrit</span>
+        </a>
+        <a href="book2_omscript.html" class="trilogy-tab">
+          <span>BOOK 2: ॐ-SCRIPT</span>
+          <span class="book-sub">Universal Interlingua</span>
+        </a>
+        <a href="book3_unleashed.html" class="trilogy-tab">
+          <span>BOOK 3: THE SOVEREIGN STACK</span>
+          <span class="book-sub">The 3 Bootcamps & Rosetta</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
 
   <div class="app-container">
 
@@ -48,11 +157,11 @@
           <button class="tab-btn" data-target="errata-panel" id="tab-errata-btn">
             <span>📖</span> Errata & Companion Desk
           </button>
-          <a href="Varnagul_Bootcamp_Web.html" class="tab-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;" title="Open Varṇagul 8-Day Interactive Bootcamp">
-            <span>🇰🇷</span> Varṇagul Bootcamp
+          <a href="book2_omscript.html" class="tab-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;" title="Open Book 2: ॐ-Script Universal Interlingua Studio">
+            <span>⚡</span> Book 2: ॐ-Script
           </a>
-          <a href="varnagul_hub.html" class="tab-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;" title="Open Studio Architecture Hub">
-            <span>🌐</span> Studio Hub
+          <a href="book3_unleashed.html" class="tab-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;" title="Open Book 3: The Sovereign Stack (3 Bootcamps & Rosetta Stone)">
+            <span>🏛️</span> Book 3: The 3 Bootcamps
           </a>
         </nav>
         <a href="#community-section" class="community-header-link" title="Jump to Community Discussions & Reader Feedback">
@@ -1086,6 +1195,20 @@
         Educational pronunciation audio courtesy of the Department of Asian Studies, University of British Columbia (<em>UBC Sanskrit</em>).<br>
         Acoustic carrier waves and singing bowls procedurally modeled in real time via the HTML5 Web Audio API.<br>
         Open-source community discussions powered by Giscus &bull; Web typography via Google Fonts.
+      </div>
+    
+      <div class="footer-legal" style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.12); font-size:0.8rem; line-height:1.6; color:var(--text-dim, #999); text-align:center;">
+        <p style="margin-bottom:4px;">
+          Copyright &copy; 2026 <strong>Timothy A. George</strong>. All rights reserved. Published by <strong>IndianAI Sovereign Publishing</strong>.
+        </p>
+        <p style="margin-bottom:4px;">
+          Normative specifications, biomechanical articulatory models, typographic engines, and compiler architectures are legally protected under 
+          <strong>Provisional Patent Reference: <code>Docket #OM-SCRIPT-2026-PAT</code></strong> &bull; IPC: <code>G06F 40/20</code>, <code>G06N 3/00</code>.
+        </p>
+        <p style="font-size:0.75rem; color:var(--text-dim, #888);">
+          Academic research, self-study, and non-commercial evaluation are permitted under the <em>IndianAI Sovereign Evaluation License</em>.<br>
+          Commercial deployment, automated compilation pipelines, and LLM training integration require explicit institutional licensure.
+        </p>
       </div>
     </footer>
 
